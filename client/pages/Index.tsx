@@ -24,6 +24,9 @@ export default function Index() {
     <div className="min-h-screen bg-cosmic-purple-950 text-white relative overflow-hidden">
       {/* Animated Background Grid */}
       <div className="absolute inset-0 cyber-grid opacity-30" />
+
+      {/* Animated Particle Background */}
+      <AnimatedBackground />
       
       {/* Dynamic Mouse Follower */}
       <div 
