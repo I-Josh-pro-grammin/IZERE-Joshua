@@ -52,9 +52,35 @@ export default function Index() {
             <a href="#contact" className="hover:text-cosmic-purple-300 transition-colors duration-300">Contact</a>
           </div>
 
-          <Button className="btn-cyber">
-            Get Started
-          </Button>
+          <div className="flex items-center space-x-4">
+            <Button className="btn-cyber hidden sm:block">
+              Get Started
+            </Button>
+
+            {/* Mobile menu button */}
+            <button
+              className="md:hidden p-2 text-cosmic-purple-300 hover:text-white transition-colors"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+          </div>
+
+          {/* Mobile menu */}
+          {isMobileMenuOpen && (
+            <div className="absolute top-full left-0 right-0 bg-cosmic-purple-900/95 backdrop-blur-lg border-t border-cosmic-purple-600/30 md:hidden">
+              <div className="px-6 py-4 space-y-4">
+                <a href="#features" className="block hover:text-cosmic-purple-300 transition-colors duration-300">Features</a>
+                <a href="#technology" className="block hover:text-cosmic-purple-300 transition-colors duration-300">Technology</a>
+                <a href="#contact" className="block hover:text-cosmic-purple-300 transition-colors duration-300">Contact</a>
+                <Button className="btn-cyber w-full mt-4">
+                  Get Started
+                </Button>
+              </div>
+            </div>
+          )}
         </div>
       </nav>
 
