@@ -95,7 +95,7 @@ export default function Index() {
           </div>
 
           {/* Main Heading */}
-          <h1 className={`text-6xl md:text-8xl font-extrabold mb-8 transition-all duration-1000 delay-300 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <h1 className={`text-4xl sm:text-6xl lg:text-8xl font-extrabold mb-6 md:mb-8 transition-all duration-1000 delay-300 leading-tight ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <span className="bg-gradient-to-r from-cosmic-purple-400 via-neon-cyan-400 to-electric-blue-400 bg-clip-text text-transparent animate-gradient-x text-glow">
               Future is
             </span>
@@ -106,8 +106,8 @@ export default function Index() {
           </h1>
 
           {/* Subtitle */}
-          <p className={`text-xl md:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto leading-relaxed transition-all duration-1000 delay-500 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            Experience the next evolution of digital innovation with cutting-edge AI, 
+          <p className={`text-lg sm:text-xl lg:text-2xl text-gray-300 mb-8 md:mb-12 max-w-3xl mx-auto leading-relaxed px-4 transition-all duration-1000 delay-500 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            Experience the next evolution of digital innovation with cutting-edge AI,
             quantum-ready architecture, and immersive interfaces that redefine possibility.
           </p>
 
