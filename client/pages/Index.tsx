@@ -12,13 +12,13 @@ export default function Index() {
 
   useEffect(() => {
     setIsLoaded(true);
-    
+
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
   return (
@@ -28,9 +28,9 @@ export default function Index() {
 
       {/* Animated Particle Background */}
       <AnimatedBackground />
-      
+
       {/* Dynamic Mouse Follower */}
-      <div 
+      <div
         className="fixed w-64 h-64 rounded-full bg-gradient-to-r from-cosmic-purple-500/20 to-neon-cyan-400/20 blur-3xl pointer-events-none transition-all duration-300 ease-out z-0"
         style={{
           left: mousePosition.x - 128,
@@ -45,27 +45,60 @@ export default function Index() {
             <div className="w-8 h-8 bg-gradient-to-br from-cosmic-purple-400 to-neon-cyan-400 rounded-lg animate-pulse-slow" />
             <span className="text-xl font-bold text-glow">IZERE Joshua</span>
           </div>
-          
+
           <div className="hidden md:flex items-center space-x-8">
-            <a href="#about" className="hover:text-cosmic-purple-300 transition-colors duration-300">About</a>
-            <a href="#projects" className="hover:text-cosmic-purple-300 transition-colors duration-300">Projects</a>
-            <a href="#skills" className="hover:text-cosmic-purple-300 transition-colors duration-300">Skills</a>
-            <a href="#experience" className="hover:text-cosmic-purple-300 transition-colors duration-300">Experience</a>
-            <a href="#contact" className="hover:text-cosmic-purple-300 transition-colors duration-300">Contact</a>
+            <a
+              href="#about"
+              className="hover:text-cosmic-purple-300 transition-colors duration-300"
+            >
+              About
+            </a>
+            <a
+              href="#projects"
+              className="hover:text-cosmic-purple-300 transition-colors duration-300"
+            >
+              Projects
+            </a>
+            <a
+              href="#skills"
+              className="hover:text-cosmic-purple-300 transition-colors duration-300"
+            >
+              Skills
+            </a>
+            <a
+              href="#experience"
+              className="hover:text-cosmic-purple-300 transition-colors duration-300"
+            >
+              Experience
+            </a>
+            <a
+              href="#contact"
+              className="hover:text-cosmic-purple-300 transition-colors duration-300"
+            >
+              Contact
+            </a>
           </div>
 
           <div className="flex items-center space-x-4">
-            <Button className="btn-cyber hidden sm:block">
-              Get Started
-            </Button>
+            <Button className="btn-cyber hidden sm:block">Get Started</Button>
 
             {/* Mobile menu button */}
             <button
               className="md:hidden p-2 text-cosmic-purple-300 hover:text-white transition-colors"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
               </svg>
             </button>
           </div>
@@ -74,11 +107,36 @@ export default function Index() {
           {isMobileMenuOpen && (
             <div className="absolute top-full left-0 right-0 bg-cosmic-purple-900/95 backdrop-blur-lg border-t border-cosmic-purple-600/30 md:hidden">
               <div className="px-6 py-4 space-y-4">
-                <a href="#about" className="block hover:text-cosmic-purple-300 transition-colors duration-300">About</a>
-                <a href="#projects" className="block hover:text-cosmic-purple-300 transition-colors duration-300">Projects</a>
-                <a href="#skills" className="block hover:text-cosmic-purple-300 transition-colors duration-300">Skills</a>
-                <a href="#experience" className="block hover:text-cosmic-purple-300 transition-colors duration-300">Experience</a>
-                <a href="#contact" className="block hover:text-cosmic-purple-300 transition-colors duration-300">Contact</a>
+                <a
+                  href="#about"
+                  className="block hover:text-cosmic-purple-300 transition-colors duration-300"
+                >
+                  About
+                </a>
+                <a
+                  href="#projects"
+                  className="block hover:text-cosmic-purple-300 transition-colors duration-300"
+                >
+                  Projects
+                </a>
+                <a
+                  href="#skills"
+                  className="block hover:text-cosmic-purple-300 transition-colors duration-300"
+                >
+                  Skills
+                </a>
+                <a
+                  href="#experience"
+                  className="block hover:text-cosmic-purple-300 transition-colors duration-300"
+                >
+                  Experience
+                </a>
+                <a
+                  href="#contact"
+                  className="block hover:text-cosmic-purple-300 transition-colors duration-300"
+                >
+                  Contact
+                </a>
               </div>
             </div>
           )}
@@ -89,54 +147,96 @@ export default function Index() {
       <section className="relative z-10 px-6 py-20">
         <div className="max-w-7xl mx-auto text-center">
           {/* Floating Badge */}
-          <div className={`mb-8 transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <div
+            className={`mb-8 transition-all duration-1000 ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+          >
             <Badge className="bg-cosmic-purple-800/50 text-cosmic-purple-200 border-cosmic-purple-600/50 px-6 py-2 text-sm animate-float">
               ✦ Available for freelance · Portfolio
             </Badge>
           </div>
 
           {/* Main Heading */}
-          <h1 className={`text-4xl sm:text-6xl lg:text-8xl font-extrabold mb-6 md:mb-8 transition-all duration-1000 delay-300 leading-tight ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <h1
+            className={`text-4xl sm:text-6xl lg:text-8xl font-extrabold mb-6 md:mb-8 transition-all duration-1000 delay-300 leading-tight ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+          >
             <span className="bg-gradient-to-r from-cosmic-purple-400 via-neon-cyan-400 to-electric-blue-400 bg-clip-text text-transparent animate-gradient-x text-glow">
               IZERE Joshua
             </span>
             <br />
-            <span className="text-white">
-              Frontend Engineer
-            </span>
+            <span className="text-white">Frontend Engineer</span>
           </h1>
 
           {/* Subtitle */}
-          <p className={`text-lg sm:text-xl lg:text-2xl text-gray-300 mb-8 md:mb-12 max-w-3xl mx-auto leading-relaxed px-4 transition-all duration-1000 delay-500 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            I craft immersive, high‑performance interfaces with a love for motion, precision and futuristic aesthetics.
+          <p
+            className={`text-lg sm:text-xl lg:text-2xl text-gray-300 mb-8 md:mb-12 max-w-3xl mx-auto leading-relaxed px-4 transition-all duration-1000 delay-500 ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+          >
+            I craft immersive, high‑performance interfaces with a love for
+            motion, precision and futuristic aesthetics.
           </p>
 
           {/* CTA Buttons */}
-          <div className={`flex flex-col sm:flex-row gap-6 justify-center items-center mb-20 transition-all duration-1000 delay-700 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <Button size="lg" className="btn-cyber px-8 py-4 text-lg font-semibold" onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}>
+          <div
+            className={`flex flex-col sm:flex-row gap-6 justify-center items-center mb-20 transition-all duration-1000 delay-700 ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+          >
+            <Button
+              size="lg"
+              className="btn-cyber px-8 py-4 text-lg font-semibold"
+              onClick={() =>
+                document
+                  .getElementById("projects")
+                  ?.scrollIntoView({ behavior: "smooth" })
+              }
+            >
               View Projects
-              <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              <svg
+                className="ml-2 w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M13 7l5 5m0 0l-5 5m5-5H6"
+                />
               </svg>
             </Button>
 
-            <Button variant="ghost" size="lg" className="border border-cosmic-purple-500/30 hover:bg-cosmic-purple-800/20 px-8 py-4 text-lg" onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}>
+            <Button
+              variant="ghost"
+              size="lg"
+              className="border border-cosmic-purple-500/30 hover:bg-cosmic-purple-800/20 px-8 py-4 text-lg"
+              onClick={() =>
+                document
+                  .getElementById("contact")
+                  ?.scrollIntoView({ behavior: "smooth" })
+              }
+            >
               Contact Me
             </Button>
           </div>
 
           {/* Stats */}
-          <div className={`grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto transition-all duration-1000 delay-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <div
+            className={`grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto transition-all duration-1000 delay-1000 ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+          >
             <div className="text-center">
-              <div className="text-4xl font-bold text-neon-cyan-400 mb-2 animate-glow">20+</div>
+              <div className="text-4xl font-bold text-neon-cyan-400 mb-2 animate-glow">
+                20+
+              </div>
               <div className="text-gray-400">Projects Shipped</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-bold text-cosmic-purple-400 mb-2 animate-glow">12+</div>
+              <div className="text-4xl font-bold text-cosmic-purple-400 mb-2 animate-glow">
+                12+
+              </div>
               <div className="text-gray-400">Technologies</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-bold text-electric-blue-400 mb-2 animate-glow">&lt; 24h</div>
+              <div className="text-4xl font-bold text-electric-blue-400 mb-2 animate-glow">
+                &lt; 24h
+              </div>
               <div className="text-gray-400">Response Time</div>
             </div>
           </div>
@@ -147,14 +247,32 @@ export default function Index() {
       <section id="about" className="relative z-10 px-6 py-20">
         <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-10 items-center">
           <div>
-            <h2 className="text-3xl md:text-5xl font-bold mb-6"><span className="bg-gradient-to-r from-cosmic-purple-400 to-neon-cyan-400 bg-clip-text text-transparent">About Me</span></h2>
+            <h2 className="text-3xl md:text-5xl font-bold mb-6">
+              <span className="bg-gradient-to-r from-cosmic-purple-400 to-neon-cyan-400 bg-clip-text text-transparent">
+                About Me
+              </span>
+            </h2>
             <p className="text-gray-300 leading-relaxed">
-              I'm a frontend engineer focused on building beautiful, accessible and blazing‑fast web experiences. I love micro‑interactions, motion design and creating fluid interfaces that feel alive.
+              I'm a frontend engineer focused on building beautiful, accessible
+              and blazing‑fast web experiences. I love micro‑interactions,
+              motion design and creating fluid interfaces that feel alive.
             </p>
           </div>
           <div className="grid grid-cols-2 gap-4">
-            {['React', 'TypeScript', 'Tailwind', 'Node', 'Vite', 'Framer Motion'].map((skill) => (
-              <div key={skill} className="glass p-4 text-center border-cosmic-purple-600/30">{skill}</div>
+            {[
+              "React",
+              "TypeScript",
+              "Tailwind",
+              "Node",
+              "Vite",
+              "Framer Motion",
+            ].map((skill) => (
+              <div
+                key={skill}
+                className="glass p-4 text-center border-cosmic-purple-600/30"
+              >
+                {skill}
+              </div>
             ))}
           </div>
         </div>
@@ -173,22 +291,66 @@ export default function Index() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { icon: "✨", title: "Holo UI Kit", description: "A futuristic component library with neon aesthetics and fluid micro‑interactions." },
-              { icon: "📈", title: "Insight Dashboard", description: "Real‑time analytics dashboard with animated charts and seamless UX." },
-              { icon: "🛍️", title: "Commerce Flow", description: "Headless e‑commerce storefront focused on speed, accessibility and conversion." },
-              { icon: "🎬", title: "Motion Lab", description: "Playground of complex page transitions and magnetic cursor effects." },
-              { icon: "📱", title: "Mobile Studio", description: "Responsive PWA with offline support and delightful gestures." },
-              { icon: "🧩", title: "Design Systems", description: "Token‑driven, themeable systems with full documentation and templates." },
+              {
+                icon: "✨",
+                title: "Holo UI Kit",
+                description:
+                  "A futuristic component library with neon aesthetics and fluid micro‑interactions.",
+              },
+              {
+                icon: "📈",
+                title: "Insight Dashboard",
+                description:
+                  "Real‑time analytics dashboard with animated charts and seamless UX.",
+              },
+              {
+                icon: "🛍️",
+                title: "Commerce Flow",
+                description:
+                  "Headless e‑commerce storefront focused on speed, accessibility and conversion.",
+              },
+              {
+                icon: "🎬",
+                title: "Motion Lab",
+                description:
+                  "Playground of complex page transitions and magnetic cursor effects.",
+              },
+              {
+                icon: "📱",
+                title: "Mobile Studio",
+                description:
+                  "Responsive PWA with offline support and delightful gestures.",
+              },
+              {
+                icon: "🧩",
+                title: "Design Systems",
+                description:
+                  "Token‑driven, themeable systems with full documentation and templates.",
+              },
             ].map((project, index) => (
               <ScrollReveal key={index} delay={index * 100} direction="up">
                 <Card className="glass border-cosmic-purple-600/30 hover:border-cosmic-purple-400/50 transition-all duration-500 group hover:transform hover:scale-105">
                   <CardContent className="p-8 text-center">
-                    <div className="text-4xl mb-6 animate-float" style={{ animationDelay: `${index * 0.2}s` }}>{project.icon}</div>
-                    <h3 className="text-xl font-semibold mb-3 text-cosmic-purple-200 group-hover:text-white transition-colors">{project.title}</h3>
-                    <p className="text-gray-400 group-hover:text-gray-300 transition-colors mb-4">{project.description}</p>
+                    <div
+                      className="text-4xl mb-6 animate-float"
+                      style={{ animationDelay: `${index * 0.2}s` }}
+                    >
+                      {project.icon}
+                    </div>
+                    <h3 className="text-xl font-semibold mb-3 text-cosmic-purple-200 group-hover:text-white transition-colors">
+                      {project.title}
+                    </h3>
+                    <p className="text-gray-400 group-hover:text-gray-300 transition-colors mb-4">
+                      {project.description}
+                    </p>
                     <div className="flex flex-wrap justify-center gap-2 text-xs text-gray-400">
-                      {['React','TypeScript','Tailwind'].map(tag => (
-                        <span key={tag} className="px-2 py-1 rounded border border-cosmic-purple-600/30">{tag}</span>
+                      {["React", "TypeScript", "Tailwind"].map((tag) => (
+                        <span
+                          key={tag}
+                          className="px-2 py-1 rounded border border-cosmic-purple-600/30"
+                        >
+                          {tag}
+                        </span>
                       ))}
                     </div>
                   </CardContent>
@@ -209,12 +371,25 @@ export default function Index() {
           </h2>
 
           <p className="text-xl text-gray-300 mb-16 max-w-3xl mx-auto">
-            Modern stack focused on performance, accessibility and delightful UX.
+            Modern stack focused on performance, accessibility and delightful
+            UX.
           </p>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {['React', 'TypeScript', 'Next.js', 'Vite', 'Tailwind', 'Framer Motion', 'Express', 'Zod'].map((tech, index) => (
-              <div key={index} className="holographic rounded-lg p-6 border border-cosmic-purple-600/30 hover:border-neon-cyan-400/50 transition-all duration-500 group">
+            {[
+              "React",
+              "TypeScript",
+              "Next.js",
+              "Vite",
+              "Tailwind",
+              "Framer Motion",
+              "Express",
+              "Zod",
+            ].map((tech, index) => (
+              <div
+                key={index}
+                className="holographic rounded-lg p-6 border border-cosmic-purple-600/30 hover:border-neon-cyan-400/50 transition-all duration-500 group"
+              >
                 <div className="text-lg font-semibold text-cosmic-purple-200 group-hover:text-white transition-colors">
                   {tech}
                 </div>
@@ -228,17 +403,34 @@ export default function Index() {
       <section id="experience" className="relative z-10 px-6 py-20">
         <div className="max-w-5xl mx-auto">
           <h2 className="text-4xl md:text-6xl font-bold mb-12 text-center">
-            <span className="bg-gradient-to-r from-cosmic-purple-400 to-neon-cyan-400 bg-clip-text text-transparent">Experience</span>
+            <span className="bg-gradient-to-r from-cosmic-purple-400 to-neon-cyan-400 bg-clip-text text-transparent">
+              Experience
+            </span>
           </h2>
           <div className="space-y-6">
             {[
-              { role: 'Frontend Engineer', company: 'Freelance', period: '2021 — Present', desc: 'Designing and building bespoke interfaces for startups and agencies.' },
-              { role: 'UI Engineer', company: 'Studio Aurora', period: '2019 — 2021', desc: 'Led component libraries and animations for high‑traffic sites.' },
+              {
+                role: "Frontend Engineer",
+                company: "Freelance",
+                period: "2021 — Present",
+                desc: "Designing and building bespoke interfaces for startups and agencies.",
+              },
+              {
+                role: "UI Engineer",
+                company: "Studio Aurora",
+                period: "2019 — 2021",
+                desc: "Led component libraries and animations for high‑traffic sites.",
+              },
             ].map((job, i) => (
               <div key={i} className="glass p-6 border-cosmic-purple-600/30">
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
                   <div>
-                    <div className="text-lg font-semibold">{job.role} — <span className="text-cosmic-purple-300">{job.company}</span></div>
+                    <div className="text-lg font-semibold">
+                      {job.role} —{" "}
+                      <span className="text-cosmic-purple-300">
+                        {job.company}
+                      </span>
+                    </div>
                     <div className="text-gray-400">{job.desc}</div>
                   </div>
                   <div className="text-gray-400">{job.period}</div>
@@ -259,14 +451,30 @@ export default function Index() {
           </h2>
 
           <p className="text-xl text-gray-300 mb-12">
-            For collaborations or opportunities, reach out and I’ll respond within 24 hours.
+            For collaborations or opportunities, reach out and I’ll respond
+            within 24 hours.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-            <Button size="lg" className="btn-cyber px-12 py-4 text-lg font-semibold" onClick={() => window.location.href = 'mailto:hello@example.com'}>
+            <Button
+              size="lg"
+              className="btn-cyber px-12 py-4 text-lg font-semibold"
+              onClick={() =>
+                (window.location.href = "mailto:hello@example.com")
+              }
+            >
               Email Me
             </Button>
-            <Button variant="ghost" size="lg" className="border border-cosmic-purple-500/30 hover:bg-cosmic-purple-800/20 px-12 py-4 text-lg" onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}>
+            <Button
+              variant="ghost"
+              size="lg"
+              className="border border-cosmic-purple-500/30 hover:bg-cosmic-purple-800/20 px-12 py-4 text-lg"
+              onClick={() =>
+                document
+                  .getElementById("projects")
+                  ?.scrollIntoView({ behavior: "smooth" })
+              }
+            >
               View Projects
             </Button>
           </div>

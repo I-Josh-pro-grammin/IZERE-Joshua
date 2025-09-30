@@ -94,7 +94,7 @@ export default {
           700: "#1d4ed8",
           800: "#1e40af",
           900: "#1e3a8a",
-        }
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -118,11 +118,11 @@ export default {
             height: "0",
           },
         },
-        "float": {
+        float: {
           "0%, 100%": { transform: "translateY(0px)" },
           "50%": { transform: "translateY(-20px)" },
         },
-        "glow": {
+        glow: {
           "0%, 100%": { opacity: "1" },
           "50%": { opacity: "0.5" },
         },
@@ -133,14 +133,14 @@ export default {
         "gradient-x": {
           "0%, 100%": {
             "background-size": "200% 200%",
-            "background-position": "left center"
+            "background-position": "left center",
           },
           "50%": {
             "background-size": "200% 200%",
-            "background-position": "right center"
+            "background-position": "right center",
           },
         },
-        "shimmer": {
+        shimmer: {
           "0%": { transform: "translateX(-100%)" },
           "100%": { transform: "translateX(100%)" },
         },
@@ -152,17 +152,19 @@ export default {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "float": "float 6s ease-in-out infinite",
-        "glow": "glow 2s ease-in-out infinite alternate",
+        float: "float 6s ease-in-out infinite",
+        glow: "glow 2s ease-in-out infinite alternate",
         "pulse-slow": "pulse-slow 4s ease-in-out infinite",
         "gradient-x": "gradient-x 15s ease infinite",
-        "shimmer": "shimmer 2s infinite",
+        shimmer: "shimmer 2s infinite",
         "spin-slow": "spin-slow 3s linear infinite",
       },
       boxShadow: {
-        "neon": "0 0 5px currentColor, 0 0 20px currentColor, 0 0 35px currentColor, 0 0 50px currentColor",
-        "neon-sm": "0 0 2px currentColor, 0 0 10px currentColor, 0 0 20px currentColor",
-        "cyber": "0 0 10px rgba(139, 68, 255, 0.3), 0 0 20px rgba(139, 68, 255, 0.2), 0 0 30px rgba(139, 68, 255, 0.1)",
+        neon: "0 0 5px currentColor, 0 0 20px currentColor, 0 0 35px currentColor, 0 0 50px currentColor",
+        "neon-sm":
+          "0 0 2px currentColor, 0 0 10px currentColor, 0 0 20px currentColor",
+        cyber:
+          "0 0 10px rgba(139, 68, 255, 0.3), 0 0 20px rgba(139, 68, 255, 0.2), 0 0 30px rgba(139, 68, 255, 0.1)",
       },
     },
   },

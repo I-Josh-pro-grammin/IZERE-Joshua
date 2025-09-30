@@ -1,17 +1,19 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from "react";
 
 interface AnimatedBackgroundProps {
   className?: string;
 }
 
-export function AnimatedBackground({ className = '' }: AnimatedBackgroundProps) {
+export function AnimatedBackground({
+  className = "",
+}: AnimatedBackgroundProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     // Set canvas size
@@ -21,7 +23,7 @@ export function AnimatedBackground({ className = '' }: AnimatedBackgroundProps) 
     };
 
     resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
+    window.addEventListener("resize", resizeCanvas);
 
     // Particles system
     const particles: Array<{
@@ -43,7 +45,7 @@ export function AnimatedBackground({ className = '' }: AnimatedBackgroundProps) 
         dy: (Math.random() - 0.5) * 0.5,
         size: Math.random() * 2 + 1,
         opacity: Math.random() * 0.5 + 0.1,
-        color: Math.random() > 0.5 ? '#8b44ff' : '#22d3ee',
+        color: Math.random() > 0.5 ? "#8b44ff" : "#22d3ee",
       });
     }
 
@@ -69,7 +71,7 @@ export function AnimatedBackground({ className = '' }: AnimatedBackgroundProps) 
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
         ctx.fill();
-        
+
         // Add glow effect
         ctx.shadowBlur = 20;
         ctx.shadowColor = particle.color;
@@ -77,14 +79,14 @@ export function AnimatedBackground({ className = '' }: AnimatedBackgroundProps) 
         ctx.restore();
 
         // Connect nearby particles
-        particles.slice(index + 1).forEach(otherParticle => {
+        particles.slice(index + 1).forEach((otherParticle) => {
           const dx = particle.x - otherParticle.x;
           const dy = particle.y - otherParticle.y;
           const distance = Math.sqrt(dx * dx + dy * dy);
 
           if (distance < 100) {
             ctx.save();
-            ctx.globalAlpha = (100 - distance) / 100 * 0.1;
+            ctx.globalAlpha = ((100 - distance) / 100) * 0.1;
             ctx.strokeStyle = particle.color;
             ctx.lineWidth = 1;
             ctx.beginPath();
@@ -102,7 +104,7 @@ export function AnimatedBackground({ className = '' }: AnimatedBackgroundProps) 
     animate();
 
     return () => {
-      window.removeEventListener('resize', resizeCanvas);
+      window.removeEventListener("resize", resizeCanvas);
     };
   }, []);
 

@@ -1,19 +1,19 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from "react";
 
 interface ScrollRevealProps {
   children: React.ReactNode;
   className?: string;
   delay?: number;
-  direction?: 'up' | 'down' | 'left' | 'right' | 'fade';
+  direction?: "up" | "down" | "left" | "right" | "fade";
   duration?: number;
 }
 
-export function ScrollReveal({ 
-  children, 
-  className = '', 
-  delay = 0, 
-  direction = 'up', 
-  duration = 1000 
+export function ScrollReveal({
+  children,
+  className = "",
+  delay = 0,
+  direction = "up",
+  duration = 1000,
 }: ScrollRevealProps) {
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -27,8 +27,8 @@ export function ScrollReveal({
       },
       {
         threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px',
-      }
+        rootMargin: "0px 0px -50px 0px",
+      },
     );
 
     if (ref.current) {
@@ -43,20 +43,20 @@ export function ScrollReveal({
   }, [delay]);
 
   const getTransformClasses = () => {
-    const baseClasses = 'transition-all ease-out';
+    const baseClasses = "transition-all ease-out";
     const durationClass = `duration-[${duration}ms]`;
-    
+
     if (!isVisible) {
       switch (direction) {
-        case 'up':
+        case "up":
           return `${baseClasses} ${durationClass} opacity-0 translate-y-8`;
-        case 'down':
+        case "down":
           return `${baseClasses} ${durationClass} opacity-0 -translate-y-8`;
-        case 'left':
+        case "left":
           return `${baseClasses} ${durationClass} opacity-0 translate-x-8`;
-        case 'right':
+        case "right":
           return `${baseClasses} ${durationClass} opacity-0 -translate-x-8`;
-        case 'fade':
+        case "fade":
           return `${baseClasses} ${durationClass} opacity-0`;
         default:
           return `${baseClasses} ${durationClass} opacity-0 translate-y-8`;
