@@ -163,19 +163,21 @@ export default function Index() {
                 description: "Auto-scaling infrastructure that grows with your needs, from startup to enterprise."
               }
             ].map((feature, index) => (
-              <Card key={index} className="glass border-cosmic-purple-600/30 hover:border-cosmic-purple-400/50 transition-all duration-500 group hover:transform hover:scale-105">
-                <CardContent className="p-8 text-center">
-                  <div className="text-4xl mb-6 animate-float" style={{ animationDelay: `${index * 0.2}s` }}>
-                    {feature.icon}
-                  </div>
-                  <h3 className="text-xl font-semibold mb-4 text-cosmic-purple-200 group-hover:text-white transition-colors">
-                    {feature.title}
-                  </h3>
-                  <p className="text-gray-400 group-hover:text-gray-300 transition-colors">
-                    {feature.description}
-                  </p>
-                </CardContent>
-              </Card>
+              <ScrollReveal key={index} delay={index * 100} direction="up">
+                <Card className="glass border-cosmic-purple-600/30 hover:border-cosmic-purple-400/50 transition-all duration-500 group hover:transform hover:scale-105">
+                  <CardContent className="p-8 text-center">
+                    <div className="text-4xl mb-6 animate-float" style={{ animationDelay: `${index * 0.2}s` }}>
+                      {feature.icon}
+                    </div>
+                    <h3 className="text-xl font-semibold mb-4 text-cosmic-purple-200 group-hover:text-white transition-colors">
+                      {feature.title}
+                    </h3>
+                    <p className="text-gray-400 group-hover:text-gray-300 transition-colors">
+                      {feature.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              </ScrollReveal>
             ))}
           </div>
         </div>
