@@ -42,7 +42,7 @@ export default function Index() {
       <nav className="relative z-10 p-6">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-cosmic-purple-400 to-neon-cyan-400 rounded-lg animate-pulse-slow" />
+            <img src="/Greenland2.jpg" alt="IZERE Joshua" className="w-12 h-12 bg-gradient-to-br from-cosmic-purple-400 to-neon-cyan-400 rounded-full animate-pulse-slow" />
             <span className="text-xl font-bold text-glow">IZERE Joshua</span>
           </div>
 
@@ -144,13 +144,18 @@ export default function Index() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative z-10 px-6 py-20">
+      <section className="relative z-10 px-6 pb-20">
         <div className="max-w-7xl mx-auto text-center">
+        <div className="flex justify-center items-center">
+        <img src="/Greenland2.jpg" alt="IZERE Joshua" className="hover:scale-105 hover:transition-all hover:duration-8000 hover:cursor-pointer w-[15rem] h-[15rem] bg-gradient-to-br from-cosmic-purple-400 to-neon-cyan-400 rounded-full animate-pulse-slow" />
+        </div>
+
+
           {/* Floating Badge */}
           <div
             className={`mb-8 transition-all duration-1000 ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
           >
-            <Badge className="bg-cosmic-purple-800/50 text-cosmic-purple-200 border-cosmic-purple-600/50 px-6 py-2 text-sm animate-float">
+            <Badge className="absolute bottom-[10rem] right-[10] bg-cosmic-purple-800/50 text-cosmic-purple-200 border-cosmic-purple-600/50 px-6 py-2 text-sm animate-float">
               ✦ Available for freelance · Portfolio
             </Badge>
           </div>
@@ -163,7 +168,7 @@ export default function Index() {
               IZERE Joshua
             </span>
             <br />
-            <span className="text-white">Frontend Engineer</span>
+            <span className="text-white">Software Engineer</span>
           </h1>
 
           {/* Subtitle */}
