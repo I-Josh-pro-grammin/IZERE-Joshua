@@ -122,11 +122,13 @@ export default function Index() {
       {/* Features Section */}
       <section id="features" className="relative z-10 px-6 py-20">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl md:text-6xl font-bold text-center mb-16">
-            <span className="bg-gradient-to-r from-cosmic-purple-400 to-neon-cyan-400 bg-clip-text text-transparent">
-              Core Features
-            </span>
-          </h2>
+          <ScrollReveal>
+            <h2 className="text-4xl md:text-6xl font-bold text-center mb-16">
+              <span className="bg-gradient-to-r from-cosmic-purple-400 to-neon-cyan-400 bg-clip-text text-transparent">
+                Core Features
+              </span>
+            </h2>
+          </ScrollReveal>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
