@@ -103,7 +103,7 @@ export default function Index() {
               <div className="text-gray-400">Uptime Guarantee</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-bold text-cosmic-purple-400 mb-2 animate-glow">< 50ms</div>
+              <div className="text-4xl font-bold text-cosmic-purple-400 mb-2 animate-glow">&lt; 50ms</div>
               <div className="text-gray-400">Response Time</div>
             </div>
             <div className="text-center">
