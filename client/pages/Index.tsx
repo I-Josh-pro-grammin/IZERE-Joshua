@@ -260,19 +260,25 @@ export default function Index() {
               </span>
             </h2>
             <p className="text-gray-300 leading-relaxed">
-              I'm a frontend engineer focused on building beautiful, accessible
+              I'm a software engineer focused on building beautiful, accessible
               and blazing‑fast web experiences. I love micro‑interactions,
-              motion design and creating fluid interfaces that feel alive.
+              motion design and creating fluid interfaces that feel alive and efficient and secure backend solutions.
             </p>
           </div>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-3 gap-4">
             {[
               "React",
               "TypeScript",
               "Tailwind",
-              "Node",
               "Vite",
               "Framer Motion",
+              "Next.js",
+              "Node.js",
+              "Express",
+              "MongoDB",
+              "PostgreSQL",
+              "Docker",
+              "Prisma"
             ].map((skill) => (
               <div
                 key={skill}
@@ -299,41 +305,59 @@ export default function Index() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
-                icon: "✨",
-                title: "Holo UI Kit",
+                icon: "🛒",
+                title: "E-Buy",
                 description:
                   "A futuristic component library with neon aesthetics and fluid micro‑interactions.",
               },
               {
-                icon: "📈",
-                title: "Insight Dashboard",
+                icon: "💻",
+                title: "Brainly Code",
                 description:
                   "Real‑time analytics dashboard with animated charts and seamless UX.",
               },
               {
-                icon: "🛍️",
+                icon: "💻",
                 title: "Commerce Flow",
                 description:
                   "Headless e‑commerce storefront focused on speed, accessibility and conversion.",
               },
               {
-                icon: "🎬",
+                icon: "💻",
                 title: "Motion Lab",
                 description:
                   "Playground of complex page transitions and magnetic cursor effects.",
               },
               {
-                icon: "📱",
-                title: "Mobile Studio",
+                icon: "🛒",
+                title: "E-commerce backend app",
                 description:
                   "Responsive PWA with offline support and delightful gestures.",
               },
               {
                 icon: "🧩",
-                title: "Design Systems",
+                title: "Design Templates",
                 description:
                   "Token‑driven, themeable systems with full documentation and templates.",
               },
+              {
+                icon: "🧩",
+                title: "My NextJs portfolio Template",
+                description:
+                  "Token‑driven, themeable systems with full documentation and templates.",
+              },
+              {
+                icon: "💰",
+                title: "Budgetly",
+                description:
+                  "Token‑driven, themeable systems with full documentation and templates.",
+              },
+              {
+                icon: "💰",
+                title: "Spring-boot backend app",
+                description:
+                  "Token‑driven, themeable systems with full documentation and templates.",
+              }
             ].map((project, index) => (
               <ScrollReveal key={index} delay={index * 100} direction="up">
                 <Card className="glass border-cosmic-purple-600/30 hover:border-cosmic-purple-400/50 transition-all duration-500 group hover:transform hover:scale-105">
@@ -386,12 +410,16 @@ export default function Index() {
             {[
               "React",
               "TypeScript",
-              "Next.js",
-              "Vite",
               "Tailwind",
+              "Vite",
               "Framer Motion",
+              "Next.js",
+              "Node.js",
               "Express",
-              "Zod",
+              "MongoDB",
+              "PostgreSQL",
+              "Docker",
+              "Prisma"
             ].map((tech, index) => (
               <div
                 key={index}
@@ -419,13 +447,19 @@ export default function Index() {
               {
                 role: "Frontend Engineer",
                 company: "Freelance",
-                period: "2021 — Present",
+                period: "2024 — 2025",
                 desc: "Designing and building bespoke interfaces for startups and agencies.",
               },
               {
-                role: "UI Engineer",
-                company: "Studio Aurora",
-                period: "2019 — 2021",
+                role: "Backend Engineer",
+                company: "Blink Tech",
+                period: "2025 — Present",
+                desc: "Building secure , efficient and scalable backend solutions and maintaining backend development of the company websites.",
+              },
+              {
+                role: "UI Designer",
+                company: "Blink Tech",
+                period: "2025 — Present",
                 desc: "Led component libraries and animations for high‑traffic sites.",
               },
             ].map((job, i) => (
