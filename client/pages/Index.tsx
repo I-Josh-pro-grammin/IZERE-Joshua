@@ -147,7 +147,9 @@ export default function Index() {
       <section className="relative z-10 px-6 pb-20">
         <div className="max-w-7xl mx-auto text-center">
         <div className="flex justify-center items-center">
-        <img src="/Greenland2.jpg" alt="IZERE Joshua" className="hover:scale-105 hover:transition-all hover:duration-8000 hover:cursor-pointer w-[15rem] h-[15rem] bg-gradient-to-br from-cosmic-purple-400 to-neon-cyan-400 rounded-full animate-pulse-slow" />
+        <div className="hover:transition-all hover:duration-8000 hover:cursor-pointer w-[15rem] h-[15rem] bg-gradient-to-br from-cosmic-purple-400 to-neon-cyan-400 border-2 border-black rounded-full animate-pulse-slow overflow-hidden">
+        <img src="/Greenland2.jpg" alt="IZERE Joshua" className="" />
+        </div>
         </div>
 
 
@@ -228,7 +230,7 @@ export default function Index() {
           >
             <div className="text-center">
               <div className="text-4xl font-bold text-neon-cyan-400 mb-2 animate-glow">
-                20+
+                4+
               </div>
               <div className="text-gray-400">Projects Shipped</div>
             </div>
