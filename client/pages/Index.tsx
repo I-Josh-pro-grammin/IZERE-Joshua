@@ -164,7 +164,7 @@ export default function Index() {
 
           {/* Main Heading */}
           <h1
-            className={`text-4xl sm:text-6xl lg:text-8xl font-extrabold mb-6 md:mb-8 transition-all duration-1000 delay-300 leading-tight ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+            className={`text-4xl sm:text-6xl lg:text-5xl font-extrabold mb-6 md:mb-8 transition-all duration-1000 delay-300 leading-tight ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
           >
             <span className="bg-gradient-to-r from-cosmic-purple-400 via-neon-cyan-400 to-electric-blue-400 bg-clip-text text-transparent animate-gradient-x text-glow">
               IZERE Joshua
