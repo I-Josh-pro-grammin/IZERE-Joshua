@@ -309,54 +309,81 @@ export default function Index() {
                 title: "E-Buy",
                 description:
                   "A futuristic component library with neon aesthetics and fluid micro‑interactions.",
+                link: "https://e-buy.vercel.app/",
+                github: "https://github.com/izerejoshua/e-buy",
+                technologies: ["React", "TypeScript", "Tailwind", "Vite", "Node.js", "Express", "MongoDB"],
               },
               {
                 icon: "💻",
                 title: "Brainly Code",
                 description:
                   "Real‑time analytics dashboard with animated charts and seamless UX.",
+                link: "https://brainly-code.vercel.app/",
+                github: "https://github.com/izerejoshua/brainly-code",
+                technologies: ["React", "TypeScript", "Tailwind", "Vite", "Node.js", "Nest.js", "PostgreSQL", "Docker", "Prisma"],
               },
               {
                 icon: "💻",
                 title: "Commerce Flow",
                 description:
                   "Headless e‑commerce storefront focused on speed, accessibility and conversion.",
+                link: "https://commerce-flow.vercel.app/",
+                github: "https://github.com/izerejoshua/commerce-flow",
+                technologies: ["React", "TypeScript", "Tailwind"],
               },
               {
                 icon: "💻",
                 title: "Motion Lab",
                 description:
                   "Playground of complex page transitions and magnetic cursor effects.",
+                link: "https://motion-lab.vercel.app/",
+                github: "https://github.com/izerejoshua/motion-lab",
+                technologies: ["React", "TypeScript", "Tailwind"],
               },
               {
                 icon: "🛒",
                 title: "E-commerce backend app",
                 description:
                   "Responsive PWA with offline support and delightful gestures.",
+                link: "https://e-commerce-backend-app.vercel.app/",
+                github: "https://github.com/izerejoshua/e-commerce-backend-app",
+                technologies: ["React", "TypeScript", "Tailwind"],
               },
               {
                 icon: "🧩",
                 title: "Design Templates",
                 description:
                   "Token‑driven, themeable systems with full documentation and templates.",
+                link: "https://design-templates.vercel.app/",
+                github: "https://github.com/izerejoshua/design-templates",
+                technologies: ["React", "TypeScript", "Tailwind"],
               },
               {
                 icon: "🧩",
                 title: "My NextJs portfolio Template",
                 description:
                   "Token‑driven, themeable systems with full documentation and templates.",
+                link: "https://my-nextjs-portfolio-template.vercel.app/",
+                github: "https://github.com/izerejoshua/my-nextjs-portfolio-template",
+                technologies: ["React", "TypeScript", "Tailwind"],
               },
               {
                 icon: "💰",
                 title: "Budgetly",
                 description:
                   "Token‑driven, themeable systems with full documentation and templates.",
+                link: "https://budgetly.vercel.app/",
+                github: "https://github.com/izerejoshua/budgetly",
+                technologies: ["React", "TypeScript", "Tailwind"],
               },
               {
                 icon: "💰",
                 title: "Spring-boot backend app",
                 description:
                   "Token‑driven, themeable systems with full documentation and templates.",
+                link: "https://spring-boot-backend-app.vercel.app/",
+                github: "https://github.com/izerejoshua/spring-boot-backend-app",
+                technologies: ["React", "TypeScript", "Tailwind"],
               }
             ].map((project, index) => (
               <ScrollReveal key={index} delay={index * 100} direction="up">
@@ -375,7 +402,7 @@ export default function Index() {
                       {project.description}
                     </p>
                     <div className="flex flex-wrap justify-center gap-2 text-xs text-gray-400">
-                      {["React", "TypeScript", "Tailwind"].map((tag) => (
+                      {project.technologies.map((tag) => (
                         <span
                           key={tag}
                           className="px-2 py-1 rounded border border-cosmic-purple-600/30"
