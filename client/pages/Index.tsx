@@ -310,7 +310,7 @@ export default function Index() {
                 description:
                   "A futuristic component library with neon aesthetics and fluid micro‑interactions.",
                 link: "https://e-buy.vercel.app/",
-                github: "https://github.com/izerejoshua/e-buy",
+                github: "https://github.com/I-Josh-pro-grammin/E-buy",
                 technologies: ["React", "TypeScript", "Tailwind", "Vite", "Node.js", "Express", "MongoDB"],
               },
               {
@@ -319,7 +319,7 @@ export default function Index() {
                 description:
                   "Real‑time analytics dashboard with animated charts and seamless UX.",
                 link: "https://brainly-code.vercel.app/",
-                github: "https://github.com/izerejoshua/brainly-code",
+                github: "https://github.com/Brainly-Code",
                 technologies: ["React", "TypeScript", "Tailwind", "Vite", "Node.js", "Nest.js", "PostgreSQL", "Docker", "Prisma"],
               },
               {
@@ -328,8 +328,8 @@ export default function Index() {
                 description:
                   "Headless e‑commerce storefront focused on speed, accessibility and conversion.",
                 link: "https://commerce-flow.vercel.app/",
-                github: "https://github.com/izerejoshua/commerce-flow",
-                technologies: ["React", "TypeScript", "Tailwind"],
+                github: "https://github.com/I-Josh-pro-grammin/commerce-flow",
+                technologies: ["React", "TypeScript", "Tailwind", "Vite"],
               },
               {
                 icon: "💻",
@@ -337,8 +337,8 @@ export default function Index() {
                 description:
                   "Playground of complex page transitions and magnetic cursor effects.",
                 link: "https://motion-lab.vercel.app/",
-                github: "https://github.com/izerejoshua/motion-lab",
-                technologies: ["React", "TypeScript", "Tailwind"],
+                github: "https://github.com/I-Josh-pro-grammin/motion-lab",
+                technologies: ["React", "TypeScript", "Tailwind", "Vite"],
               },
               {
                 icon: "🛒",
@@ -346,8 +346,8 @@ export default function Index() {
                 description:
                   "Responsive PWA with offline support and delightful gestures.",
                 link: "https://e-commerce-backend-app.vercel.app/",
-                github: "https://github.com/izerejoshua/e-commerce-backend-app",
-                technologies: ["React", "TypeScript", "Tailwind"],
+                github: "https://github.com/I-Josh-pro-grammin/e-commerce-backend-app",
+                technologies: ["Node.js", "Nest.js", "PostgreSQL", "Docker", "Prisma"],
               },
               {
                 icon: "🧩",
@@ -355,8 +355,8 @@ export default function Index() {
                 description:
                   "Token‑driven, themeable systems with full documentation and templates.",
                 link: "https://design-templates.vercel.app/",
-                github: "https://github.com/izerejoshua/design-templates",
-                technologies: ["React", "TypeScript", "Tailwind"],
+                github: "https://github.com/I-Josh-pro-grammin/design-templates",
+                technologies: ["Figma"],
               },
               {
                 icon: "🧩",
@@ -364,8 +364,8 @@ export default function Index() {
                 description:
                   "Token‑driven, themeable systems with full documentation and templates.",
                 link: "https://my-nextjs-portfolio-template.vercel.app/",
-                github: "https://github.com/izerejoshua/my-nextjs-portfolio-template",
-                technologies: ["React", "TypeScript", "Tailwind"],
+                github: "https://github.com/I-Josh-pro-grammin/my-nextjs-portfolio-template",
+                technologies: ["Next.js", "TypeScript", "Tailwind", "Vite"],
               },
               {
                 icon: "💰",
@@ -373,8 +373,8 @@ export default function Index() {
                 description:
                   "Token‑driven, themeable systems with full documentation and templates.",
                 link: "https://budgetly.vercel.app/",
-                github: "https://github.com/izerejoshua/budgetly",
-                technologies: ["React", "TypeScript", "Tailwind"],
+                github: "https://github.com/I-Josh-pro-grammin/budgetly",
+                technologies: ["Next.js", "TypeScript", "Tailwind", "Vite", "Django", "PostgreSQL", "Firebase"],
               },
               {
                 icon: "💰",
@@ -382,8 +382,8 @@ export default function Index() {
                 description:
                   "Token‑driven, themeable systems with full documentation and templates.",
                 link: "https://spring-boot-backend-app.vercel.app/",
-                github: "https://github.com/izerejoshua/spring-boot-backend-app",
-                technologies: ["React", "TypeScript", "Tailwind"],
+                github: "https://github.com/I-Josh-pro-grammin/spring-boot-backend-app",
+                technologies: ["Spring Boot", "Java", "PostgreSQL", "Docker", "Prisma"],
               }
             ].map((project, index) => (
               <ScrollReveal key={index} delay={index * 100} direction="up">
