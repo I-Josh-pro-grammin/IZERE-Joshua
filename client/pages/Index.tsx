@@ -233,13 +233,13 @@ export default function Index() {
           >
             <div className="text-center">
               <div className="text-4xl font-bold text-neon-cyan-400 mb-2 animate-glow">
-                4+
+                7+
               </div>
               <div className="text-gray-400">Projects Shipped</div>
             </div>
             <div className="text-center">
               <div className="text-4xl font-bold text-cosmic-purple-400 mb-2 animate-glow">
-                12+
+                15+
               </div>
               <div className="text-gray-400">Technologies</div>
             </div>
