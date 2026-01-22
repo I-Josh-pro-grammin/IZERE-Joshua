@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { AnimatedBackground } from "@/components/ui/animated-background";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
+import bCode from "@/../public/bcode.png";
+import akaguriro from "@/../public/akaguriroo.png";
+import projects from "@/../public/projects.png"
 
 export default function Index() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -278,7 +281,13 @@ export default function Index() {
               "MongoDB",
               "PostgreSQL",
               "Docker",
-              "Prisma"
+              "Prisma",
+              "Appwrite",
+              "Supabase",
+              "Firebase",
+              "Java",
+              "Spring Boot",
+              "React Native"
             ].map((skill) => (
               <div
                 key={skill}
@@ -309,16 +318,17 @@ export default function Index() {
                 title: "E-Buy",
                 description:
                   "A futuristic component library with neon aesthetics and fluid micro‑interactions.",
-                link: "https://e-buy.vercel.app/",
+                link: "",
                 github: "https://github.com/I-Josh-pro-grammin/E-buy",
                 technologies: ["React", "TypeScript", "Tailwind", "Vite", "Node.js", "Express", "MongoDB"],
               },
               {
                 icon: "💻",
+                image: bCode,
                 title: "Brainly Code",
                 description:
                   "Real‑time analytics dashboard with animated charts and seamless UX.",
-                link: "https://brainly-code.vercel.app/",
+                link: "https://brainlycode.dpdns.org",
                 github: "https://github.com/Brainly-Code",
                 technologies: ["React", "TypeScript", "Tailwind", "Vite", "Node.js", "Nest.js", "PostgreSQL", "Docker", "Prisma"],
               },
@@ -327,7 +337,7 @@ export default function Index() {
                 title: "Commerce Flow",
                 description:
                   "Headless e‑commerce storefront focused on speed, accessibility and conversion.",
-                link: "https://commerce-flow.vercel.app/",
+                link: "",
                 github: "https://github.com/I-Josh-pro-grammin/commerce-flow",
                 technologies: ["React", "TypeScript", "Tailwind", "Vite"],
               },
@@ -336,7 +346,7 @@ export default function Index() {
                 title: "Motion Lab",
                 description:
                   "Playground of complex page transitions and magnetic cursor effects.",
-                link: "https://motion-lab.vercel.app/",
+                link: "",
                 github: "https://github.com/I-Josh-pro-grammin/motion-lab",
                 technologies: ["React", "TypeScript", "Tailwind", "Vite"],
               },
@@ -345,7 +355,7 @@ export default function Index() {
                 title: "E-commerce backend app",
                 description:
                   "Responsive PWA with offline support and delightful gestures.",
-                link: "https://e-commerce-backend-app.vercel.app/",
+                link: "",
                 github: "https://github.com/I-Josh-pro-grammin/e-commerce-backend-app",
                 technologies: ["Node.js", "Nest.js", "PostgreSQL", "Docker", "Prisma"],
               },
@@ -354,7 +364,7 @@ export default function Index() {
                 title: "Design Templates",
                 description:
                   "Token‑driven, themeable systems with full documentation and templates.",
-                link: "https://design-templates.vercel.app/",
+                link: "",
                 github: "https://github.com/I-Josh-pro-grammin/design-templates",
                 technologies: ["Figma"],
               },
@@ -362,8 +372,8 @@ export default function Index() {
                 icon: "🧩",
                 title: "My NextJs portfolio Template",
                 description:
-                  "Token‑driven, themeable systems with full documentation and templates.",
-                link: "https://my-nextjs-portfolio-template.vercel.app/",
+                  "A portfolio template built for anyone who wants to create a portfolio for themselves",
+                link: "",
                 github: "https://github.com/I-Josh-pro-grammin/my-nextjs-portfolio-template",
                 technologies: ["Next.js", "TypeScript", "Tailwind", "Vite"],
               },
@@ -372,23 +382,52 @@ export default function Index() {
                 title: "Budgetly",
                 description:
                   "Token‑driven, themeable systems with full documentation and templates.",
-                link: "https://budgetly.vercel.app/",
+                link: "",
                 github: "https://github.com/I-Josh-pro-grammin/budgetly",
                 technologies: ["Next.js", "TypeScript", "Tailwind", "Vite", "Django", "PostgreSQL", "Firebase"],
               },
               {
                 icon: "💰",
-                title: "Spring-boot backend app",
+                title: "Springboot backend app",
                 description:
-                  "Token‑driven, themeable systems with full documentation and templates.",
-                link: "https://spring-boot-backend-app.vercel.app/",
-                github: "https://github.com/I-Josh-pro-grammin/spring-boot-backend-app",
+                  "This was my first Springboot application, I used it to learn and clearly understand how spring-ecosystem works",
+                link: "",
+                github: "https://github.com/I-Josh-pro-grammin/springboot-backend-app",
                 technologies: ["Spring Boot", "Java", "PostgreSQL", "Docker", "Prisma"],
+              },
+              {
+                icon: "💰",
+                title: "Sapient backend",
+                description:
+                  "Helped build a backend for a company called Sapient.",
+                link: "",
+                github: "https://github.com/I-Josh-pro-grammin/sapient-backend-app",
+                technologies: ["Spring Boot", "Java", "PostgreSQL", "Docker", "Prisma"],
+              },
+              {
+                icon: "🛣️",
+                title: "IMove mobile app",
+                description:
+                  "IMove is a mobile application that helps you find the nearest riders and allows you to book and pay for the rides",
+                link: "",
+                github: "https://github.com/I-Josh-pro-grammin/imove-mobile-app",
+                technologies: ["React Native", "Express", "MongoDB", "Expo"],
+              },
+              {
+                icon: "💵",
+                image: akaguriro,
+                title: "Akaguriro",
+                description:
+                  "Akaguriro is a platform that helps you find the best deals on products and services in Burundi.",
+                link: "https://akaguriroo.com",
+                github: "https://github.com/I-Josh-pro-grammin/akaguriro",
+                technologies: ["React", "TypeScript", "Tailwind", "Vite", "Express", "PostgreSQL", "Supabase"],
               }
             ].map((project, index) => (
               <ScrollReveal key={index} delay={index * 100} direction="up">
-                <Card className="glass border-cosmic-purple-600/30 hover:border-cosmic-purple-400/50 transition-all duration-500 group hover:transform hover:scale-105">
+                <Card className="glass h-full border-cosmic-purple-600/30 hover:border-cosmic-purple-400/50 transition-all duration-500 group hover:transform hover:scale-105">
                   <CardContent className="p-8 text-center">
+                    <img src={project?.image || projects} alt="" className="w-full h-full" />
                     <div
                       className="text-4xl mb-6 animate-float"
                       style={{ animationDelay: `${index * 0.2}s` }}
@@ -412,6 +451,25 @@ export default function Index() {
                       ))}
                     </div>
                   </CardContent>
+                  <CardFooter>
+                    <div className="flex w-full justify-between">
+                      {
+                        project.link && (
+                          <Button variant="outline" onClick={() => window.open(project.link, "_blank")}>
+                            View Project
+                          </Button>
+                        )
+                      }
+
+                      {
+                        project.github && (
+                          <Button onClick={() => window.open(project.github, "_blank")}>
+                            View GitHub
+                          </Button>
+                        )
+                      }
+                    </div>
+                  </CardFooter>
                 </Card>
               </ScrollReveal>
             ))}
@@ -446,7 +504,16 @@ export default function Index() {
               "MongoDB",
               "PostgreSQL",
               "Docker",
-              "Prisma"
+              "Prisma",
+              "Springboot",
+              "React Native",
+              "Appwrite",
+              "Supabase",
+              "Firebase",
+              "Expo",
+              "Figma",
+              "Adobe XD",
+              "Adobe Photoshop",
             ].map((tech, index) => (
               <div
                 key={index}
@@ -528,7 +595,7 @@ export default function Index() {
               size="lg"
               className="btn-cyber px-12 py-4 text-lg font-semibold"
               onClick={() =>
-                (window.location.href = "mailto:hello@example.com")
+                (window.location.href = "mailto:izerejoshua94@gmail.com")
               }
             >
               Email Me

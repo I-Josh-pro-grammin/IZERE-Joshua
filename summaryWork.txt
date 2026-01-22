@@ -1,0 +1,7 @@
+The Role of Artificial Intelligence in Healthcare
+
+Artificial Intelligence is revolutionizing Healthcare by improving efficiency,
+accuracy, and patient outcomes.They can analyse vast amounts of medical data in seconds,
+helping doctors and more informed decisions. AI is also transforming the way patients recieve care
+because chatbots and virtual assistants now provide round-the-clock support.Despite these advantages, 
+the use of AI in healthcare raises ethical concerns 
