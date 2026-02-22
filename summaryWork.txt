@@ -5,3 +5,37 @@ accuracy, and patient outcomes.They can analyse vast amounts of medical data in 
 helping doctors and more informed decisions. AI is also transforming the way patients recieve care
 because chatbots and virtual assistants now provide round-the-clock support.Despite these advantages, 
 the use of AI in healthcare raises ethical concerns 
+
+
+
+
+S – Survey
+
+The text discusses how artificial intelligence is changing healthcare, its benefits in diagnosis and patient care, and the ethical challenges it presents.
+
+Q – Question
+
+How does AI improve healthcare, and what concerns does its use raise?
+
+R1 – Read
+
+AI helps doctors analyze medical data quickly, detect diseases early, and improve decision-making. It also supports patients through chatbots and virtual assistants, making healthcare more accessible. However, issues like data privacy and loss of human interaction are concerns.
+
+R2 – Recite
+
+Artificial intelligence increases efficiency and accuracy in healthcare but raises ethical issues such as privacy and reduced human touch.
+
+R3 – Review
+
+AI has great potential to improve healthcare outcomes, but it must be used responsibly by balancing technological benefits with ethical considerations.
+
+
+Summary:
+
+The Role of Artificial Intelligence in Healthcare
+
+
+Artificial intelligence is transforming healthcare by improving diagnosis, efficiency,
+and patient care. It helps doctors analyze data quickly, detect diseases early, and provides
+patient support through virtual assistants. However, ethical concerns such as data privacy
+and loss of human interaction must be addressed to ensure AI is used responsibly.

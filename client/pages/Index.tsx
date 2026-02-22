@@ -25,7 +25,7 @@ export default function Index() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-cosmic-purple-950 text-white relative overflow-hidden">
+    <div className="min-h-screen bg-black text-white relative overflow-hidden">
       {/* Animated Background Grid */}
       <div className="absolute inset-0 cyber-grid opacity-30" />
 
@@ -91,8 +91,8 @@ export default function Index() {
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
               <svg
-                className="w-6 h-6"
-                fill="none"
+                className="w-8 h-8"
+                fill="white"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
               >
@@ -149,11 +149,11 @@ export default function Index() {
       {/* Hero Section */}
       <section className="relative z-10 px-6 pb-20">
         <div className="max-w-7xl mx-auto text-center">
-        <div className="flex justify-center items-center">
-        <div className="hover:transition-all hover:duration-8000 hover:cursor-pointer w-[15rem] h-[15rem] bg-gradient-to-br from-cosmic-purple-400 to-neon-cyan-400 border-2 border-black rounded-full animate-pulse-slow overflow-hidden">
-        <img src="/Greenland2.jpg" alt="IZERE Joshua" className="" />
-        </div>
-        </div>
+          <div className="flex justify-center items-center">
+            <div className="hover:transition-all hover:duration-8000 hover:cursor-pointer w-[15rem] h-[15rem] bg-gradient-to-br from-cosmic-purple-400 to-neon-cyan-400 border-2 border-black rounded-full animate-pulse-slow overflow-hidden">
+              <img src="/Greenland2.jpg" alt="IZERE Joshua" className="" />
+            </div>
+          </div>
 
 
           {/* Floating Badge */}
@@ -184,24 +184,23 @@ export default function Index() {
             motion, precision and futuristic aesthetics.
           </p>
 
-          {/* CTA Buttons */}
           <div
             className={`flex flex-col sm:flex-row gap-6 justify-center items-center mb-20 transition-all duration-1000 delay-700 ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
           >
             <Button
+              variant="cyber"
               size="lg"
-              className="btn-cyber px-8 py-4 text-lg font-semibold"
+              className="px-8 py-4 text-lg font-semibold"
               onClick={() =>
                 document
                   .getElementById("projects")
                   ?.scrollIntoView({ behavior: "smooth" })
               }
             >
-              View Projects
               <svg
                 className="ml-2 w-5 h-5"
-                fill="none"
-                stroke="currentColor"
+                fill="white"
+                stroke="white"
                 viewBox="0 0 24 24"
               >
                 <path
@@ -211,12 +210,13 @@ export default function Index() {
                   d="M13 7l5 5m0 0l-5 5m5-5H6"
                 />
               </svg>
+              View Projects
             </Button>
 
             <Button
               variant="ghost"
               size="lg"
-              className="border border-cosmic-purple-500/30 hover:bg-cosmic-purple-800/20 px-8 py-4 text-lg"
+              className="border border-cosmic-purple-500/30 hover:bg-cosmic-purple-800/20 px-8 py-4 text-lg btn-3d"
               onClick={() =>
                 document
                   .getElementById("contact")
@@ -291,7 +291,7 @@ export default function Index() {
             ].map((skill) => (
               <div
                 key={skill}
-                className="glass p-4 text-center border-cosmic-purple-600/30"
+                className="glass p-4 text-center  border-cosmic-purple-600/80"
               >
                 {skill}
               </div>
@@ -425,8 +425,9 @@ export default function Index() {
               }
             ].map((project, index) => (
               <ScrollReveal key={index} delay={index * 100} direction="up">
-                <Card className="glass h-full border-cosmic-purple-600/30 hover:border-cosmic-purple-400/50 transition-all duration-500 group hover:transform hover:scale-105">
+                <Card className="glass bg-black h-full border-cosmic-purple-600/30 hover:border-cosmic-purple-400/50 transition-all duration-500 group hover:transform hover:scale-105">
                   <CardContent className="p-8 text-center">
+                    <AnimatedBackground />
                     <img src={project?.image || projects} alt="" className="w-full h-full" />
                     <div
                       className="text-4xl mb-6 animate-float"
