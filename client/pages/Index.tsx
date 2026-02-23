@@ -185,20 +185,21 @@ export default function Index() {
           </p>
 
           <div
-            className={`flex flex-col sm:flex-row gap-6 justify-center items-center mb-20 transition-all duration-1000 delay-700 ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+            className={`flex flex-col  sm:flex-row gap-6 justify-center items-center mb-20 transition-all duration-1000 delay-700 ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
           >
             <Button
               variant="cyber"
               size="lg"
-              className="px-8 py-4 text-lg font-semibold"
+              className="px-8 py-4 bg-black text-lg font-semibold"
               onClick={() =>
                 document
                   .getElementById("projects")
                   ?.scrollIntoView({ behavior: "smooth" })
               }
             >
-              <svg
-                className="ml-2 w-5 h-5"
+              <div className="flex bg-black p-3 rounded-full items-center justify-center">
+                <svg
+                className=" w-5 h-5"
                 fill="white"
                 stroke="white"
                 viewBox="0 0 24 24"
@@ -210,6 +211,7 @@ export default function Index() {
                   d="M13 7l5 5m0 0l-5 5m5-5H6"
                 />
               </svg>
+              </div>
               View Projects
             </Button>
 
