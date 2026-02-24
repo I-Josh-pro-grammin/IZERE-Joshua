@@ -1,628 +1,546 @@
-import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
+import { Github, Linkedin, Mail, ArrowUpRight, Plus, Menu, X } from "lucide-react";
+const bCode = "/bcode.png";
+const akaguriro = "/akaguriroo.png";
+const projects = "/projects.png";
+const joshImg = "/Greenland2.jpg";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { AnimatedBackground } from "@/components/ui/animated-background";
+import { Button } from "@/components/ui/button";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
-import bCode from "@/../public/bcode.png";
-import akaguriro from "@/../public/akaguriroo.png";
-import projects from "@/../public/projects.png"
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 export default function Index() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isLoaded, setIsLoaded] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     setIsLoaded(true);
-
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
   return (
-    <div className="min-h-screen bg-black text-white relative overflow-hidden">
-      {/* Animated Background Grid */}
-      <div className="absolute inset-0 cyber-grid opacity-30" />
-
-      {/* Animated Particle Background */}
-      <AnimatedBackground />
-
-      {/* Dynamic Mouse Follower */}
-      <div
-        className="fixed w-64 h-64 rounded-full bg-gradient-to-r from-cosmic-purple-500/20 to-neon-cyan-400/20 blur-3xl pointer-events-none transition-all duration-300 ease-out z-0"
-        style={{
-          left: mousePosition.x - 128,
-          top: mousePosition.y - 128,
-        }}
-      />
+    <div className="min-h-screen bg-black text-white selection:bg-white selection:text-black">
+      {/* Background Decor */}
+      <div className="fixed inset-0 grid-pattern opacity-40 pointer-events-none" />
+      <div className="fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[500px] bg-white/5 blur-[120px] rounded-full pointer-events-none" />
 
       {/* Navigation */}
-      <nav className="relative z-10 p-6">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
+      <nav className="fixed top-0 left-0 right-0 z-50 px-6 py-4">
+        <div className="max-w-7xl mx-auto flex items-center justify-between glass px-6 py-3 rounded-full">
           <div className="flex items-center space-x-2">
-            <img src="/Greenland2.jpg" alt="IZERE Joshua" className="w-12 h-12 bg-gradient-to-br from-cosmic-purple-400 to-neon-cyan-400 rounded-full animate-pulse-slow" />
-            <span className="text-xl font-bold text-glow">IZERE Joshua</span>
+            <span className="text-lg font-extrabold tracking-tighter">IZERE.</span>
           </div>
 
-          <div className="hidden md:flex items-center space-x-8">
-            <a
-              href="#about"
-              className="hover:text-cosmic-purple-300 transition-colors duration-300"
-            >
-              About
-            </a>
-            <a
-              href="#projects"
-              className="hover:text-cosmic-purple-300 transition-colors duration-300"
-            >
-              Projects
-            </a>
-            <a
-              href="#skills"
-              className="hover:text-cosmic-purple-300 transition-colors duration-300"
-            >
-              Skills
-            </a>
-            <a
-              href="#experience"
-              className="hover:text-cosmic-purple-300 transition-colors duration-300"
-            >
-              Experience
-            </a>
-            <a
-              href="#contact"
-              className="hover:text-cosmic-purple-300 transition-colors duration-300"
-            >
-              Contact
-            </a>
+          <div className="hidden md:flex items-center space-x-10">
+            {["Services", "Projects", "Process", "Contact"].map((item) => (
+              <a
+                key={item}
+                href={`#${item.toLowerCase()}`}
+                className="text-sm font-medium text-white/60 hover:text-white transition-colors"
+              >
+                {item}
+              </a>
+            ))}
           </div>
 
           <div className="flex items-center space-x-4">
-            <Button className="btn-cyber hidden sm:block">Get Started</Button>
-
-            {/* Mobile menu button */}
+            <Button variant="outline" size="sm" className="hidden sm:inline-flex">
+              Let's talk
+            </Button>
             <button
-              className="md:hidden p-2 text-cosmic-purple-300 hover:text-white transition-colors"
+              className="md:hidden p-1"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
-              <svg
-                className="w-8 h-8"
-                fill="white"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
+              {isMobileMenuOpen ? <X /> : <Menu />}
             </button>
           </div>
-
-          {/* Mobile menu */}
-          {isMobileMenuOpen && (
-            <div className="absolute top-full left-0 right-0 bg-cosmic-purple-900/95 backdrop-blur-lg border-t border-cosmic-purple-600/30 md:hidden">
-              <div className="px-6 py-4 space-y-4">
-                <a
-                  href="#about"
-                  className="block hover:text-cosmic-purple-300 transition-colors duration-300"
-                >
-                  About
-                </a>
-                <a
-                  href="#projects"
-                  className="block hover:text-cosmic-purple-300 transition-colors duration-300"
-                >
-                  Projects
-                </a>
-                <a
-                  href="#skills"
-                  className="block hover:text-cosmic-purple-300 transition-colors duration-300"
-                >
-                  Skills
-                </a>
-                <a
-                  href="#experience"
-                  className="block hover:text-cosmic-purple-300 transition-colors duration-300"
-                >
-                  Experience
-                </a>
-                <a
-                  href="#contact"
-                  className="block hover:text-cosmic-purple-300 transition-colors duration-300"
-                >
-                  Contact
-                </a>
-              </div>
-            </div>
-          )}
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <section className="relative z-10 px-6 pb-20">
-        <div className="max-w-7xl mx-auto text-center">
-          <div className="flex justify-center items-center">
-            <div className="hover:transition-all hover:duration-8000 hover:cursor-pointer w-[15rem] h-[15rem] bg-gradient-to-br from-cosmic-purple-400 to-neon-cyan-400 border-2 border-black rounded-full animate-pulse-slow overflow-hidden">
-              <img src="/Greenland2.jpg" alt="IZERE Joshua" className="" />
-            </div>
-          </div>
-
-
-          {/* Floating Badge */}
-          <div
-            className={`mb-8 transition-all duration-1000 ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
-          >
-            <Badge className="absolute bottom-[10rem] right-[10] bg-cosmic-purple-800/50 text-cosmic-purple-200 border-cosmic-purple-600/50 px-6 py-2 text-sm animate-float">
-              ✦ Available for freelance · Portfolio
-            </Badge>
-          </div>
-
-          {/* Main Heading */}
-          <h1
-            className={`text-4xl sm:text-6xl lg:text-5xl font-extrabold mb-6 md:mb-8 transition-all duration-1000 delay-300 leading-tight ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
-          >
-            <span className="bg-gradient-to-r from-cosmic-purple-400 via-neon-cyan-400 to-electric-blue-400 bg-clip-text text-transparent animate-gradient-x text-glow">
-              IZERE Joshua
-            </span>
-            <br />
-            <span className="text-white">Software Engineer</span>
-          </h1>
-
-          {/* Subtitle */}
-          <p
-            className={`text-lg sm:text-xl lg:text-2xl text-gray-300 mb-8 md:mb-12 max-w-3xl mx-auto leading-relaxed px-4 transition-all duration-1000 delay-500 ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
-          >
-            I craft immersive, high‑performance interfaces with a love for
-            motion, precision and futuristic aesthetics.
-          </p>
-
-          <div
-            className={`flex flex-col  sm:flex-row gap-6 justify-center items-center mb-20 transition-all duration-1000 delay-700 ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
-          >
-            <Button
-              variant="cyber"
-              size="lg"
-              className="px-8 py-4 bg-black text-lg font-semibold"
-              onClick={() =>
-                document
-                  .getElementById("projects")
-                  ?.scrollIntoView({ behavior: "smooth" })
-              }
-            >
-              <div className="flex bg-black p-3 rounded-full items-center justify-center">
-                <svg
-                className=" w-5 h-5"
-                fill="white"
-                stroke="white"
-                viewBox="0 0 24 24"
+      {/* Mobile Menu Overlay */}
+      {isMobileMenuOpen && (
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="fixed inset-0 z-40 bg-black pt-24 px-6 md:hidden"
+        >
+          <div className="flex flex-col space-y-6 text-2xl font-bold">
+            {["Services", "Projects", "Process", "Contact"].map((item) => (
+              <a
+                key={item}
+                href={`#${item.toLowerCase()}`}
+                onClick={() => setIsMobileMenuOpen(false)}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M13 7l5 5m0 0l-5 5m5-5H6"
-                />
-              </svg>
-              </div>
-              View Projects
-            </Button>
-
-            <Button
-              variant="ghost"
-              size="lg"
-              className="border border-cosmic-purple-500/30 hover:bg-cosmic-purple-800/20 px-8 py-4 text-lg btn-3d"
-              onClick={() =>
-                document
-                  .getElementById("contact")
-                  ?.scrollIntoView({ behavior: "smooth" })
-              }
-            >
-              Contact Me
-            </Button>
-          </div>
-
-          {/* Stats */}
-          <div
-            className={`grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto transition-all duration-1000 delay-1000 ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
-          >
-            <div className="text-center">
-              <div className="text-4xl font-bold text-neon-cyan-400 mb-2 animate-glow">
-                7+
-              </div>
-              <div className="text-gray-400">Projects Shipped</div>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-bold text-cosmic-purple-400 mb-2 animate-glow">
-                15+
-              </div>
-              <div className="text-gray-400">Technologies</div>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-bold text-electric-blue-400 mb-2 animate-glow">
-                &lt; 24h
-              </div>
-              <div className="text-gray-400">Response Time</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* About Section */}
-      <section id="about" className="relative z-10 px-6 py-20">
-        <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-10 items-center">
-          <div>
-            <h2 className="text-3xl md:text-5xl font-bold mb-6">
-              <span className="bg-gradient-to-r from-cosmic-purple-400 to-neon-cyan-400 bg-clip-text text-transparent">
-                About Me
-              </span>
-            </h2>
-            <p className="text-gray-300 leading-relaxed">
-              I'm a software engineer focused on building beautiful, accessible
-              and blazing‑fast web experiences. I love micro‑interactions,
-              motion design and creating fluid interfaces that feel alive and efficient and secure backend solutions.
-            </p>
-          </div>
-          <div className="grid grid-cols-3 gap-4">
-            {[
-              "React",
-              "TypeScript",
-              "Tailwind",
-              "Vite",
-              "Framer Motion",
-              "Next.js",
-              "Node.js",
-              "Express",
-              "MongoDB",
-              "PostgreSQL",
-              "Docker",
-              "Prisma",
-              "Appwrite",
-              "Supabase",
-              "Firebase",
-              "Java",
-              "Spring Boot",
-              "React Native"
-            ].map((skill) => (
-              <div
-                key={skill}
-                className="glass p-4 text-center  border-cosmic-purple-600/80"
-              >
-                {skill}
-              </div>
+                {item}
+              </a>
             ))}
           </div>
+        </motion.div>
+      )}
+
+      {/* Hero Section */}
+      <section className="relative pt-44 pb-32 px-6">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="flex flex-col items-center text-center"
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 1, delay: 0.2 }}
+              className="relative w-80 h-80 mb-10 group"
+            >
+              <div className="absolute -inset-10 bg-white/10 rounded-full blur-2xl group-hover:bg-white/20 transition-all duration-500" />
+              <div className="relative w-full h-full rounded-full border border-white/10 overflow-hidden glass">
+                <img
+                  src={joshImg}
+                  alt="IZERE JOSHUA"
+                  className="w-full h-full object-cover grayscale brightness-110 group-hover:grayscale-0 transition-all duration-700"
+                />
+              </div>
+              <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-black border border-white/10 rounded-full flex items-center justify-center">
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+              </div>
+            </motion.div>
+
+            <Badge variant="outline" className="mb-8 px-4 py-1.5 border-white/10 bg-white/5 rounded-full text-[10px] font-mono tracking-widest uppercase">
+              ✦ SYSTEM ARCHITECT & FULL-STACK ENGINEER
+            </Badge>
+
+            <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold tracking-tighter mb-10 leading-[0.9] gradient-text">
+              IZERE JOSHUA<br />
+              <span className="text-white/40 font-medium">Engineering Solutions</span>
+            </h1>
+
+            <p className="text-xl md:text-2xl text-white/50 max-w-2xl mb-12 font-medium leading-relaxed">
+              Building high-performance, scalable systems and immersive digital experiences with modern technology.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+              <Button size="lg" className="h-16 px-12" onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}>
+                View Projects
+              </Button>
+              <Button size="lg" variant="outline" className="h-16 px-12" onClick={() => window.location.href = "mailto:izerejoshua94@gmail.com"}>
+                Connect Now
+              </Button>
+            </div>
+          </motion.div>
+
+          {/* Featured Stats or Tags in Design Style */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.5, duration: 1 }}
+            className="mt-32 grid grid-cols-2 md:grid-cols-4 gap-4"
+          >
+            {[
+              { label: "Experience", value: "2+ Years" },
+              { label: "Projects", value: "15+ Completed" },
+              { label: "Design", value: "Minimalist" },
+              { label: "Stack", value: "Full-Stack" },
+            ].map((stat, i) => (
+              <div key={i} className="glass p-8 rounded-3xl flex flex-col justify-between h-40">
+                <span className="text-xs uppercase tracking-widest text-white/40 font-bold">{stat.label}</span>
+                <span className="text-2xl font-bold">{stat.value}</span>
+              </div>
+            ))}
+          </motion.div>
         </div>
       </section>
 
-      {/* Projects Section */}
-      <section id="projects" className="relative z-10 px-6 py-20">
+      {/* Services Section */}
+      <section id="services" className="py-32 px-6 relative overflow-hidden">
         <div className="max-w-7xl mx-auto">
           <ScrollReveal>
-            <h2 className="text-4xl md:text-6xl font-bold text-center mb-16">
-              <span className="bg-gradient-to-r from-cosmic-purple-400 to-neon-cyan-400 bg-clip-text text-transparent">
-                Featured Projects
-              </span>
+            <h2 className="text-4xl md:text-6xl font-bold tracking-tighter mb-16">
+              Design <span className="text-white/40 font-medium">Services</span>
             </h2>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              {
-                icon: "🛒",
-                title: "E-Buy",
-                description:
-                  "A futuristic component library with neon aesthetics and fluid micro‑interactions.",
-                link: "",
-                github: "https://github.com/I-Josh-pro-grammin/E-buy",
-                technologies: ["React", "TypeScript", "Tailwind", "Vite", "Node.js", "Express", "MongoDB"],
-              },
-              {
-                icon: "💻",
-                image: bCode,
-                title: "Brainly Code",
-                description:
-                  "Real‑time analytics dashboard with animated charts and seamless UX.",
-                link: "https://brainlycode.dpdns.org",
-                github: "https://github.com/Brainly-Code",
-                technologies: ["React", "TypeScript", "Tailwind", "Vite", "Node.js", "Nest.js", "PostgreSQL", "Docker", "Prisma"],
-              },
-              {
-                icon: "💻",
-                title: "Commerce Flow",
-                description:
-                  "Headless e‑commerce storefront focused on speed, accessibility and conversion.",
-                link: "",
-                github: "https://github.com/I-Josh-pro-grammin/commerce-flow",
-                technologies: ["React", "TypeScript", "Tailwind", "Vite"],
-              },
-              {
-                icon: "💻",
-                title: "Motion Lab",
-                description:
-                  "Playground of complex page transitions and magnetic cursor effects.",
-                link: "",
-                github: "https://github.com/I-Josh-pro-grammin/motion-lab",
-                technologies: ["React", "TypeScript", "Tailwind", "Vite"],
-              },
-              {
-                icon: "🛒",
-                title: "E-commerce backend app",
-                description:
-                  "Responsive PWA with offline support and delightful gestures.",
-                link: "",
-                github: "https://github.com/I-Josh-pro-grammin/e-commerce-backend-app",
-                technologies: ["Node.js", "Nest.js", "PostgreSQL", "Docker", "Prisma"],
-              },
-              {
-                icon: "🧩",
-                title: "Design Templates",
-                description:
-                  "Token‑driven, themeable systems with full documentation and templates.",
-                link: "",
-                github: "https://github.com/I-Josh-pro-grammin/design-templates",
-                technologies: ["Figma"],
-              },
-              {
-                icon: "🧩",
-                title: "My NextJs portfolio Template",
-                description:
-                  "A portfolio template built for anyone who wants to create a portfolio for themselves",
-                link: "",
-                github: "https://github.com/I-Josh-pro-grammin/my-nextjs-portfolio-template",
-                technologies: ["Next.js", "TypeScript", "Tailwind", "Vite"],
-              },
-              {
-                icon: "💰",
-                title: "Budgetly",
-                description:
-                  "Token‑driven, themeable systems with full documentation and templates.",
-                link: "",
-                github: "https://github.com/I-Josh-pro-grammin/budgetly",
-                technologies: ["Next.js", "TypeScript", "Tailwind", "Vite", "Django", "PostgreSQL", "Firebase"],
-              },
-              {
-                icon: "💰",
-                title: "Springboot backend app",
-                description:
-                  "This was my first Springboot application, I used it to learn and clearly understand how spring-ecosystem works",
-                link: "",
-                github: "https://github.com/I-Josh-pro-grammin/springboot-backend-app",
-                technologies: ["Spring Boot", "Java", "PostgreSQL", "Docker", "Prisma"],
-              },
-              {
-                icon: "💰",
-                title: "Sapient backend",
-                description:
-                  "Helped build a backend for a company called Sapient.",
-                link: "",
-                github: "https://github.com/I-Josh-pro-grammin/sapient-backend-app",
-                technologies: ["Spring Boot", "Java", "PostgreSQL", "Docker", "Prisma"],
-              },
-              {
-                icon: "🛣️",
-                title: "IMove mobile app",
-                description:
-                  "IMove is a mobile application that helps you find the nearest riders and allows you to book and pay for the rides",
-                link: "",
-                github: "https://github.com/I-Josh-pro-grammin/imove-mobile-app",
-                technologies: ["React Native", "Express", "MongoDB", "Expo"],
-              },
-              {
-                icon: "💵",
-                image: akaguriro,
-                title: "Akaguriro",
-                description:
-                  "Akaguriro is a platform that helps you find the best deals on products and services in Burundi.",
-                link: "https://akaguriroo.com",
-                github: "https://github.com/I-Josh-pro-grammin/akaguriro",
-                technologies: ["React", "TypeScript", "Tailwind", "Vite", "Express", "PostgreSQL", "Supabase"],
-              }
-            ].map((project, index) => (
-              <ScrollReveal key={index} delay={index * 100} direction="up">
-                <Card className="glass bg-black h-full border-cosmic-purple-600/30 hover:border-cosmic-purple-400/50 transition-all duration-500 group hover:transform hover:scale-105">
-                  <CardContent className="p-8 text-center">
-                    <AnimatedBackground />
-                    <img src={project?.image || projects} alt="" className="w-full h-full" />
-                    <div
-                      className="text-4xl mb-6 animate-float"
-                      style={{ animationDelay: `${index * 0.2}s` }}
-                    >
-                      {project.icon}
-                    </div>
-                    <h3 className="text-xl font-semibold mb-3 text-cosmic-purple-200 group-hover:text-white transition-colors">
-                      {project.title}
-                    </h3>
-                    <p className="text-gray-400 group-hover:text-gray-300 transition-colors mb-4">
-                      {project.description}
-                    </p>
-                    <div className="flex flex-wrap justify-center gap-2 text-xs text-gray-400">
-                      {project.technologies.map((tag) => (
-                        <span
-                          key={tag}
-                          className="px-2 py-1 rounded border border-cosmic-purple-600/30"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </CardContent>
-                  <CardFooter>
-                    <div className="flex w-full justify-between">
-                      {
-                        project.link && (
-                          <Button variant="outline" onClick={() => window.open(project.link, "_blank")}>
-                            View Project
-                          </Button>
-                        )
-                      }
-
-                      {
-                        project.github && (
-                          <Button onClick={() => window.open(project.github, "_blank")}>
-                            View GitHub
-                          </Button>
-                        )
-                      }
-                    </div>
-                  </CardFooter>
-                </Card>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Skills Section */}
-      <section id="skills" className="relative z-10 px-6 py-20">
-        <div className="max-w-7xl mx-auto text-center">
-          <h2 className="text-4xl md:text-6xl font-bold mb-8">
-            <span className="bg-gradient-to-r from-electric-blue-400 to-neon-cyan-400 bg-clip-text text-transparent">
-              Skills & Tools
-            </span>
-          </h2>
-
-          <p className="text-xl text-gray-300 mb-16 max-w-3xl mx-auto">
-            Modern stack focused on performance, accessibility and delightful
-            UX.
-          </p>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {[
-              "React",
-              "TypeScript",
-              "Tailwind",
-              "Vite",
-              "Framer Motion",
-              "Next.js",
-              "Node.js",
-              "Express",
-              "MongoDB",
-              "PostgreSQL",
-              "Docker",
-              "Prisma",
-              "Springboot",
-              "React Native",
-              "Appwrite",
-              "Supabase",
-              "Firebase",
-              "Expo",
-              "Figma",
-              "Adobe XD",
-              "Adobe Photoshop",
-            ].map((tech, index) => (
-              <div
-                key={index}
-                className="holographic rounded-lg p-6 border border-cosmic-purple-600/30 hover:border-neon-cyan-400/50 transition-all duration-500 group"
+              { title: "Product Design", desc: "Crafting intuitive digital products from concept to launch.", meta: "User Research · Wireframing · Prototyping" },
+              { title: "Visual Design", desc: "Creating stunning visual identities and marketing materials.", meta: "Branding · Illustrations · Social Media" },
+              { title: "Web Development", desc: "Building high-performance, responsive websites and apps.", meta: "React · Next.js · Node.js" },
+            ].map((service, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: i * 0.1 }}
+                className="glass p-10 rounded-[2.5rem] group hover:bg-white/10 transition-colors"
               >
-                <div className="text-lg font-semibold text-cosmic-purple-200 group-hover:text-white transition-colors">
-                  {tech}
+                <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center mb-8 border border-white/10 group-hover:border-white/30 transition-colors">
+                  <Plus className="w-5 h-5 text-white/40 group-hover:text-white group-hover:rotate-90 transition-all" />
                 </div>
-              </div>
+                <h3 className="text-2xl font-bold mb-4">{service.title}</h3>
+                <p className="text-white/50 mb-8 leading-relaxed font-medium">{service.desc}</p>
+                <div className="pt-8 border-t border-white/5 flex flex-wrap gap-2">
+                  <span className="text-[10px] uppercase tracking-widest text-white/30 font-bold">{service.meta}</span>
+                </div>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Experience Section */}
-      <section id="experience" className="relative z-10 px-6 py-20">
-        <div className="max-w-5xl mx-auto">
-          <h2 className="text-4xl md:text-6xl font-bold mb-12 text-center">
-            <span className="bg-gradient-to-r from-cosmic-purple-400 to-neon-cyan-400 bg-clip-text text-transparent">
-              Experience
-            </span>
-          </h2>
-          <div className="space-y-6">
+      {/* Featured Projects Section */}
+      <section id="projects" className="py-32 px-6 bg-[#050505]">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
+            <ScrollReveal>
+              <h2 className="text-4xl md:text-6xl font-bold tracking-tighter">
+                Engineering <span className="text-white/40 font-medium">Projects</span>
+              </h2>
+            </ScrollReveal>
+            <Button variant="outline" className="rounded-full px-8" onClick={() => window.open("https://github.com/I-Josh-pro-grammin", "_blank")}>
+              <Github className="mr-2 w-4 h-4" />
+              View Full GitHub
+            </Button>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
             {[
               {
-                role: "Frontend Engineer",
-                company: "Freelance",
-                period: "2024 — 2025",
-                desc: "Designing and building bespoke interfaces for startups and agencies.",
+                title: "Brainly Code",
+                desc: "Real‑time analytics dashboard with animated charts and seamless UX.",
+                image: bCode,
+                github: "https://brainlycode.dpdns.org",
+                tags: ["React", "Nest.js", "PostgreSQL", "Docker"],
+                colSpan: "md:col-span-8",
+                aspect: "aspect-[16/9]"
               },
               {
-                role: "Backend Engineer",
-                company: "Blink Tech",
-                period: "2025 — Present",
-                desc: "Building secure , efficient and scalable backend solutions and maintaining backend development of the company websites.",
+                title: "Akaguriro",
+                desc: "Full-stack E-commerce platform for the Burundian market.",
+                image: akaguriro,
+                github: "https://akaguriroo.com",
+                tags: ["TypeScript", "Express", "Supabase", "Vite"],
+                colSpan: "md:col-span-4",
+                aspect: "aspect-[4/5]"
               },
               {
-                role: "UI Designer",
-                company: "Blink Tech",
-                period: "2025 — Present",
-                desc: "Led component libraries and animations for high‑traffic sites.",
+                title: "E-Buy Store",
+                desc: "Futuristic component library and global commerce experience.",
+                image: projects,
+                github: "https://github.com/I-Josh-pro-grammin/E-buy",
+                tags: ["React", "Node.js", "MongoDB", "Tailwind"],
+                colSpan: "md:col-span-5",
+                aspect: "aspect-square"
               },
-            ].map((job, i) => (
-              <div key={i} className="glass p-6 border-cosmic-purple-600/30">
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
-                  <div>
-                    <div className="text-lg font-semibold">
-                      {job.role} —{" "}
-                      <span className="text-cosmic-purple-300">
-                        {job.company}
-                      </span>
+              {
+                title: "IMove Mobile",
+                desc: "Mobile app for finding nearest riders with real-time booking.",
+                github: "https://github.com/I-Josh-pro-grammin/imove-mobile-app",
+                tags: ["React Native", "Express", "MongoDB", "Expo"],
+                colSpan: "md:col-span-7",
+                customContent: true
+              }
+            ].map((project, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1 }}
+                className={`${project.colSpan} group cursor-pointer`}
+                onClick={() => project.github && window.open(project.github, "_blank")}
+              >
+                <div className={`relative ${project.aspect || "h-full"} overflow-hidden rounded-[3rem] bg-[#111] border border-white/5 group-hover:border-white/20 transition-all duration-500`}>
+                  {project.customContent ? (
+                    <div className="absolute inset-0 grid grid-cols-1 md:grid-cols-2 p-12 gap-8">
+                      <div className="flex flex-col justify-end">
+                        <h3 className="text-3xl font-bold mb-4 leading-tight">{project.title}</h3>
+                        <p className="text-white/50 font-medium mb-8">{project.desc}</p>
+                        <div className="flex flex-wrap gap-2 mb-8">
+                          {project.tags.map(tag => <span key={tag} className="text-[10px] font-mono border border-white/10 px-2 py-1 rounded bg-white/5">{tag}</span>)}
+                        </div>
+                        <Button variant="outline" className="w-fit">Source Code</Button>
+                      </div>
+                      <div className="hidden md:flex items-center justify-center">
+                        <div className="w-full h-full bg-gradient-to-br from-white/10 to-transparent rounded-[2rem] border border-white/10 backdrop-blur-3xl overflow-hidden flex items-center justify-center">
+                          <Github className="w-32 h-32 opacity-10" />
+                        </div>
+                      </div>
                     </div>
-                    <div className="text-gray-400">{job.desc}</div>
-                  </div>
-                  <div className="text-gray-400">{job.period}</div>
+                  ) : (
+                    <>
+                      <img src={project.image || projects} alt={project.title} className="w-full h-full object-cover opacity-60 group-hover:scale-105 group-hover:opacity-80 transition-all duration-700" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80" />
+                      <div className="absolute bottom-10 left-10">
+                        <div className="flex flex-wrap gap-2 mb-4">
+                          {project.tags.map(tag => <span key={tag} className="text-[10px] font-mono border border-white/10 px-2 py-1 rounded bg-black/40 backdrop-blur-sm">{tag}</span>)}
+                        </div>
+                        <h3 className="text-3xl font-bold mb-2">{project.title}</h3>
+                        <p className="text-white/60 font-medium">{project.desc}</p>
+                      </div>
+                      <div className="absolute top-10 right-10 w-14 h-14 bg-white rounded-full flex items-center justify-center -translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                        <ArrowUpRight className="text-black w-6 h-6" />
+                      </div>
+                    </>
+                  )}
                 </div>
-              </div>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="flex mt-10 items-center justify-center">
+            <h2 className="text-2xl  md:text-xl font-bold tracking-tighter">
+              Other Projects
+            </h2>
+          </div>
+          {/* Secondary Projects Grid (Monospace/Technical Style) */}
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+
+            {[
+              { title: "Springboot backend", github: "https://github.com/I-Josh-pro-grammin/springboot-backend-app", tags: ["Java", "Spring Boot", "Docker"] },
+              { title: "Sapient API", github: "https://github.com/I-Josh-pro-grammin/sapient-backend-app", tags: ["Spring Boot", "PostgreSQL", "AWS"] },
+              { title: "Budgetly", github: "https://github.com/I-Josh-pro-grammin/budgetly", tags: ["Next.js", "Django", "Firebase"] },
+              { title: "Commerce Flow", github: "https://github.com/I-Josh-pro-grammin/commerce-flow", tags: ["React", "Tailwind", "Vite"] },
+              { title: "Motion Lab", github: "https://github.com/I-Josh-pro-grammin/motion-lab", tags: ["Framer Motion", "GSAP"] },
+              { title: "E-Commerce API", github: "https://github.com/I-Josh-pro-grammin/e-commerce-backend-app", tags: ["Node.js", "Prisma", "Redis"] },
+              { title: "Design Systems", github: "https://github.com/I-Josh-pro-grammin/design-templates", tags: ["Figma", "Storybook", "CSS"] },
+              { title: "Portfolio V1", github: "https://github.com/I-Josh-pro-grammin/Portfolio-With-Next", tags: ["Next.js", "Tailwind", "Framer"] },
+            ].map((project, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                className="glass p-8 rounded-[2rem] hover:bg-white/5 transition-colors cursor-pointer group"
+                onClick={() => window.open(project.github, "_blank")}
+              >
+                <div className="flex justify-between items-start mb-6">
+                  <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center border border-white/10 group-hover:border-white/30">
+                    <Github className="w-5 h-5 opacity-40 group-hover:opacity-100" />
+                  </div>
+                  <ArrowUpRight className="w-4 h-4 text-white/20 group-hover:text-white" />
+                </div>
+                <h4 className="text-xl font-bold mb-3">{project.title}</h4>
+                <div className="flex flex-wrap gap-2">
+                  {project.tags.map(tag => <span key={tag} className="text-[10px] font-mono text-white/40">{tag}</span>)}
+                </div>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section id="contact" className="relative z-10 px-6 py-20">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl md:text-6xl font-bold mb-8">
-            <span className="bg-gradient-to-r from-neon-cyan-400 to-cosmic-purple-400 bg-clip-text text-transparent">
-              Get in touch
-            </span>
-          </h2>
+      {/* Technical Expertise Section */}
+      <section id="services" className="py-32 px-6 relative overflow-hidden">
+        <div className="max-w-7xl mx-auto">
+          <ScrollReveal>
+            <h2 className="text-4xl md:text-6xl font-bold tracking-tighter mb-16">
+              Technical <span className="text-white/40 font-medium">Expertise</span>
+            </h2>
+          </ScrollReveal>
 
-          <p className="text-xl text-gray-300 mb-12">
-            For collaborations or opportunities, reach out and I’ll respond
-            within 24 hours.
-          </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              { title: "Backend Systems", desc: "Architecting scalable, secure server-side solutions and robust APIs.", meta: "Spring Boot · Node.js · PostgreSQL · Docker" },
+              { title: "Frontend Engineering", desc: "Building high-performance, responsive web interfaces with smooth motion.", meta: "React · Next.js · TypeScript · Tailwind" },
+              { title: "Mobile Development", desc: "Developing cross-platform mobile applications with native-like performance.", meta: "React Native · Expo · Android SDK" },
+            ].map((expertise, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: i * 0.1 }}
+                className="glass p-10 rounded-[2.5rem] group hover:bg-white/10 transition-colors"
+              >
+                <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center mb-8 border border-white/10 group-hover:border-white/30 transition-colors">
+                  <Plus className="w-5 h-5 text-white/40 group-hover:text-white group-hover:rotate-90 transition-all" />
+                </div>
+                <h3 className="text-2xl font-bold mb-4">{expertise.title}</h3>
+                <p className="text-white/50 mb-8 leading-relaxed font-medium">{expertise.desc}</p>
+                <div className="pt-8 border-t border-white/5 flex flex-wrap gap-2">
+                  <span className="text-[10px] uppercase font-mono tracking-widest text-white/30 font-bold">{expertise.meta}</span>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Engineering Excellence Section */}
+      <section className="py-32 px-6 bg-[#050505] relative overflow-hidden">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-20">
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tighter">
+              Engineering <span className="text-white/40 font-medium">Excellence</span>
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {[
+              "Scalable Architecture", "Clean Code Enthusiast", "Performance Optimization", "Security Best Practices",
+              "CI/CD Pipelines", "Database Optimization", "Responsive Web Design", "Technical Documentation"
+            ].map((point, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                whileHover={{ backgroundColor: "rgba(255,255,255,0.05)" }}
+                className="glass p-8 rounded-[2rem] flex items-center space-x-4 group"
+              >
+                <div className="w-2 h-2 rounded-full bg-white opacity-20" />
+                <span className="font-bold text-sm tracking-tight">{point}</span>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials / Clients */}
+      <section className="py-32 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+            <div className="lg:col-span-4">
+              <h2 className="text-4xl md:text-6xl font-bold tracking-tighter mb-8 italic">Collab <br /><span className="text-white not-italic">& Feedback</span></h2>
+              <div className="grid grid-cols-3 gap-8">
+                <div><div className="text-3xl font-bold mb-1">15+</div><div className="text-xs text-white/40 font-bold uppercase">Projects</div></div>
+                <div><div className="text-3xl font-bold mb-1">10+</div><div className="text-xs text-white/40 font-bold uppercase">Happy Clients</div></div>
+                <div><div className="text-3xl font-bold mb-1">4.9</div><div className="text-xs text-white/40 font-bold uppercase">Rating</div></div>
+              </div>
+            </div>
+
+            <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+              {[
+                { name: "John Doe", role: "CEO, TechFlow", text: "Izere is a visionary. His design and development skills are unmatched." },
+                { name: "Sarah Smith", role: "Founder, GreenArt", text: "The focus on motion and user experience really made our project stand out." }
+              ].map((client, i) => (
+                <div key={i} className="glass p-10 rounded-[2.5rem] flex flex-col justify-between">
+                  <div>
+                    <div className="flex mb-6 text-yellow-500">{"★".repeat(5)}</div>
+                    <p className="text-lg font-medium text-white/70 leading-relaxed mb-8 italic">"{client.text}"</p>
+                  </div>
+                  <div className="flex items-center space-x-4">
+                    <div className="w-12 h-12 rounded-full bg-white/10" />
+                    <div>
+                      <div className="font-bold">{client.name}</div>
+                      <div className="text-xs text-white/40">{client.role}</div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Process Section */}
+      <section id="process" className="py-32 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-24">
+            <ScrollReveal>
+              <h2 className="text-4xl md:text-6xl font-bold tracking-tighter mb-6">
+                Development <span className="text-white/40 font-medium">Lifecycle</span>
+              </h2>
+              <p className="text-white/50 max-w-xl mx-auto font-medium">Focused on building secure, high-performance systems through a structured engineering approach.</p>
+            </ScrollReveal>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            {[
+              { step: "01", title: "Discovery", desc: "Analyzing requirements, identifying bottlenecks, and defining technical goals." },
+              { step: "02", title: "Architecture", desc: "Designing system components, database schemas, and API structures." },
+              { step: "03", title: "Implementation", desc: "Writing clean, modular code with unit tests and continuous integration." },
+              { step: "04", title: "Scale & QC", desc: "Deployment, performance monitoring, and ensuring long-term scalability." },
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: i * 0.1 }}
+                className="relative glass p-10 rounded-[2.5rem] group overflow-hidden"
+              >
+                <div className="text-4xl font-bold text-white/10 group-hover:text-white/20 transition-colors mb-8 font-mono">{item.step}</div>
+                <h3 className="text-2xl font-bold mb-4">{item.title}</h3>
+                <p className="text-white/50 leading-relaxed font-medium">{item.desc}</p>
+                <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 blur-3xl rounded-full translate-x-10 -translate-y-10 group-hover:bg-white/10 transition-all" />
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-32 px-6 bg-[#050505]">
+        <div className="max-w-3xl mx-auto">
+          <div className="mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tighter mb-4">
+              Technical <span className="text-white/40 italic">Insights & FAQ</span>
+            </h2>
+          </div>
+
+          <div className="space-y-4">
+            {[
+              { q: "What is your primary tech stack?", a: "I focus on React/Next.js for the frontend, Spring Boot or Node.js for the backend, and PostgreSQL/MongoDB for databases." },
+              { q: "How do you ensure system scalability?", a: "I implement micro-services architecture where needed, optimize database queries, and use caching layers like Redis for high-load applications." },
+              { q: "Do you provide API documentation?", a: "Always. I use Swagger/OpenAPI or Postman collections to ensure seamless integration for frontend teams or third-party developers." },
+              { q: "What is your approach to security?", a: "I follow OWASP principles, implement robust JWT authentication, and ensure data encryption at rest and in transit." },
+            ].map((faq, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                className="glass rounded-[1.5rem] overflow-hidden"
+              >
+                <button className="w-full p-8 text-left flex items-center justify-between group">
+                  <span className="text-lg font-bold group-hover:text-white/80 transition-colors">{faq.q}</span>
+                  <Plus className="w-5 h-5 text-white/30 group-hover:rotate-45 transition-transform" />
+                </button>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Footer CTA */}
+      <footer id="contact" className="py-32 px-6">
+        <div className="max-w-7xl mx-auto glass p-20 rounded-[4rem] text-center relative overflow-hidden">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-white/10 blur-[100px] rounded-full -translate-y-1/2" />
+
+          <ScrollReveal>
+            <h2 className="text-5xl md:text-8xl font-bold tracking-tighter mb-10 leading-[0.9]">
+              Let's Grow <br />
+              <span className="text-white/40 italic">Together</span>
+            </h2>
+            <p className="text-xl text-white/50 max-w-xl mx-auto mb-16 font-medium leading-relaxed">
+              Have a visionary project in mind? Let's turn your ideas into a high-performance digital reality.
+            </p>
+          </ScrollReveal>
 
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-            <Button
-              size="lg"
-              className="btn-cyber px-12 py-4 text-lg font-semibold"
-              onClick={() =>
-                (window.location.href = "mailto:izerejoshua94@gmail.com")
-              }
-            >
-              Email Me
+            <Button size="lg" variant="cyber" className="group h-16 px-12" onClick={() => window.location.href = "mailto:izerejoshua94@gmail.com"}>
+              <Mail className="mr-3 w-5 h-5" />
+              Email Me Directly
             </Button>
-            <Button
-              variant="ghost"
-              size="lg"
-              className="border border-cosmic-purple-500/30 hover:bg-cosmic-purple-800/20 px-12 py-4 text-lg"
-              onClick={() =>
-                document
-                  .getElementById("projects")
-                  ?.scrollIntoView({ behavior: "smooth" })
-              }
-            >
-              View Projects
+            <Button size="lg" variant="outline" className="h-16 px-12" onClick={() => window.open("https://linkedin.com/in/izere-joshua", "_blank")}>
+              <Linkedin className="mr-3 w-5 h-5" />
+              LinkedIn
             </Button>
           </div>
-        </div>
-      </section>
 
-      {/* Footer */}
-      <footer className="relative z-10 px-6 py-12 border-t border-cosmic-purple-800/30">
-        <div className="max-w-7xl mx-auto text-center text-gray-400">
-          <p>&copy; 2024 IZERE Joshua. All rights reserved.</p>
+          <div className="mt-24 pt-12 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-8">
+            <div className="text-sm font-bold tracking-tighter font-mono">IZERE.SYSTEMS [v 2.5]</div>
+            <div className="flex items-center space-x-8 text-sm font-medium text-white/40">
+              <a href="#" className="hover:text-white transition-colors">Privacy</a>
+              <a href="#" className="hover:text-white transition-colors">Terms</a>
+              <span>© 2025 IZERE JOSHUA</span>
+            </div>
+            <div className="flex items-center space-x-4">
+              {[
+                { Icon: Github, href: "https://github.com/I-Josh-pro-grammin" },
+                { Icon: Linkedin, href: "https://linkedin.com/in/izere-joshua" },
+                { Icon: Mail, href: "mailto:izerejoshua94@gmail.com" }
+              ].map((item, i) => (
+                <a key={i} href={item.href} target={item.href.startsWith("http") ? "_blank" : undefined} className="w-10 h-10 glass rounded-full flex items-center justify-center hover:bg-white/10 transition-colors">
+                  <item.Icon className="w-4 h-4" />
+                </a>
+              ))}
+            </div>
+          </div>
         </div>
       </footer>
 

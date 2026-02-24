@@ -13,48 +13,40 @@
    * A different format will require also updating the theme in tailwind.config.ts.
   */
   :root {
-    /* Futuristic Dark Theme - Primary Colors */
-    --background: 280 70% 8%;
-    /* #11071F - Figma background */
-    --foreground: 280 10% 95%;
+    --background: 0 0% 0%;
+    /* Pure Black */
+    --foreground: 0 0% 100%;
+    /* White */
 
-    --card: 280 60% 12%;
-    --card-foreground: 280 10% 95%;
+    --card: 0 0% 3%;
+    --card-foreground: 0 0% 100%;
 
-    --popover: 280 60% 10%;
-    --popover-foreground: 280 10% 95%;
+    --popover: 0 0% 3%;
+    --popover-foreground: 0 0% 100%;
 
-    --primary: 268 100% 65%;
-    /* Electric purple */
-    --primary-foreground: 280 70% 8%;
+    --primary: 0 0% 100%;
+    /* White */
+    --primary-foreground: 0 0% 0%;
 
-    --secondary: 280 40% 20%;
-    --secondary-foreground: 280 10% 90%;
+    --secondary: 0 0% 10%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 280 40% 16%;
-    --muted-foreground: 280 10% 70%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 70%;
 
-    --accent: 189 100% 50%;
-    /* Neon cyan */
-    --accent-foreground: 280 70% 8%;
+    --accent: 268 100% 65%;
+    /* Keeping a subtle purple for highlights if needed */
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 280 30% 25%;
-    --input: 280 40% 20%;
-    --ring: 268 100% 65%;
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
+    --ring: 0 0% 100%;
 
-    --radius: 0.75rem;
-
-    --sidebar-background: 280 70% 8%;
-    --sidebar-foreground: 280 10% 90%;
-    --sidebar-primary: 268 100% 65%;
-    --sidebar-primary-foreground: 280 70% 8%;
-    --sidebar-accent: 280 40% 16%;
-    --sidebar-accent-foreground: 280 10% 90%;
-    --sidebar-border: 280 30% 25%;
-    --sidebar-ring: 268 100% 65%;
+    --radius: 2rem;
+    /* Large radius for buttons and cards */
   }
 }
 
@@ -65,12 +57,8 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family:
-      "Inter",
-      system-ui,
-      -apple-system,
-      sans-serif;
-    overflow-x: hidden;
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
   }
 
   html {
@@ -79,115 +67,41 @@
 }
 
 @layer components {
-
-  /* Futuristic glowing text */
   .text-glow {
-    text-shadow:
-      0 0 10px currentColor,
-      0 0 20px currentColor,
-      0 0 40px currentColor;
-  }
-
-  /* Neon border effect */
-  .border-neon {
-    border: 1px solid transparent;
-    background: linear-gradient(45deg,
-        transparent,
-        rgba(139, 68, 255, 0.1),
-        transparent) border-box;
-    border-image: linear-gradient(45deg,
-        transparent,
-        rgba(139, 68, 255, 0.3),
-        transparent) 1;
-  }
-
-  /* Cyber grid background */
-  .cyber-grid {
-    background-image:
-      linear-gradient(rgba(139, 68, 255, 0.1) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(139, 68, 255, 0.1) 1px, transparent 1px);
-    background-size: 50px 50px;
-  }
-
-  /* Holographic effect */
-  .holographic {
-    background: linear-gradient(45deg,
-        rgba(139, 68, 255, 0.1),
-        rgba(34, 211, 238, 0.1),
-        rgba(139, 68, 255, 0.1));
-    background-size: 400% 400%;
-    animation: gradient-x 15s ease infinite;
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
   }
 
   /* Glass morphism */
   .glass {
-    background: rgba(139, 68, 255, 0.05);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(139, 68, 255, 0.1);
+    @apply bg-white/5 backdrop-blur-xl border border-white/10;
   }
 
-  /* Futuristic button */
+  /* Updated Button Styles */
   .btn-cyber {
-    position: relative;
-    background: linear-gradient(45deg,
-        rgba(139, 68, 255, 0.2),
-        rgba(34, 211, 238, 0.2));
-    border: 1px solid rgba(139, 68, 255, 0.4);
-    box-shadow:
-      0 4px 0 rgba(139, 68, 255, 0.3),
-      0 0 15px rgba(139, 68, 255, 0.1);
-    transition: all 0.1s ease;
-    overflow: hidden;
-    transform: translateY(0);
-  }
-
-  .btn-cyber::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg,
-        transparent,
-        rgba(255, 255, 255, 0.1),
-        transparent);
-    transition: left 0.5s;
-  }
-
-  .btn-cyber:hover::before {
-    left: 100%;
+    @apply relative overflow-hidden transition-all duration-300;
+    background: linear-gradient(180deg, #1a1a1a 0%, #000 100%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 0 rgba(255, 255, 255, 0.05);
   }
 
   .btn-cyber:hover {
-    border-color: rgba(139, 68, 255, 0.6);
-    box-shadow:
-      0 6px 0 rgba(139, 68, 255, 0.4),
-      0 0 25px rgba(139, 68, 255, 0.2);
-    transform: translateY(-2px);
-  }
-
-  .btn-3d {
-    position: relative;
-    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.4);
-    transform: translateY(0);
-    transition: all 0.1s ease !important;
-  }
-
-  .btn-3d:hover {
-    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.4);
-    transform: translateY(-2px);
-  }
-
-  .btn-3d:active {
-    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.4);
-    transform: translateY(2px);
+    @apply -translate-y-[2px];
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 6px 0 rgba(255, 255, 255, 0.1);
   }
 
   .btn-cyber:active {
-    transform: translateY(2px);
-    box-shadow:
-      0 2px 0 rgba(139, 68, 255, 0.6),
-      0 0 10px rgba(139, 68, 255, 0.1);
+    @apply translate-y-[2px];
+    box-shadow: 0 2px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  /* Design specific utilities */
+  .grid-pattern {
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 30px 30px;
+  }
+
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-b from-white to-white/50;
   }
 }
