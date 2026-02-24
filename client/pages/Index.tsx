@@ -6,12 +6,14 @@ const joshImg = "/Greenland2.jpg";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
+import { cn } from "@/lib/utils";
 
 export default function Index() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeFaq, setActiveFaq] = useState<number | null>(null);
 
   useEffect(() => {
     setIsLoaded(true);
@@ -122,8 +124,8 @@ export default function Index() {
               <Button size="lg" className="h-16 px-12" onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}>
                 View Projects
               </Button>
-              <Button size="lg" variant="outline" className="h-16 px-12" onClick={() => window.location.href = "mailto:izerejoshua94@gmail.com"}>
-                Connect Now
+              <Button size="lg" variant="outline" className="h-16 px-12" asChild>
+                <a href="https://mail.google.com/mail/?view=cm&to=izerejoshua94@gmail.com" target="_blank" rel="noopener noreferrer">Connect Now</a>
               </Button>
             </div>
           </motion.div>
@@ -362,7 +364,85 @@ export default function Index() {
         </div>
       </section>
 
+      {/* Animated Skills Ticker */}
+      <style>{`
+        @keyframes ticker-left {
+          0%   { transform: translateX(0px); }
+          100% { transform: translateX(-50%); }
+        }
+        @keyframes ticker-right {
+          0%   { transform: translateX(-50%); }
+          100% { transform: translateX(0px); }
+        }
+        .ticker-row-left  { animation: ticker-left  30s linear infinite; display: flex; gap: 1rem; width: max-content; }
+        .ticker-row-right { animation: ticker-right 32s linear infinite; display: flex; gap: 1rem; width: max-content; }
+        .ticker-chip {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          padding: 0.6rem 1.25rem;
+          background: rgba(255,255,255,0.05);
+          border: 1px solid rgba(255,255,255,0.1);
+          border-radius: 9999px;
+          font-size: 0.875rem;
+          font-weight: 600;
+          color: rgba(255,255,255,0.7);
+          white-space: nowrap;
+          cursor: default;
+          transition: color 0.2s, background 0.2s, border-color 0.2s;
+        }
+        .ticker-chip:hover { color: white; background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.3); }
+        .ticker-icon { filter: grayscale(1) brightness(0.55); font-style: normal; font-size: 1rem; line-height: 1; }
+      `}</style>
+
+      <div style={{ padding: "4rem 0", overflow: "hidden", position: "relative" }}>
+        {/* Fade edges */}
+        <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: "6rem", zIndex: 10, pointerEvents: "none", background: "linear-gradient(to right, black, transparent)" }} />
+        <div style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: "6rem", zIndex: 10, pointerEvents: "none", background: "linear-gradient(to left, black, transparent)" }} />
+
+        {/* Row 1 — scrolls left */}
+        <div style={{ overflow: "hidden", marginBottom: "1rem" }}>
+          <div className="ticker-row-left">
+            {(([
+              ["⊛", "React"], ["△", "Next.js"], ["⬡", "Node.js"], ["◈", "NestJS"], ["◉", "Vue.js"],
+              ["◆", "TypeScript"], ["⬢", "Spring Boot"], ["◎", "PostgreSQL"], ["⊕", "MongoDB"],
+              ["□", "Docker"], ["◇", "AWS"], ["△", "Firebase"], ["◫", "React Native"], ["⚡", "GraphQL"],
+              /* repeat for seamless loop */
+              ["⊛", "React"], ["△", "Next.js"], ["⬡", "Node.js"], ["◈", "NestJS"], ["◉", "Vue.js"],
+              ["◆", "TypeScript"], ["⬢", "Spring Boot"], ["◎", "PostgreSQL"], ["⊕", "MongoDB"],
+              ["□", "Docker"], ["◇", "AWS"], ["△", "Firebase"], ["◫", "React Native"], ["⚡", "GraphQL"],
+            ]) as [string, string][]).map(([icon, label], i) => (
+              <span key={i} className="ticker-chip">
+                <em className="ticker-icon">{icon}</em>
+                {label}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* Row 2 — scrolls right */}
+        <div style={{ overflow: "hidden" }}>
+          <div className="ticker-row-right">
+            {([
+              ["◐", "Python"], ["☕", "Java"], ["⬟", "Rust"], ["◧", "PHP"], ["◈", "Redis"],
+              ["◉", "Prisma"], ["✓", "Jest"], ["◌", "Framer Motion"], ["◯", "Tailwind CSS"],
+              ["⇌", "REST APIs"], ["◆", "JWT Auth"], ["⬡", "Webpack"], ["⟳", "CI/CD"], ["◎", "GitHub"],
+              /* repeat for seamless loop */
+              ["◐", "Python"], ["☕", "Java"], ["⬟", "Rust"], ["◧", "PHP"], ["◈", "Redis"],
+              ["◉", "Prisma"], ["✓", "Jest"], ["◌", "Framer Motion"], ["◯", "Tailwind CSS"],
+              ["⇌", "REST APIs"], ["◆", "JWT Auth"], ["⬡", "Webpack"], ["⟳", "CI/CD"], ["◎", "GitHub"],
+            ] as [string, string][]).map(([icon, label], i) => (
+              <span key={i} className="ticker-chip">
+                <em className="ticker-icon">{icon}</em>
+                {label}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+
       {/* Engineering Excellence Section */}
+
       <section className="py-32 px-6 bg-[#050505] relative overflow-hidden">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-20">
@@ -392,36 +472,83 @@ export default function Index() {
       </section>
 
       {/* Testimonials / Clients */}
-      <section className="py-32 px-6">
+      <section id="testimonials" className="py-32 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
-            <div className="lg:col-span-4">
-              <h2 className="text-4xl md:text-6xl font-bold tracking-tighter mb-8 italic">Collab <br /><span className="text-white not-italic">& Feedback</span></h2>
-              <div className="grid grid-cols-3 gap-8">
-                <div><div className="text-3xl font-bold mb-1">15+</div><div className="text-xs text-white/40 font-bold uppercase">Projects</div></div>
-                <div><div className="text-3xl font-bold mb-1">10+</div><div className="text-xs text-white/40 font-bold uppercase">Happy Clients</div></div>
-                <div><div className="text-3xl font-bold mb-1">4.9</div><div className="text-xs text-white/40 font-bold uppercase">Rating</div></div>
+
+            {/* Left: Sticky Panel */}
+            <div className="lg:col-span-5">
+              <div className="sticky top-32 space-y-10">
+                <Badge variant="outline" className="px-4 py-1.5 border-white/10 bg-white/5 rounded-full text-[10px] font-mono tracking-widest uppercase">
+                  ✦ Happy Clients
+                </Badge>
+                <h2 className="text-5xl md:text-6xl font-bold tracking-tighter leading-tight">
+                  Clients <span className="text-white/40 font-medium">Love me</span>
+                </h2>
+                <p className="text-lg text-white/50 max-w-sm font-medium leading-relaxed">
+                  Trusted by 10+ happy clients, providing great solutions through optimized engineering.
+                </p>
+                <div className="grid grid-cols-3 gap-4">
+                  {[
+                    { label: "Happy Clients", value: "10+" },
+                    { label: "Produced projects", value: "20+" },
+                    { label: "Avg Rating", value: "4.8" },
+                  ].map((stat, i) => (
+                    <div key={i} className="glass p-5 rounded-2xl">
+                      <div className="text-2xl font-bold mb-1">{stat.value}</div>
+                      <div className="text-[10px] text-white/40 font-bold uppercase tracking-tight">{stat.label}</div>
+                    </div>
+                  ))}
+                </div>
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <Button variant="outline" className="rounded-full px-8 h-12" onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}>
+                    See All Projects
+                  </Button>
+                  <Button className="rounded-full px-8 h-12" asChild>
+                    <a href="mailto:izerejoshua94@gmail.com">Contact Now</a>
+                  </Button>
+                </div>
               </div>
             </div>
 
-            <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Right: Scrollable Cards */}
+            <div className="lg:col-span-7 space-y-6">
               {[
-                { name: "John Doe", role: "CEO, TechFlow", text: "Izere is a visionary. His design and development skills are unmatched." },
-                { name: "Sarah Smith", role: "Founder, GreenArt", text: "The focus on motion and user experience really made our project stand out." }
+                { name: "John Doe", role: "CEO, TechFlow", text: "Izere is a visionary. His design and development skills are unmatched. The final product not only looks great but also enhances user engagement.", rating: 5 },
+                { name: "Sarah Smith", role: "Founder, GreenArt", text: "The focus on motion and user experience really made our project stand out. Engineering meets art in the best way possible.", rating: 5 },
+                { name: "David Chen", role: "CTO, NexaLink", text: "Technical depth and speed. We built a complex dashboard in record time with perfect performance scores.", rating: 5 },
+                { name: "Emma Wilson", role: "Product Manager, Sphere", text: "A rare mix of engineering excellence and creative flair. He understood our complex requirements perfectly.", rating: 4.9 },
+                { name: "Michael Ross", role: "MD, Stellar", text: "Exceptional creativity and attention to detail! The final product delivered was beyond our expectations.", rating: 5 },
+                { name: "Lisa Wong", role: "Design Lead, Bloom", text: "His ability to bridge gap between complex backend logic and smooth frontend motion is incredible.", rating: 5 }
               ].map((client, i) => (
-                <div key={i} className="glass p-10 rounded-[2.5rem] flex flex-col justify-between">
-                  <div>
-                    <div className="flex mb-6 text-yellow-500">{"★".repeat(5)}</div>
-                    <p className="text-lg font-medium text-white/70 leading-relaxed mb-8 italic">"{client.text}"</p>
-                  </div>
-                  <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 rounded-full bg-white/10" />
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: i * 0.08 }}
+                  viewport={{ once: true }}
+                  className="glass p-10 rounded-[2.5rem] relative group"
+                >
+                  <div className="flex items-center space-x-4 mb-8">
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-white/10 to-transparent border border-white/10 flex items-center justify-center">
+                      <span className="text-xl font-bold text-white/40">{client.name[0]}</span>
+                    </div>
                     <div>
-                      <div className="font-bold">{client.name}</div>
-                      <div className="text-xs text-white/40">{client.role}</div>
+                      <div className="text-xl font-bold">{client.name}</div>
+                      <div className="text-xs text-white/40 font-mono tracking-wider uppercase">{client.role}</div>
                     </div>
                   </div>
-                </div>
+                  <div className="flex items-center mb-6 space-x-1">
+                    <span className="text-sm font-bold mr-2">{client.rating.toFixed(1)}</span>
+                    {[...Array(5)].map((_, s) => (
+                      <span key={s} className={cn("text-sm", s < Math.floor(client.rating) ? "text-yellow-500" : "text-white/10")}>★</span>
+                    ))}
+                  </div>
+                  <p className="text-lg font-medium text-white/70 leading-relaxed italic">
+                    "{client.text}"
+                  </p>
+                  <div className="absolute top-10 right-10 w-2 h-2 rounded-full bg-white/20 group-hover:bg-green-500 transition-colors duration-300" />
+                </motion.div>
               ))}
             </div>
           </div>
@@ -469,7 +596,7 @@ export default function Index() {
         <div className="max-w-3xl mx-auto">
           <div className="mb-16">
             <h2 className="text-4xl md:text-5xl font-bold tracking-tighter mb-4">
-              Technical <span className="text-white/40 italic">Insights & FAQ</span>
+              Technical <span className="text-white/40 font-medium">Insights & FAQ</span>
             </h2>
           </div>
 
@@ -486,10 +613,28 @@ export default function Index() {
                 whileInView={{ opacity: 1, x: 0 }}
                 className="glass rounded-[1.5rem] overflow-hidden"
               >
-                <button className="w-full p-8 text-left flex items-center justify-between group">
+                <button
+                  className="w-full p-8 text-left flex items-center justify-between group"
+                  onClick={() => setActiveFaq(activeFaq === i ? null : i)}
+                >
                   <span className="text-lg font-bold group-hover:text-white/80 transition-colors">{faq.q}</span>
-                  <Plus className="w-5 h-5 text-white/30 group-hover:rotate-45 transition-transform" />
+                  <Plus className={cn("w-5 h-5 text-white/30 transition-transform duration-300", activeFaq === i && "rotate-45")} />
                 </button>
+                <AnimatePresence>
+                  {activeFaq === i && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="overflow-hidden"
+                    >
+                      <div className="px-8 pb-8 text-white/50 font-medium leading-relaxed">
+                        {faq.a}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </motion.div>
             ))}
           </div>
@@ -512,13 +657,17 @@ export default function Index() {
           </ScrollReveal>
 
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-            <Button size="lg" variant="cyber" className="group h-16 px-12" onClick={() => window.location.href = "mailto:izerejoshua94@gmail.com"}>
-              <Mail className="mr-3 w-5 h-5" />
-              Email Me Directly
+            <Button size="lg" variant="cyber" className="group h-16 px-12" asChild>
+              <a href="https://mail.google.com/mail/?view=cm&to=izerejoshua94@gmail.com" target="_blank" rel="noopener noreferrer">
+                <Mail className="mr-3 w-5 h-5" />
+                Email Me Directly
+              </a>
             </Button>
-            <Button size="lg" variant="outline" className="h-16 px-12" onClick={() => window.open("https://linkedin.com/in/izere-joshua", "_blank")}>
-              <Linkedin className="mr-3 w-5 h-5" />
-              LinkedIn
+            <Button size="lg" variant="outline" className="h-16 px-12" asChild>
+              <a href="https://linkedin.com/in/izere-joshua" target="_blank" rel="noopener noreferrer">
+                <Linkedin className="mr-3 w-5 h-5" />
+                LinkedIn
+              </a>
             </Button>
           </div>
 
@@ -533,7 +682,7 @@ export default function Index() {
               {[
                 { Icon: Github, href: "https://github.com/I-Josh-pro-grammin" },
                 { Icon: Linkedin, href: "https://linkedin.com/in/izere-joshua" },
-                { Icon: Mail, href: "mailto:izerejoshua94@gmail.com" }
+                { Icon: Mail, href: "https://mail.google.com/mail/?view=cm&to=izerejoshua94@gmail.com" }
               ].map((item, i) => (
                 <a key={i} href={item.href} target={item.href.startsWith("http") ? "_blank" : undefined} className="w-10 h-10 glass rounded-full flex items-center justify-center hover:bg-white/10 transition-colors">
                   <item.Icon className="w-4 h-4" />
@@ -559,6 +708,6 @@ export default function Index() {
           />
         ))}
       </div>
-    </div>
+    </div >
   );
 }
