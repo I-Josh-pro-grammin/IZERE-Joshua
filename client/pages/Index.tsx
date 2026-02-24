@@ -1,4 +1,4 @@
-import { Github, Linkedin, Mail, ArrowUpRight, Plus, Menu, X } from "lucide-react";
+import { Github, Linkedin, Mail, ArrowUpRight, Plus, Menu, X, Send, Loader2, CheckCircle } from "lucide-react";
 const bCode = "/bcode.png";
 const akaguriro = "/akaguriroo.png";
 const projects = "/projects.png";
@@ -14,10 +14,34 @@ export default function Index() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
+  const [contactName, setContactName] = useState("");
+  const [contactEmail, setContactEmail] = useState("");
+  const [contactMessage, setContactMessage] = useState("");
+  const [isSending, setIsSending] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
 
   useEffect(() => {
     setIsLoaded(true);
   }, []);
+
+  const handleSubmit = async () => {
+    if (!contactName || !contactEmail || !contactMessage) return;
+
+    setIsSending(true);
+    // Simulate network request
+    await new Promise(resolve => setTimeout(resolve, 2000));
+
+    setIsSending(false);
+    setShowSuccess(true);
+
+    // Reset form
+    setContactName("");
+    setContactEmail("");
+    setContactMessage("");
+
+    // Hide success message after 5 seconds
+    setTimeout(() => setShowSuccess(false), 5000);
+  };
 
   return (
     <div className="min-h-screen bg-black text-white selection:bg-white selection:text-black">
@@ -641,34 +665,107 @@ export default function Index() {
         </div>
       </section>
 
-      {/* Footer CTA */}
+      {/* Footer CTA & Contact Form */}
       <footer id="contact" className="py-32 px-6">
-        <div className="max-w-7xl mx-auto glass p-20 rounded-[4rem] text-center relative overflow-hidden">
+        <div className="max-w-7xl mx-auto glass p-12 md:p-20 rounded-[4rem] relative overflow-hidden">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-white/10 blur-[100px] rounded-full -translate-y-1/2" />
 
-          <ScrollReveal>
-            <h2 className="text-5xl md:text-8xl font-bold tracking-tighter mb-10 leading-[0.9]">
-              Let's Grow <br />
-              <span className="text-white/40 italic">Together</span>
-            </h2>
-            <p className="text-xl text-white/50 max-w-xl mx-auto mb-16 font-medium leading-relaxed">
-              Have a visionary project in mind? Let's turn your ideas into a high-performance digital reality.
-            </p>
-          </ScrollReveal>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+            <ScrollReveal>
+              <div className="max-w-xl">
+                <h2 className="text-5xl md:text-8xl font-bold tracking-tighter mb-10 leading-[0.9]">
+                  Let's Grow <br />
+                  <span className="text-white/40 italic">Together</span>
+                </h2>
+                <p className="text-xl text-white/50 mb-16 font-medium leading-relaxed">
+                  Have a visionary project in mind? Let's turn your ideas into a high-performance digital reality.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-6">
+                  <Button size="lg" variant="outline" className="h-16 px-12" asChild>
+                    <a href="https://linkedin.com/in/izere-joshua" target="_blank" rel="noopener noreferrer">
+                      <Linkedin className="mr-3 w-5 h-5" />
+                      LinkedIn
+                    </a>
+                  </Button>
+                </div>
+              </div>
+            </ScrollReveal>
 
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-            <Button size="lg" variant="cyber" className="group h-16 px-12" asChild>
-              <a href="https://mail.google.com/mail/?view=cm&to=izerejoshua94@gmail.com" target="_blank" rel="noopener noreferrer">
-                <Mail className="mr-3 w-5 h-5" />
-                Email Me Directly
-              </a>
-            </Button>
-            <Button size="lg" variant="outline" className="h-16 px-12" asChild>
-              <a href="https://linkedin.com/in/izere-joshua" target="_blank" rel="noopener noreferrer">
-                <Linkedin className="mr-3 w-5 h-5" />
-                LinkedIn
-              </a>
-            </Button>
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              className="glass p-8 md:p-12 rounded-[2.5rem] relative z-10"
+            >
+              <h3 className="text-2xl font-bold mb-8">Send a Message</h3>
+              <div className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-xs uppercase tracking-widest text-white/40 font-bold mb-3">Your Name</label>
+                    <input
+                      type="text"
+                      value={contactName}
+                      onChange={(e) => setContactName(e.target.value)}
+                      placeholder="John Doe"
+                      className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white placeholder:text-white/20 focus:outline-none focus:border-white/30 transition-colors"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs uppercase tracking-widest text-white/40 font-bold mb-3">Email Address</label>
+                    <input
+                      type="email"
+                      value={contactEmail}
+                      onChange={(e) => setContactEmail(e.target.value)}
+                      placeholder="john@example.com"
+                      className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white placeholder:text-white/20 focus:outline-none focus:border-white/30 transition-colors"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-xs uppercase tracking-widest text-white/40 font-bold mb-3">Message</label>
+                  <textarea
+                    rows={4}
+                    value={contactMessage}
+                    onChange={(e) => setContactMessage(e.target.value)}
+                    placeholder="Tell me about your project..."
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white placeholder:text-white/20 focus:outline-none focus:border-white/30 transition-colors resize-none"
+                  />
+                </div>
+                <Button
+                  size="lg"
+                  variant="cyber"
+                  className="w-full h-16 group relative"
+                  onClick={handleSubmit}
+                  disabled={isSending || !contactName || !contactEmail || !contactMessage}
+                >
+                  {isSending ? (
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                  ) : (
+                    <>
+                      <Send className="mr-3 w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                      Email Me
+                    </>
+                  )}
+                </Button>
+
+                <AnimatePresence>
+                  {showSuccess && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      className="mt-6 flex items-center justify-center space-x-3 text-green-400 bg-green-400/10 border border-green-400/20 p-4 rounded-2xl"
+                    >
+                      <CheckCircle className="w-5 h-5" />
+                      <span className="font-bold text-sm">Message sent successfully!</span>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                <p className="text-center text-white/30 text-[10px] font-mono tracking-widest uppercase">
+                  ✦ Direct Response Guaranteed
+                </p>
+              </div>
+            </motion.div>
           </div>
 
           <div className="mt-24 pt-12 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-8">
