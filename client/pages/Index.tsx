@@ -171,7 +171,7 @@ export default function Index() {
               <a
                 key={item}
                 href={`#${item.toLowerCase()}`}
-                className="text-sm font-medium text-white/60 hover:text-white transition-colors"
+                className="text-xs font-normal text-white/60 hover:text-white sm:text-sm sm:font-semibold transition-colors"
               >
                 {item}
               </a>
@@ -364,35 +364,35 @@ export default function Index() {
               {
                 title: "Web Platforms",
                 label: "Brainly Code",
-                desc: "Designing breathtaking, user-centric dashboards that boost engagement, analytics, and growth, perfectly aligned with your brand",
+                desc: "Real‑time analytics dashboard with animated charts and seamless UX, built for high-performance data visualization.",
                 image: bCode,
                 icon: <Globe className="w-6 h-6" />,
                 github: "https://brainlycode.dpdns.org",
-                tags: ["React", "Nest.js", "PostgreSQL"],
-                colSpan: "md:col-span-7",
+                tags: ["React", "Nest.js", "PostgreSQL", "Docker"],
+                colSpan: "md:col-span-12 lg:col-span-7",
                 rowSpan: "md:row-span-2",
                 imageHeight: "h-[300px] md:h-[450px]"
               },
               {
                 title: "Digital Commerce",
                 label: "Akaguriro",
-                desc: "Crafting distinctive, scalable, and impactful e-commerce marketplaces with deep integration and seamless checkouts",
+                desc: "Full-stack E-commerce platform for the Burundian market with optimized performance and localized payment flows.",
                 image: akaguriro,
                 icon: <Layout className="w-6 h-6" />,
                 github: "https://akaguriroo.com",
                 tags: ["TypeScript", "Supabase", "Vite"],
-                colSpan: "md:col-span-5",
+                colSpan: "md:col-span-12 lg:col-span-5",
                 rowSpan: "md:row-span-1",
                 imageHeight: "h-[250px]"
               },
               {
                 title: "Mobile Architecture",
                 label: "IMove App",
-                desc: "Bringing ideas to life with interactive, user-centered mobile designs that simplify transport complexity and elevate UX",
+                desc: "Mobile app for finding nearest riders with real-time booking and geolocation tracking for seamless transit.",
                 icon: <Smartphone className="w-6 h-6" />,
                 github: "https://github.com/I-Josh-pro-grammin/imove-mobile-app",
                 tags: ["React Native", "Expo", "MongoDB"],
-                colSpan: "md:col-span-5",
+                colSpan: "md:col-span-12 lg:col-span-5",
                 rowSpan: "md:row-span-2",
                 imageHeight: "h-[350px]",
                 customContent: true
@@ -400,12 +400,12 @@ export default function Index() {
               {
                 title: "Visual Identity",
                 label: "E-Buy Store",
-                desc: "Crafting bold, engaging, and versatile design systems that elevate brand presence across global commerce platforms",
+                desc: "Futuristic component library and global commerce experience with a focus on high-fidelity motion and design systems.",
                 image: projects,
                 icon: <Palette className="w-6 h-6" />,
                 github: "https://github.com/I-Josh-pro-grammin/E-buy",
                 tags: ["Next.js", "Node.js", "Tailwind"],
-                colSpan: "md:col-span-7",
+                colSpan: "md:col-span-12 lg:col-span-7",
                 rowSpan: "md:row-span-1",
                 imageHeight: "h-[250px]"
               }
@@ -532,7 +532,7 @@ export default function Index() {
                 className="group"
               >
                 <TiltCard className="h-full">
-                  <div className="glass p-10 rounded-[2.5rem] bg-black/20 group-hover:bg-white/10 transition-colors h-full">
+                  <div className="glass p-10 rounded-[2.5rem] bg-black group-hover:bg-gray-700/10 transition-colors h-full">
                     <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center mb-8 border border-white/10 group-hover:border-white/30 transition-colors">
                       <Plus className="w-5 h-5 text-white/40 group-hover:text-white group-hover:rotate-90 transition-all" />
                     </div>
