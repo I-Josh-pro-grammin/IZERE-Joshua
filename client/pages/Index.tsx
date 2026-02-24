@@ -7,8 +7,116 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { motion, AnimatePresence } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, useMemo } from "react";
 import { cn } from "@/lib/utils";
+import { useMotionValue, useSpring, useTransform } from "framer-motion";
+
+// Helper for 3D Tilt effect
+const TiltCard = ({ children, className }: { children: React.ReactNode, className?: string }) => {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const mouseXSpring = useSpring(x);
+  const mouseYSpring = useSpring(y);
+
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["17.5deg", "-17.5deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-17.5deg", "17.5deg"]);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    const xPct = mouseX / width - 0.5;
+    const yPct = mouseY / height - 0.5;
+    x.set(xPct);
+    y.set(yPct);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  return (
+    <motion.div
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{ rotateY, rotateX, transformStyle: "preserve-3d" }}
+      className={cn("relative", className)}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
+// Helper for Magnetic effect
+const Magnetic = ({ children }: { children: React.ReactNode }) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+
+  const handleMouse = (e: React.MouseEvent) => {
+    const { clientX, clientY } = e;
+    const { height, width, left, top } = ref.current!.getBoundingClientRect();
+    const middleX = clientX - (left + width / 2);
+    const middleY = clientY - (top + height / 2);
+    setPosition({ x: middleX * 0.35, y: middleY * 0.35 });
+  };
+
+  const reset = () => {
+    setPosition({ x: 0, y: 0 });
+  };
+
+  const { x, y } = position;
+  return (
+    <motion.div
+      style={{ position: "relative" }}
+      ref={ref}
+      onMouseMove={handleMouse}
+      onMouseLeave={reset}
+      animate={{ x, y }}
+      transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
+// Helper for Custom Cursor
+const CustomCursor = () => {
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isHovering, setIsHovering] = useState(false);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+
+      const target = e.target as HTMLElement;
+      setIsHovering(
+        target.tagName === "BUTTON" ||
+        target.tagName === "A" ||
+        target.closest(".cursor-pointer") !== null
+      );
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
+  return (
+    <motion.div
+      className="fixed top-0 left-0 w-8 h-8 rounded-full border border-white/30 pointer-events-none z-[9999] hidden md:block"
+      animate={{
+        x: mousePosition.x - 16,
+        y: mousePosition.y - 16,
+        scale: isHovering ? 2 : 1,
+        backgroundColor: isHovering ? "rgba(255, 255, 255, 0.1)" : "rgba(255, 255, 255, 0)",
+      }}
+      transition={{ type: "spring", stiffness: 250, damping: 20, mass: 0.5 }}
+    />
+  );
+};
 
 export default function Index() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -44,9 +152,11 @@ export default function Index() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white selection:bg-white selection:text-black">
+    <div className="min-h-screen bg-black text-white selection:bg-white selection:text-black cursor-none">
+      <CustomCursor />
       {/* Background Decor */}
       <div className="fixed inset-0 grid-pattern opacity-40 pointer-events-none" />
+      <div className="fixed inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_2px,3px_100%] pointer-events-none z-[100] opacity-[0.03]" />
       <div className="fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[500px] bg-white/5 blur-[120px] rounded-full pointer-events-none" />
 
       {/* Navigation */}
@@ -135,9 +245,27 @@ export default function Index() {
               ✦ SYSTEM ARCHITECT & FULL-STACK ENGINEER
             </Badge>
 
-            <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold tracking-tighter mb-10 leading-[0.9] gradient-text">
-              IZERE JOSHUA<br />
-              <span className="text-white/40 font-medium">Engineering Solutions</span>
+            <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold tracking-tighter mb-10 leading-[0.9] gradient-text overflow-hidden">
+              {"IZERE JOSHUA".split("").map((char, i) => (
+                <motion.span
+                  key={i}
+                  initial={{ y: "100%" }}
+                  animate={{ y: 0 }}
+                  transition={{ delay: i * 0.03, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                  className="inline-block"
+                >
+                  {char === " " ? "\u00A0" : char}
+                </motion.span>
+              ))}
+              <br />
+              <motion.span
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.8, duration: 1 }}
+                className="text-white/40 font-medium"
+              >
+                Engineering Solutions
+              </motion.span>
             </h1>
 
             <p className="text-xl md:text-2xl text-white/50 max-w-2xl mb-12 font-medium leading-relaxed">
@@ -145,12 +273,16 @@ export default function Index() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-              <Button size="lg" className="h-16 px-12" onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}>
-                View Projects
-              </Button>
-              <Button size="lg" variant="outline" className="h-16 px-12" asChild>
-                <a href="https://mail.google.com/mail/?view=cm&to=izerejoshua94@gmail.com" target="_blank" rel="noopener noreferrer">Connect Now</a>
-              </Button>
+              <Magnetic>
+                <Button size="lg" className="h-16 px-12" onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}>
+                  View Projects
+                </Button>
+              </Magnetic>
+              <Magnetic>
+                <Button size="lg" variant="outline" className="h-16 px-12" asChild>
+                  <a href="https://mail.google.com/mail/?view=cm&to=izerejoshua94@gmail.com" target="_blank" rel="noopener noreferrer">Contact Now</a>
+                </Button>
+              </Magnetic>
             </div>
           </motion.div>
 
@@ -273,40 +405,42 @@ export default function Index() {
                 className={`${project.colSpan} group cursor-pointer`}
                 onClick={() => project.github && window.open(project.github, "_blank")}
               >
-                <div className={`relative ${project.aspect || "h-full"} overflow-hidden rounded-[3rem] bg-[#111] border border-white/5 group-hover:border-white/20 transition-all duration-500`}>
-                  {project.customContent ? (
-                    <div className="absolute inset-0 grid grid-cols-1 md:grid-cols-2 p-12 gap-8">
-                      <div className="flex flex-col justify-end">
-                        <h3 className="text-3xl font-bold mb-4 leading-tight">{project.title}</h3>
-                        <p className="text-white/50 font-medium mb-8">{project.desc}</p>
-                        <div className="flex flex-wrap gap-2 mb-8">
-                          {project.tags.map(tag => <span key={tag} className="text-[10px] font-mono border border-white/10 px-2 py-1 rounded bg-white/5">{tag}</span>)}
+                <TiltCard className="h-full">
+                  <div className={`relative ${project.aspect || "h-full"} overflow-hidden rounded-[3rem] bg-[#111] border border-white/5 group-hover:border-white/20 transition-all duration-500`}>
+                    {project.customContent ? (
+                      <div className="absolute inset-0 grid grid-cols-1 md:grid-cols-2 p-12 gap-8">
+                        <div className="flex flex-col justify-end">
+                          <h3 className="text-3xl font-bold mb-4 leading-tight">{project.title}</h3>
+                          <p className="text-white/50 font-medium mb-8">{project.desc}</p>
+                          <div className="flex flex-wrap gap-2 mb-8">
+                            {project.tags.map(tag => <span key={tag} className="text-[10px] font-mono border border-white/10 px-2 py-1 rounded bg-white/5">{tag}</span>)}
+                          </div>
+                          <Button variant="outline" className="w-fit">Source Code</Button>
                         </div>
-                        <Button variant="outline" className="w-fit">Source Code</Button>
-                      </div>
-                      <div className="hidden md:flex items-center justify-center">
-                        <div className="w-full h-full bg-gradient-to-br from-white/10 to-transparent rounded-[2rem] border border-white/10 backdrop-blur-3xl overflow-hidden flex items-center justify-center">
-                          <Github className="w-32 h-32 opacity-10" />
+                        <div className="hidden md:flex items-center justify-center">
+                          <div className="w-full h-full bg-gradient-to-br from-white/10 to-transparent rounded-[2rem] border border-white/10 backdrop-blur-3xl overflow-hidden flex items-center justify-center">
+                            <Github className="w-32 h-32 opacity-10" />
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ) : (
-                    <>
-                      <img src={project.image || projects} alt={project.title} className="w-full h-full object-cover opacity-60 group-hover:scale-105 group-hover:opacity-80 transition-all duration-700" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80" />
-                      <div className="absolute bottom-10 left-10">
-                        <div className="flex flex-wrap gap-2 mb-4">
-                          {project.tags.map(tag => <span key={tag} className="text-[10px] font-mono border border-white/10 px-2 py-1 rounded bg-black/40 backdrop-blur-sm">{tag}</span>)}
+                    ) : (
+                      <>
+                        <img src={project.image || projects} alt={project.title} className="w-full h-full object-cover opacity-60 group-hover:scale-105 group-hover:opacity-80 transition-all duration-700" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80" />
+                        <div className="absolute bottom-10 left-10">
+                          <div className="flex flex-wrap gap-2 mb-4">
+                            {project.tags.map(tag => <span key={tag} className="text-[10px] font-mono border border-white/10 px-2 py-1 rounded bg-black/40 backdrop-blur-sm">{tag}</span>)}
+                          </div>
+                          <h3 className="text-3xl font-bold mb-2">{project.title}</h3>
+                          <p className="text-white/60 font-medium">{project.desc}</p>
                         </div>
-                        <h3 className="text-3xl font-bold mb-2">{project.title}</h3>
-                        <p className="text-white/60 font-medium">{project.desc}</p>
-                      </div>
-                      <div className="absolute top-10 right-10 w-14 h-14 bg-white rounded-full flex items-center justify-center -translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-                        <ArrowUpRight className="text-black w-6 h-6" />
-                      </div>
-                    </>
-                  )}
-                </div>
+                        <div className="absolute top-10 right-10 w-14 h-14 bg-white rounded-full flex items-center justify-center -translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                          <ArrowUpRight className="text-black w-6 h-6" />
+                        </div>
+                      </>
+                    )}
+                  </div>
+                </TiltCard>
               </motion.div>
             ))}
           </div>
@@ -372,16 +506,20 @@ export default function Index() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: i * 0.1 }}
-                className="glass p-10 rounded-[2.5rem] group hover:bg-white/10 transition-colors"
+                className="group"
               >
-                <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center mb-8 border border-white/10 group-hover:border-white/30 transition-colors">
-                  <Plus className="w-5 h-5 text-white/40 group-hover:text-white group-hover:rotate-90 transition-all" />
-                </div>
-                <h3 className="text-2xl font-bold mb-4">{expertise.title}</h3>
-                <p className="text-white/50 mb-8 leading-relaxed font-medium">{expertise.desc}</p>
-                <div className="pt-8 border-t border-white/5 flex flex-wrap gap-2">
-                  <span className="text-[10px] uppercase font-mono tracking-widest text-white/30 font-bold">{expertise.meta}</span>
-                </div>
+                <TiltCard className="h-full">
+                  <div className="glass p-10 rounded-[2.5rem] bg-black/20 group-hover:bg-white/10 transition-colors h-full">
+                    <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center mb-8 border border-white/10 group-hover:border-white/30 transition-colors">
+                      <Plus className="w-5 h-5 text-white/40 group-hover:text-white group-hover:rotate-90 transition-all" />
+                    </div>
+                    <h3 className="text-2xl font-bold mb-4">{expertise.title}</h3>
+                    <p className="text-white/50 mb-8 leading-relaxed font-medium">{expertise.desc}</p>
+                    <div className="pt-8 border-t border-white/5 flex flex-wrap gap-2">
+                      <span className="text-[10px] uppercase font-mono tracking-widest text-white/30 font-bold">{expertise.meta}</span>
+                    </div>
+                  </div>
+                </TiltCard>
               </motion.div>
             ))}
           </div>
@@ -535,43 +673,52 @@ export default function Index() {
               </div>
             </div>
 
-            {/* Right: Scrollable Cards */}
-            <div className="lg:col-span-7 space-y-6">
+            {/* Right: Overlapping Sticky Cards */}
+            <div className="lg:col-span-7 relative">
               {[
-                { name: "John Doe", role: "CEO, TechFlow", text: "Izere is a visionary. His design and development skills are unmatched. The final product not only looks great but also enhances user engagement.", rating: 5 },
-                { name: "Sarah Smith", role: "Founder, GreenArt", text: "The focus on motion and user experience really made our project stand out. Engineering meets art in the best way possible.", rating: 5 },
-                { name: "David Chen", role: "CTO, NexaLink", text: "Technical depth and speed. We built a complex dashboard in record time with perfect performance scores.", rating: 5 },
-                { name: "Emma Wilson", role: "Product Manager, Sphere", text: "A rare mix of engineering excellence and creative flair. He understood our complex requirements perfectly.", rating: 4.9 },
-                { name: "Michael Ross", role: "MD, Stellar", text: "Exceptional creativity and attention to detail! The final product delivered was beyond our expectations.", rating: 5 },
-                { name: "Lisa Wong", role: "Design Lead, Bloom", text: "His ability to bridge gap between complex backend logic and smooth frontend motion is incredible.", rating: 5 }
+                { image: "/delice.png", name: "Delice", role: "Mobile developer at ThinkStack", text: "I’ve had the pleasure of working with this developer, and I highly recommend them. They are skilled, reliable, and passionate about writing clean and efficient code. They solve problems effectively and are always eager to learn and improve. A great team player and a valuable asset to any development team.", rating: 5 },
+                { image: "/Isaac.jpeg", name: "Isaac", role: "Mentor At Brainiacs", text: "Josh is a strong Engineer who is good at collaborating with others in different projects. He is a good design at System  design and backend  models which are optimal for impactful solutions, I can recommend him for team work, collaboration and hard working.", rating: 5 },
+                { image: "/KIRENGA_Kenny.png", name: "KIRENGA Kenny", role: "Backend Developer at I-Code Rwanda", text: "He was instrumental in building the backend of IMove, delivering a scalable, secure, and well-architected system. Highly skilled, reliable, and committed to excellence — a backend developer you can truly trust.", rating: 5 },
+                { image: "/aaron.png", name: "Twarimitswe Aaron", role: "Mentor At Brainiacs and Minister of Discipline at RCA", text: "Joshua is a persistent and highly motivated Full Stack Engineer who approaches every project with determination and ownership. His commitment to delivering quality results and pushing through challenges makes him someone you can confidently rely on for complex and demanding work.", rating: 4.9 },
+                { image: "/darius.jpg", name: "Niyonkuru Darius", role: "Mentor At Brainiacs and Minister of Academics at RCA", text: "Joshua is not just a developer but a true programmer. He doesn’t only write code; he understands the logic behind it and thinks deeply to find better solutions. His way of thinking is unique and impactful. I’ve known him for a year, and he continues to impress me—not only technically, but also mentally and socially. Beyond his skills, he has been a great friend, and working with him is truly inspiring.", rating: 5 },
+                { image: "", name: "Ange", role: "Design Lead, Bloom", text: "His ability to bridge gap between complex backend logic and smooth frontend motion is incredible.", rating: 5 }
               ].map((client, i) => (
                 <motion.div
                   key={i}
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={{ opacity: 0, y: 50 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: i * 0.08 }}
+                  transition={{ duration: 0.8, ease: "easeOut" }}
                   viewport={{ once: true }}
-                  className="glass p-10 rounded-[2.5rem] relative group"
+                  className="sticky top-32 mb-12 sm:mb-24"
+                  style={{ zIndex: i + 1, top: 120 + i * 20 }}
                 >
-                  <div className="flex items-center space-x-4 mb-8">
-                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-white/10 to-transparent border border-white/10 flex items-center justify-center">
-                      <span className="text-xl font-bold text-white/40">{client.name[0]}</span>
+                  <TiltCard className="h-full">
+                    <div className="glass p-8 md:p-12 rounded-[2.5rem] relative bg-black/40 backdrop-blur-3xl border border-white/10 group-hover:border-white/30 transition-all shadow-2xl">
+                      <div className="flex items-center space-x-6 mb-10">
+                        <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-br from-white/10 to-transparent border border-white/10 flex items-center justify-center overflow-hidden">
+                          {client.image ? (
+                            <img src={client.image} alt={client.name} className="w-full h-full object-cover" />
+                          ) : (
+                            <span className="text-2xl font-bold text-white/40">{client.name[0]}</span>
+                          )}
+                        </div>
+                        <div>
+                          <div className="text-2xl font-bold mb-1">{client.name}</div>
+                          <div className="text-sm text-white/40 font-mono tracking-wider uppercase">{client.role}</div>
+                        </div>
+                      </div>
+                      <div className="flex items-center mb-8 space-x-1">
+                        <span className="text-base font-bold mr-3">{client.rating.toFixed(1)}</span>
+                        {[...Array(5)].map((_, s) => (
+                          <span key={s} className={cn("text-base", s < Math.floor(client.rating) ? "text-yellow-500" : "text-white/10")}>★</span>
+                        ))}
+                      </div>
+                      <p className="text-xl md:text-2xl font-medium text-white/80 leading-relaxed italic">
+                        "{client.text}"
+                      </p>
+                      <div className="absolute top-12 right-12 w-3 h-3 rounded-full bg-white/20 group-hover:bg-green-500 transition-colors duration-500" />
                     </div>
-                    <div>
-                      <div className="text-xl font-bold">{client.name}</div>
-                      <div className="text-xs text-white/40 font-mono tracking-wider uppercase">{client.role}</div>
-                    </div>
-                  </div>
-                  <div className="flex items-center mb-6 space-x-1">
-                    <span className="text-sm font-bold mr-2">{client.rating.toFixed(1)}</span>
-                    {[...Array(5)].map((_, s) => (
-                      <span key={s} className={cn("text-sm", s < Math.floor(client.rating) ? "text-yellow-500" : "text-white/10")}>★</span>
-                    ))}
-                  </div>
-                  <p className="text-lg font-medium text-white/70 leading-relaxed italic">
-                    "{client.text}"
-                  </p>
-                  <div className="absolute top-10 right-10 w-2 h-2 rounded-full bg-white/20 group-hover:bg-green-500 transition-colors duration-300" />
+                  </TiltCard>
                 </motion.div>
               ))}
             </div>
@@ -579,88 +726,101 @@ export default function Index() {
         </div>
       </section>
 
-      {/* Process Section */}
-      <section id="process" className="py-32 px-6">
+      {/* Combined Process & FAQ Section */}
+      <section className="py-32 px-6 bg-[#030303]">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-24">
-            <ScrollReveal>
-              <h2 className="text-4xl md:text-6xl font-bold tracking-tighter mb-6">
-                Development <span className="text-white/40 font-medium">Lifecycle</span>
-              </h2>
-              <p className="text-white/50 max-w-xl mx-auto font-medium">Focused on building secure, high-performance systems through a structured engineering approach.</p>
-            </ScrollReveal>
-          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-start">
 
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            {[
-              { step: "01", title: "Discovery", desc: "Analyzing requirements, identifying bottlenecks, and defining technical goals." },
-              { step: "02", title: "Architecture", desc: "Designing system components, database schemas, and API structures." },
-              { step: "03", title: "Implementation", desc: "Writing clean, modular code with unit tests and continuous integration." },
-              { step: "04", title: "Scale & QC", desc: "Deployment, performance monitoring, and ensuring long-term scalability." },
-            ].map((item, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: i * 0.1 }}
-                className="relative glass p-10 rounded-[2.5rem] group overflow-hidden"
-              >
-                <div className="text-4xl font-bold text-white/10 group-hover:text-white/20 transition-colors mb-8 font-mono">{item.step}</div>
-                <h3 className="text-2xl font-bold mb-4">{item.title}</h3>
-                <p className="text-white/50 leading-relaxed font-medium">{item.desc}</p>
-                <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 blur-3xl rounded-full translate-x-10 -translate-y-10 group-hover:bg-white/10 transition-all" />
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+            {/* Left Column: Development Lifecycle */}
+            <div>
+              <div className="mb-16">
+                <ScrollReveal>
+                  <h2 className="text-4xl md:text-6xl font-bold tracking-tighter mb-6 leading-tight">
+                    Development <br />
+                    <span className="text-white/40 font-medium whitespace-nowrap">Lifecycle</span>
+                  </h2>
+                  <p className="text-white/50 max-w-xl font-medium leading-relaxed">
+                    Building secure, high-performance systems through a structured engineering approach.
+                  </p>
+                </ScrollReveal>
+              </div>
 
-      {/* FAQ Section */}
-      <section className="py-32 px-6 bg-[#050505]">
-        <div className="max-w-3xl mx-auto">
-          <div className="mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tighter mb-4">
-              Technical <span className="text-white/40 font-medium">Insights & FAQ</span>
-            </h2>
-          </div>
-
-          <div className="space-y-4">
-            {[
-              { q: "What is your primary tech stack?", a: "I focus on React/Next.js for the frontend, Spring Boot or Node.js for the backend, and PostgreSQL/MongoDB for databases." },
-              { q: "How do you ensure system scalability?", a: "I implement micro-services architecture where needed, optimize database queries, and use caching layers like Redis for high-load applications." },
-              { q: "Do you provide API documentation?", a: "Always. I use Swagger/OpenAPI or Postman collections to ensure seamless integration for frontend teams or third-party developers." },
-              { q: "What is your approach to security?", a: "I follow OWASP principles, implement robust JWT authentication, and ensure data encryption at rest and in transit." },
-            ].map((faq, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                className="glass rounded-[1.5rem] overflow-hidden"
-              >
-                <button
-                  className="w-full p-8 text-left flex items-center justify-between group"
-                  onClick={() => setActiveFaq(activeFaq === i ? null : i)}
-                >
-                  <span className="text-lg font-bold group-hover:text-white/80 transition-colors">{faq.q}</span>
-                  <Plus className={cn("w-5 h-5 text-white/30 transition-transform duration-300", activeFaq === i && "rotate-45")} />
-                </button>
-                <AnimatePresence>
-                  {activeFaq === i && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="overflow-hidden"
-                    >
-                      <div className="px-8 pb-8 text-white/50 font-medium leading-relaxed">
-                        {faq.a}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                {[
+                  { step: "01", title: "Discovery", desc: "Analyzing requirements, identifying bottlenecks, and defining technical goals." },
+                  { step: "02", title: "Architecture", desc: "Designing system components, database schemas, and API structures." },
+                  { step: "03", title: "Implementation", desc: "Writing clean, modular code with unit tests and continuous integration." },
+                  { step: "04", title: "Scale & QC", desc: "Deployment, performance monitoring, and ensuring long-term scalability." },
+                ].map((item, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6, delay: i * 0.1 }}
+                    className="group"
+                  >
+                    <TiltCard className="h-full">
+                      <div className="relative glass p-8 rounded-[2.5rem] bg-black/20 group-hover:bg-white/5 transition-all h-full border border-white/5">
+                        <div className="text-3xl font-bold text-white/10 group-hover:text-white/20 transition-colors mb-6 font-mono">{item.step}</div>
+                        <h3 className="text-xl font-bold mb-3">{item.title}</h3>
+                        <p className="text-sm text-white/50 leading-relaxed font-medium">{item.desc}</p>
+                        <div className="absolute top-0 right-0 w-24 h-24 bg-white/5 blur-3xl rounded-full translate-x-10 -translate-y-10 group-hover:bg-white/10 transition-all" />
                       </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.div>
-            ))}
+                    </TiltCard>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+
+            {/* Right Column: FAQ */}
+            <div className="lg:pt-10">
+              <div className="mb-12">
+                <h2 className="text-3xl md:text-5xl font-bold tracking-tighter mb-4">
+                  Technical <br />
+                  <span className="text-white/40 font-medium whitespace-nowrap">Insights & FAQ</span>
+                </h2>
+              </div>
+
+              <div className="space-y-4">
+                {[
+                  { q: "What is your primary tech stack?", a: "I focus on React/Next.js for the frontend, Spring Boot or Node.js for the backend, and PostgreSQL/MongoDB for databases." },
+                  { q: "How do you ensure system scalability?", a: "I implement micro-services architecture where needed, optimize database queries, and use caching layers like Redis for high-load applications." },
+                  { q: "Do you provide API documentation?", a: "Always. I use Swagger/OpenAPI or Postman collections to ensure seamless integration for frontend teams or third-party developers." },
+                  { q: "What is your approach to security?", a: "I follow OWASP principles, implement robust JWT authentication, and ensure data encryption at rest and in transit." },
+                ].map((faq, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    className="glass rounded-[1.5rem] overflow-hidden border border-white/5"
+                  >
+                    <button
+                      className="w-full p-6 text-left flex items-center justify-between group"
+                      onClick={() => setActiveFaq(activeFaq === i ? null : i)}
+                    >
+                      <span className="text-base font-bold group-hover:text-white/80 transition-colors">{faq.q}</span>
+                      <Plus className={cn("w-4 h-4 text-white/30 transition-transform duration-300", activeFaq === i && "rotate-45")} />
+                    </button>
+                    <AnimatePresence>
+                      {activeFaq === i && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="overflow-hidden"
+                        >
+                          <div className="px-6 pb-6 text-sm text-white/50 font-medium leading-relaxed">
+                            {faq.a}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
@@ -681,12 +841,14 @@ export default function Index() {
                   Have a visionary project in mind? Let's turn your ideas into a high-performance digital reality.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-6">
-                  <Button size="lg" variant="outline" className="h-16 px-12" asChild>
-                    <a href="https://linkedin.com/in/izere-joshua" target="_blank" rel="noopener noreferrer">
-                      <Linkedin className="mr-3 w-5 h-5" />
-                      LinkedIn
-                    </a>
-                  </Button>
+                  <Magnetic>
+                    <Button size="lg" variant="outline" className="h-16 px-12" asChild>
+                      <a href="https://linkedin.com/in/izere-joshua" target="_blank" rel="noopener noreferrer">
+                        <Linkedin className="mr-3 w-5 h-5" />
+                        LinkedIn
+                      </a>
+                    </Button>
+                  </Magnetic>
                 </div>
               </div>
             </ScrollReveal>
@@ -781,9 +943,11 @@ export default function Index() {
                 { Icon: Linkedin, href: "https://linkedin.com/in/izere-joshua" },
                 { Icon: Mail, href: "https://mail.google.com/mail/?view=cm&to=izerejoshua94@gmail.com" }
               ].map((item, i) => (
-                <a key={i} href={item.href} target={item.href.startsWith("http") ? "_blank" : undefined} className="w-10 h-10 glass rounded-full flex items-center justify-center hover:bg-white/10 transition-colors">
-                  <item.Icon className="w-4 h-4" />
-                </a>
+                <Magnetic key={i}>
+                  <a href={item.href} target={item.href.startsWith("http") ? "_blank" : undefined} className="w-10 h-10 glass rounded-full flex items-center justify-center hover:bg-white/10 transition-colors">
+                    <item.Icon className="w-4 h-4" />
+                  </a>
+                </Magnetic>
               ))}
             </div>
           </div>
@@ -791,16 +955,28 @@ export default function Index() {
       </footer>
 
       {/* Floating Particles */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {[...Array(20)].map((_, i) => (
-          <div
+      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+        {[...Array(30)].map((_, i) => (
+          <motion.div
             key={i}
-            className="absolute w-2 h-2 bg-cosmic-purple-400/30 rounded-full animate-float"
+            initial={{
+              x: `${Math.random() * 100}%`,
+              y: `${Math.random() * 100}%`,
+              opacity: Math.random() * 0.3
+            }}
+            animate={{
+              y: ["-10%", "110%"],
+              x: [`${Math.random() * 100}%`, `${Math.random() * 100}%`],
+            }}
+            transition={{
+              duration: 10 + Math.random() * 20,
+              repeat: Infinity,
+              ease: "linear",
+              delay: -Math.random() * 20
+            }}
+            className="absolute w-1 h-1 bg-white rounded-full"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`,
-              animationDuration: `${3 + Math.random() * 4}s`,
+              filter: `blur(${Math.random() * 2}px)`,
             }}
           />
         ))}
