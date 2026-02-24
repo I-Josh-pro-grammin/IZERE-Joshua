@@ -1,4 +1,4 @@
-import { Github, Linkedin, Mail, ArrowUpRight, Plus, Menu, X, Send, Loader2, CheckCircle } from "lucide-react";
+import { Github, Linkedin, Mail, ArrowUpRight, Plus, Menu, X, Send, Loader2, CheckCircle, Check, Globe, Smartphone, Layout, Palette } from "lucide-react";
 const bCode = "/bcode.png";
 const akaguriro = "/akaguriroo.png";
 const projects = "/projects.png";
@@ -6,7 +6,7 @@ const joshImg = "/Greenland2.jpg";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll } from "framer-motion";
 import { useEffect, useState, useRef, useMemo } from "react";
 import { cn } from "@/lib/utils";
 import { useMotionValue, useSpring, useTransform } from "framer-motion";
@@ -299,7 +299,7 @@ export default function Index() {
               { label: "Design", value: "Minimalist" },
               { label: "Stack", value: "Full-Stack" },
             ].map((stat, i) => (
-              <div key={i} className="glass p-8 rounded-3xl flex flex-col justify-between h-40">
+              <div key={i} className="glass p-8 flex flex-col justify-between h-40">
                 <span className="text-xs uppercase tracking-widest text-white/40 font-bold">{stat.label}</span>
                 <span className="text-2xl font-bold">{stat.value}</span>
               </div>
@@ -328,7 +328,7 @@ export default function Index() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: i * 0.1 }}
-                className="glass p-10 rounded-[2.5rem] group hover:bg-white/10 transition-colors"
+                className="glass p-10 bg-black rounded-[2.5rem] group hover:bg-gray-700/10 transition-colors"
               >
                 <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center mb-8 border border-white/10 group-hover:border-white/30 transition-colors">
                   <Plus className="w-5 h-5 text-white/40 group-hover:text-white group-hover:rotate-90 transition-all" />
@@ -359,42 +359,55 @@ export default function Index() {
             </Button>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-10">
             {[
               {
-                title: "Brainly Code",
-                desc: "Real‑time analytics dashboard with animated charts and seamless UX.",
+                title: "Web Platforms",
+                label: "Brainly Code",
+                desc: "Designing breathtaking, user-centric dashboards that boost engagement, analytics, and growth, perfectly aligned with your brand",
                 image: bCode,
+                icon: <Globe className="w-6 h-6" />,
                 github: "https://brainlycode.dpdns.org",
-                tags: ["React", "Nest.js", "PostgreSQL", "Docker"],
-                colSpan: "md:col-span-8",
-                aspect: "aspect-[16/9]"
-              },
-              {
-                title: "Akaguriro",
-                desc: "Full-stack E-commerce platform for the Burundian market.",
-                image: akaguriro,
-                github: "https://akaguriroo.com",
-                tags: ["TypeScript", "Express", "Supabase", "Vite"],
-                colSpan: "md:col-span-4",
-                aspect: "aspect-[4/5]"
-              },
-              {
-                title: "E-Buy Store",
-                desc: "Futuristic component library and global commerce experience.",
-                image: projects,
-                github: "https://github.com/I-Josh-pro-grammin/E-buy",
-                tags: ["React", "Node.js", "MongoDB", "Tailwind"],
-                colSpan: "md:col-span-5",
-                aspect: "aspect-square"
-              },
-              {
-                title: "IMove Mobile",
-                desc: "Mobile app for finding nearest riders with real-time booking.",
-                github: "https://github.com/I-Josh-pro-grammin/imove-mobile-app",
-                tags: ["React Native", "Express", "MongoDB", "Expo"],
+                tags: ["React", "Nest.js", "PostgreSQL"],
                 colSpan: "md:col-span-7",
+                rowSpan: "md:row-span-2",
+                imageHeight: "h-[300px] md:h-[450px]"
+              },
+              {
+                title: "Digital Commerce",
+                label: "Akaguriro",
+                desc: "Crafting distinctive, scalable, and impactful e-commerce marketplaces with deep integration and seamless checkouts",
+                image: akaguriro,
+                icon: <Layout className="w-6 h-6" />,
+                github: "https://akaguriroo.com",
+                tags: ["TypeScript", "Supabase", "Vite"],
+                colSpan: "md:col-span-5",
+                rowSpan: "md:row-span-1",
+                imageHeight: "h-[250px]"
+              },
+              {
+                title: "Mobile Architecture",
+                label: "IMove App",
+                desc: "Bringing ideas to life with interactive, user-centered mobile designs that simplify transport complexity and elevate UX",
+                icon: <Smartphone className="w-6 h-6" />,
+                github: "https://github.com/I-Josh-pro-grammin/imove-mobile-app",
+                tags: ["React Native", "Expo", "MongoDB"],
+                colSpan: "md:col-span-5",
+                rowSpan: "md:row-span-2",
+                imageHeight: "h-[350px]",
                 customContent: true
+              },
+              {
+                title: "Visual Identity",
+                label: "E-Buy Store",
+                desc: "Crafting bold, engaging, and versatile design systems that elevate brand presence across global commerce platforms",
+                image: projects,
+                icon: <Palette className="w-6 h-6" />,
+                github: "https://github.com/I-Josh-pro-grammin/E-buy",
+                tags: ["Next.js", "Node.js", "Tailwind"],
+                colSpan: "md:col-span-7",
+                rowSpan: "md:row-span-1",
+                imageHeight: "h-[250px]"
               }
             ].map((project, i) => (
               <motion.div
@@ -402,43 +415,53 @@ export default function Index() {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1 }}
-                className={`${project.colSpan} group cursor-pointer`}
+                className={`${project.colSpan} ${project.rowSpan} group cursor-pointer`}
                 onClick={() => project.github && window.open(project.github, "_blank")}
               >
                 <TiltCard className="h-full">
-                  <div className={`relative ${project.aspect || "h-full"} overflow-hidden rounded-[3rem] bg-[#111] border border-white/5 group-hover:border-white/20 transition-all duration-500`}>
-                    {project.customContent ? (
-                      <div className="absolute inset-0 grid grid-cols-1 md:grid-cols-2 p-12 gap-8">
-                        <div className="flex flex-col justify-end">
-                          <h3 className="text-3xl font-bold mb-4 leading-tight">{project.title}</h3>
-                          <p className="text-white/50 font-medium mb-8">{project.desc}</p>
-                          <div className="flex flex-wrap gap-2 mb-8">
-                            {project.tags.map(tag => <span key={tag} className="text-[10px] font-mono border border-white/10 px-2 py-1 rounded bg-white/5">{tag}</span>)}
+                  <div className={`relative h-full flex flex-col overflow-hidden p-8 md:p-10 rounded-[2.5rem] bg-[#0c0c0c] border border-white/5 group-hover:border-white/10 transition-all duration-500`}>
+                    {/* Card Header: Icon + Title */}
+                    <div className="flex items-center space-x-4 mb-6">
+                      <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center border border-white/10 group-hover:border-white/20 transition-colors">
+                        {project.icon}
+                      </div>
+                      <h3 className="text-xl md:text-2xl font-bold tracking-tight">{project.title}</h3>
+                    </div>
+
+                    {/* Description */}
+                    <p className="text-white/50 font-medium mb-10 text-base leading-relaxed max-w-lg">
+                      {project.desc}
+                    </p>
+
+                    {/* Image Area */}
+                    <div className={`relative mt-auto w-full ${project.imageHeight} rounded-[2rem] overflow-hidden border border-white/5 bg-black/40 group-hover:border-white/20 transition-all duration-700`}>
+                      {project.customContent ? (
+                        <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-white/5 to-transparent backdrop-blur-3xl">
+                          <div className="flex flex-col items-center gap-6 opacity-30 group-hover:opacity-50 transition-opacity">
+                            <Smartphone className="w-24 h-24" />
+                            <span className="font-mono text-sm tracking-widest uppercase">System Interface Architecture</span>
                           </div>
-                          <Button variant="outline" className="w-fit">Source Code</Button>
                         </div>
-                        <div className="hidden md:flex items-center justify-center">
-                          <div className="w-full h-full bg-gradient-to-br from-white/10 to-transparent rounded-[2rem] border border-white/10 backdrop-blur-3xl overflow-hidden flex items-center justify-center">
-                            <Github className="w-32 h-32 opacity-10" />
-                          </div>
+                      ) : (
+                        <img
+                          src={project.image}
+                          alt={project.label}
+                          className="w-full h-full object-cover opacity-60 group-hover:scale-105 group-hover:opacity-90 transition-all duration-700"
+                        />
+                      )}
+
+                      {/* Label Overlay */}
+                      <div className="absolute bottom-6 left-6 flex items-center space-x-3">
+                        <div className="glass px-4 py-2 rounded-full border border-white/10 bg-black/60 backdrop-blur-md">
+                          <span className="text-xs font-bold tracking-wide uppercase">{project.label}</span>
                         </div>
                       </div>
-                    ) : (
-                      <>
-                        <img src={project.image || projects} alt={project.title} className="w-full h-full object-cover opacity-60 group-hover:scale-105 group-hover:opacity-80 transition-all duration-700" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80" />
-                        <div className="absolute bottom-10 left-10">
-                          <div className="flex flex-wrap gap-2 mb-4">
-                            {project.tags.map(tag => <span key={tag} className="text-[10px] font-mono border border-white/10 px-2 py-1 rounded bg-black/40 backdrop-blur-sm">{tag}</span>)}
-                          </div>
-                          <h3 className="text-3xl font-bold mb-2">{project.title}</h3>
-                          <p className="text-white/60 font-medium">{project.desc}</p>
-                        </div>
-                        <div className="absolute top-10 right-10 w-14 h-14 bg-white rounded-full flex items-center justify-center -translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-                          <ArrowUpRight className="text-black w-6 h-6" />
-                        </div>
-                      </>
-                    )}
+
+                      {/* Click Indicator */}
+                      <div className="absolute top-6 right-6 w-12 h-12 bg-white rounded-full flex items-center justify-center -translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 shadow-2xl">
+                        <ArrowUpRight className="text-black w-6 h-6" />
+                      </div>
+                    </div>
                   </div>
                 </TiltCard>
               </motion.div>
@@ -641,35 +664,67 @@ export default function Index() {
             {/* Left: Sticky Panel */}
             <div className="lg:col-span-5">
               <div className="sticky top-32 space-y-10">
-                <Badge variant="outline" className="px-4 py-1.5 border-white/10 bg-white/5 rounded-full text-[10px] font-mono tracking-widest uppercase">
-                  ✦ Happy Clients
-                </Badge>
-                <h2 className="text-5xl md:text-6xl font-bold tracking-tighter leading-tight">
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: 0.4 }}
+                >
+                  <Badge variant="outline" className="px-4 py-1.5 border-white/10 bg-white/5 rounded-full text-[10px] font-mono tracking-widest uppercase relative overflow-hidden group">
+                    <span className="relative z-10">✦ Happy Clients</span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:animate-shimmer" />
+                  </Badge>
+                </motion.div>
+
+                <motion.h2
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0 }}
+                  className="text-5xl md:text-6xl font-bold tracking-tighter leading-tight animate-float"
+                >
                   Clients <span className="text-white/40 font-medium">Love me</span>
-                </h2>
-                <p className="text-lg text-white/50 max-w-sm font-medium leading-relaxed">
+                </motion.h2>
+
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.5 }}
+                  className="text-lg text-white/50 max-w-sm font-medium leading-relaxed"
+                >
                   Trusted by 10+ happy clients, providing great solutions through optimized engineering.
-                </p>
+                </motion.p>
+
                 <div className="grid grid-cols-3 gap-4">
                   {[
                     { label: "Happy Clients", value: "10+" },
-                    { label: "Produced projects", value: "20+" },
+                    { label: "Completed projects", value: "20+" },
                     { label: "Avg Rating", value: "4.8" },
                   ].map((stat, i) => (
-                    <div key={i} className="glass p-5 rounded-2xl">
-                      <div className="text-2xl font-bold mb-1">{stat.value}</div>
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.5, delay: 0.6 + (i * 0.1) }}
+                      className="glass p-5 rounded-2xl group hover:bg-white/5 transition-colors"
+                    >
+                      <div className="text-2xl font-bold mb-1 group-hover:text-white transition-colors">{stat.value}</div>
                       <div className="text-[10px] text-white/40 font-bold uppercase tracking-tight">{stat.label}</div>
-                    </div>
+                    </motion.div>
                   ))}
                 </div>
-                <div className="flex flex-col sm:flex-row gap-4">
+
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.9 }}
+                  className="flex flex-col sm:flex-row gap-4"
+                >
                   <Button variant="outline" className="rounded-full px-8 h-12" onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}>
                     See All Projects
                   </Button>
                   <Button className="rounded-full px-8 h-12" asChild>
                     <a href="mailto:izerejoshua94@gmail.com">Contact Now</a>
                   </Button>
-                </div>
+                </motion.div>
               </div>
             </div>
 
@@ -687,7 +742,11 @@ export default function Index() {
                   key={i}
                   initial={{ opacity: 0, y: 50 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, ease: "easeOut" }}
+                  transition={{
+                    duration: 0.8,
+                    ease: "easeOut",
+                    delay: 1.8 + (i * 0.2)
+                  }}
                   viewport={{ once: true }}
                   className="sticky top-32 mb-12 sm:mb-24"
                   style={{ zIndex: i + 1, top: 120 + i * 20 }}
