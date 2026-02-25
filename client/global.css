@@ -13,40 +13,39 @@
    * A different format will require also updating the theme in tailwind.config.ts.
   */
   :root {
-    --background: 0 0% 0%;
-    /* Pure Black */
-    --foreground: 0 0% 100%;
-    /* White */
+    --background: 0 0% 98%;
+    --foreground: 0 0% 5%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 10%;
+    --primary: 0 0% 5%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 94%;
+    --secondary-foreground: 0 0% 15%;
+    --muted: 0 0% 94%;
+    --muted-foreground: 0 0% 40%;
+    --accent: 268 100% 65%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 0 0% 0%;
+    --radius: 2rem;
+    --grid-opacity: 0.1;
+  }
 
+  .dark {
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
     --card: 0 0% 3%;
     --card-foreground: 0 0% 100%;
-
-    --popover: 0 0% 3%;
-    --popover-foreground: 0 0% 100%;
-
     --primary: 0 0% 100%;
-    /* White */
     --primary-foreground: 0 0% 0%;
-
     --secondary: 0 0% 10%;
     --secondary-foreground: 0 0% 100%;
-
     --muted: 0 0% 15%;
     --muted-foreground: 0 0% 70%;
-
-    --accent: 268 100% 65%;
-    /* Keeping a subtle purple for highlights if needed */
-    --accent-foreground: 0 0% 100%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
     --border: 0 0% 15%;
     --input: 0 0% 15%;
     --ring: 0 0% 100%;
-
-    --radius: 2rem;
-    /* Large radius for buttons and cards */
+    --grid-opacity: 0.05;
   }
 }
 
@@ -68,41 +67,66 @@
 
 @layer components {
   .text-glow {
-    text-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
   }
 
   /* Glass morphism */
   .glass {
-    @apply bg-white/5 backdrop-blur-xl border border-white/10;
+    @apply backdrop-blur-xl transition-all duration-300;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+  }
+
+  :root {
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(0, 0, 0, 0.05);
+    --glass-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  }
+
+  .dark {
+    --glass-bg: rgba(0, 0, 0, 0.3);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   }
 
   /* Updated Button Styles */
   .btn-cyber {
     @apply relative overflow-hidden transition-all duration-300;
-    background: linear-gradient(180deg, #1a1a1a 0%, #000 100%);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 0 rgba(255, 255, 255, 0.05);
+    background: linear-gradient(180deg, #111 0%, #000 100%);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
   }
 
   .btn-cyber:hover {
     @apply -translate-y-[2px];
-    border-color: rgba(255, 255, 255, 0.3);
-    box-shadow: 0 6px 0 rgba(255, 255, 255, 0.1);
+    border-color: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.15);
   }
 
   .btn-cyber:active {
     @apply translate-y-[2px];
-    box-shadow: 0 2px 0 rgba(255, 255, 255, 0.1);
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.1);
   }
 
   /* Design specific utilities */
   .grid-pattern {
-    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-image: radial-gradient(circle, currentColor 1px, transparent 1px);
     background-size: 30px 30px;
+    opacity: var(--grid-opacity);
   }
 
   .gradient-text {
-    @apply bg-clip-text text-transparent bg-gradient-to-b from-white to-white/50;
+    @apply bg-clip-text text-transparent bg-gradient-to-b;
+    background-image: var(--gradient-text-bg);
+  }
+
+  :root {
+    --gradient-text-bg: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, 0.5) 100%);
+  }
+
+  .dark {
+    --gradient-text-bg: linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, 0.5) 100%);
   }
 }
 
