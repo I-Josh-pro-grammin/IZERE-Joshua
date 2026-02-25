@@ -1,4 +1,4 @@
-import { Github, Linkedin, Mail, ArrowUpRight, Plus, Menu, X, Send, Loader2, CheckCircle, Check, Globe, Smartphone, Layout, Palette, Sun, Moon } from "lucide-react";
+import { Github, Linkedin, Mail, ArrowUpRight, Plus, Menu, X, Send, Loader2, CheckCircle, Check, Globe, Smartphone, Layout, Palette, Sun, Moon, Phone } from "lucide-react";
 
 const bCode = "/bcode.png";
 const akaguriro = "/akaguriroo.png";
@@ -970,9 +970,9 @@ export default function Index() {
                 <div className="flex flex-col sm:flex-row gap-6">
                   <Magnetic>
                     <Button size="lg" variant="outline" className="h-16 px-12 border-border hover:bg-foreground hover:text-background transition-colors" asChild>
-                      <a href="https://linkedin.com/in/izere-joshua" target="_blank" rel="noopener noreferrer">
-                        <Linkedin className="mr-3 w-5 h-5" />
-                        LinkedIn
+                      <a href="tel:+250739587054">
+                        <Phone className="mr-3 w-5 h-5" />
+                        Call Me
                       </a>
                     </Button>
                   </Magnetic>
