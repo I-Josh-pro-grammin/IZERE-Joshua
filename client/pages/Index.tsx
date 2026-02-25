@@ -224,14 +224,14 @@ export default function Index() {
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="fixed inset-0 z-40 bg-white/95 backdrop-blur-xl pt-24 px-6 md:hidden"
+          className="fixed inset-0 z-40 bg-background/95 backdrop-blur-xl pt-24 px-6 md:hidden"
         >
-          <div className="flex flex-col space-y-6 text-2xl font-bold text-black">
+          <div className="flex flex-col space-y-6 text-2xl font-bold text-foreground">
             {["Services", "Projects", "Process", "Contact"].map((item) => (
               <a
                 key={item}
                 href={`#${item.toLowerCase()}`}
-                className="hover:text-black/60 transition-colors"
+                className="hover:text-muted-foreground transition-colors"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {item}
@@ -665,11 +665,11 @@ export default function Index() {
 
       {/* Engineering Excellence Section */}
 
-      <section className="py-32 px-6 bg-[#f8f8f8] relative overflow-hidden border-y border-black/[0.03]">
+      <section className="py-32 px-6 bg-muted/30 relative overflow-hidden border-y border-border">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-[#0a0a0a]">
-              Engineering <span className="text-black/30 font-medium">Excellence</span>
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-foreground">
+              Engineering <span className="text-muted-foreground font-medium">Excellence</span>
             </h2>
           </div>
 
@@ -683,10 +683,10 @@ export default function Index() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="bg-white/70 backdrop-blur-xl border border-black/5 shadow-sm p-8 rounded-[2rem] flex items-center space-x-4 group hover:bg-black/5 transition-colors"
+                className="glass p-8 rounded-[2rem] flex items-center space-x-4 group hover:bg-primary/[0.02] transition-colors"
               >
-                <div className="w-2 h-2 rounded-full bg-black opacity-10" />
-                <span className="font-bold text-sm tracking-tight text-[#0a0a0a]">{point}</span>
+                <div className="w-2 h-2 rounded-full bg-primary opacity-20" />
+                <span className="font-bold text-sm tracking-tight">{point}</span>
               </motion.div>
             ))}
           </div>
@@ -706,9 +706,9 @@ export default function Index() {
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.6, delay: 0.4 }}
                 >
-                  <Badge variant="outline" className="px-4 py-1.5 border-white/10 bg-white/5 rounded-full text-[10px] font-mono tracking-widest uppercase relative overflow-hidden group">
+                  <Badge variant="outline" className="px-4 py-1.5 border-border bg-muted/50 rounded-full text-[10px] font-mono tracking-widest uppercase relative overflow-hidden group">
                     <span className="relative z-10">✦ Happy Clients</span>
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:animate-shimmer" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/5 to-transparent -translate-x-full group-hover:animate-shimmer" />
                   </Badge>
                 </motion.div>
 
@@ -718,14 +718,14 @@ export default function Index() {
                   transition={{ duration: 0.8, delay: 0 }}
                   className="text-5xl md:text-6xl font-bold tracking-tighter leading-tight animate-float"
                 >
-                  Clients <span className="text-black/30 font-medium">Love me</span>
+                  Clients <span className="text-muted-foreground font-medium">Love me</span>
                 </motion.h2>
 
                 <motion.p
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.5 }}
-                  className="text-lg text-white/50 max-w-sm font-medium leading-relaxed"
+                  className="text-lg text-muted-foreground max-w-sm font-medium leading-relaxed"
                 >
                   Trusted by 10+ happy clients, providing great solutions through optimized engineering.
                 </motion.p>
@@ -741,10 +741,10 @@ export default function Index() {
                       initial={{ opacity: 0, scale: 0.8 }}
                       whileInView={{ opacity: 1, scale: 1 }}
                       transition={{ duration: 0.5, delay: 0.6 + (i * 0.1) }}
-                      className="bg-white/50 backdrop-blur-xl border border-black/5 shadow-sm p-5 rounded-2xl group hover:bg-black/5 transition-colors"
+                      className="glass p-5 rounded-2xl group hover:bg-primary/[0.02] transition-colors"
                     >
-                      <div className="text-2xl font-bold mb-1 group-hover:text-black transition-colors">{stat.value}</div>
-                      <div className="text-[10px] text-black/40 font-bold uppercase tracking-tight">{stat.label}</div>
+                      <div className="text-2xl font-bold mb-1 transition-colors">{stat.value}</div>
+                      <div className="text-[10px] text-muted-foreground font-bold uppercase tracking-tight">{stat.label}</div>
                     </motion.div>
                   ))}
                 </div>
@@ -789,30 +789,30 @@ export default function Index() {
                   style={{ zIndex: i + 1, top: 120 + i * 20 }}
                 >
                   <TiltCard className="h-full">
-                    <div className="bg-white/80 backdrop-blur-3xl border border-black/10 p-8 md:p-12 rounded-[2.5rem] relative group-hover:border-black/30 transition-all shadow-xl">
+                    <div className="glass p-8 md:p-12 rounded-[2.5rem] relative group-hover:bg-primary/[0.01] transition-all shadow-xl">
                       <div className="flex items-center space-x-6 mb-10">
-                        <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-br from-black/5 to-transparent border border-black/10 flex items-center justify-center overflow-hidden">
+                        <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-muted border border-border flex items-center justify-center overflow-hidden">
                           {client.image ? (
                             <img src={client.image} alt={client.name} className="w-full h-full object-cover" />
                           ) : (
-                            <span className="text-2xl font-bold text-black/20">{client.name[0]}</span>
+                            <span className="text-2xl font-bold text-muted-foreground">{client.name[0]}</span>
                           )}
                         </div>
                         <div>
-                          <div className="text-2xl font-bold mb-1 text-[#0a0a0a]">{client.name}</div>
-                          <div className="text-sm text-black/40 font-mono tracking-wider uppercase">{client.role}</div>
+                          <div className="text-2xl font-bold mb-1">{client.name}</div>
+                          <div className="text-sm text-muted-foreground font-mono tracking-wider uppercase">{client.role}</div>
                         </div>
                       </div>
                       <div className="flex items-center mb-8 space-x-1">
-                        <span className="text-base font-bold mr-3 text-[#0a0a0a]">{client.rating.toFixed(1)}</span>
+                        <span className="text-base font-bold mr-3">{client.rating.toFixed(1)}</span>
                         {[...Array(5)].map((_, s) => (
-                          <span key={s} className={cn("text-base", s < Math.floor(client.rating) ? "text-yellow-500" : "text-black/5")}>★</span>
+                          <span key={s} className={cn("text-base", s < Math.floor(client.rating) ? "text-yellow-500" : "text-muted opacity-20")}>★</span>
                         ))}
                       </div>
-                      <p className="text-xl md:text-2xl font-medium text-black/70 leading-relaxed italic">
+                      <p className="text-xl md:text-2xl font-medium text-muted-foreground leading-relaxed italic">
                         "{client.text}"
                       </p>
-                      <div className="absolute top-12 right-12 w-3 h-3 rounded-full bg-black/10 group-hover:bg-green-500 transition-colors duration-500" />
+                      <div className="absolute top-12 right-12 w-3 h-3 rounded-full bg-primary/20 group-hover:bg-green-500 transition-colors duration-500" />
                     </div>
                   </TiltCard>
                 </motion.div>
@@ -823,7 +823,7 @@ export default function Index() {
       </section>
 
       {/* Combined Process & FAQ Section */}
-      <section className="py-32 px-6 bg-[#fcfcfc] border-y border-black/[0.03]">
+      <section className="py-32 px-6 bg-muted/30 border-y border-border">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-start">
 
@@ -831,11 +831,11 @@ export default function Index() {
             <div>
               <div className="mb-16">
                 <ScrollReveal>
-                  <h2 className="text-4xl md:text-6xl font-bold tracking-tighter mb-6 leading-tight text-[#0a0a0a]">
+                  <h2 className="text-4xl md:text-6xl font-bold tracking-tighter mb-6 leading-tight">
                     Development <br />
-                    <span className="text-black/30 font-medium whitespace-nowrap">Lifecycle</span>
+                    <span className="text-muted-foreground font-medium whitespace-nowrap">Lifecycle</span>
                   </h2>
-                  <p className="text-black/50 max-w-xl font-medium leading-relaxed">
+                  <p className="text-muted-foreground max-w-xl font-medium leading-relaxed">
                     Building secure, high-performance systems through a structured engineering approach.
                   </p>
                 </ScrollReveal>
@@ -856,11 +856,11 @@ export default function Index() {
                     className="group"
                   >
                     <TiltCard className="h-full">
-                      <div className="relative bg-white/70 backdrop-blur-xl border border-black/5 shadow-sm p-8 rounded-[2.5rem] group-hover:bg-black/[0.01] transition-all h-full">
-                        <div className="text-3xl font-bold text-black/[0.05] group-hover:text-black/[0.1] transition-colors mb-6 font-mono">{item.step}</div>
-                        <h3 className="text-xl font-bold mb-3 text-[#0a0a0a]">{item.title}</h3>
-                        <p className="text-sm text-black/50 leading-relaxed font-medium">{item.desc}</p>
-                        <div className="absolute top-0 right-0 w-24 h-24 bg-black/[0.02] blur-3xl rounded-full translate-x-10 -translate-y-10 group-hover:bg-black/[0.04] transition-all" />
+                      <div className="relative glass p-8 rounded-[2.5rem] group-hover:bg-primary/[0.01] transition-all h-full">
+                        <div className="text-3xl font-bold text-muted-foreground/10 group-hover:text-primary/20 transition-colors mb-6 font-mono">{item.step}</div>
+                        <h3 className="text-xl font-bold mb-3">{item.title}</h3>
+                        <p className="text-sm text-muted-foreground leading-relaxed font-medium">{item.desc}</p>
+                        <div className="absolute top-0 right-0 w-24 h-24 bg-primary/[0.02] blur-3xl rounded-full translate-x-10 -translate-y-10 group-hover:bg-primary/[0.04] transition-all" />
                       </div>
                     </TiltCard>
                   </motion.div>
@@ -871,9 +871,9 @@ export default function Index() {
             {/* Right Column: FAQ */}
             <div className="lg:pt-10">
               <div className="mb-12">
-                <h2 className="text-3xl md:text-5xl font-bold tracking-tighter mb-4 text-[#0a0a0a]">
+                <h2 className="text-3xl md:text-5xl font-bold tracking-tighter mb-4">
                   Technical <br />
-                  <span className="text-black/30 font-medium whitespace-nowrap">Insights & FAQ</span>
+                  <span className="text-muted-foreground font-medium whitespace-nowrap">Insights & FAQ</span>
                 </h2>
               </div>
 
@@ -888,14 +888,14 @@ export default function Index() {
                     key={i}
                     initial={{ opacity: 0, x: 20 }}
                     whileInView={{ opacity: 1, x: 0 }}
-                    className="bg-white/70 backdrop-blur-xl rounded-[1.5rem] overflow-hidden border border-black/5 shadow-sm"
+                    className="glass rounded-[1.5rem] overflow-hidden"
                   >
                     <button
                       className="w-full p-6 text-left flex items-center justify-between group"
                       onClick={() => setActiveFaq(activeFaq === i ? null : i)}
                     >
-                      <span className="text-base font-bold group-hover:text-black/80 transition-colors text-[#0a0a0a]">{faq.q}</span>
-                      <Plus className={cn("w-4 h-4 text-black/30 transition-transform duration-300", activeFaq === i && "rotate-45")} />
+                      <span className="text-base font-bold group-hover:text-primary transition-colors">{faq.q}</span>
+                      <Plus className={cn("w-4 h-4 text-muted-foreground transition-transform duration-300", activeFaq === i && "rotate-45")} />
                     </button>
                     <AnimatePresence>
                       {activeFaq === i && (
@@ -906,7 +906,7 @@ export default function Index() {
                           transition={{ duration: 0.3 }}
                           className="overflow-hidden"
                         >
-                          <div className="px-6 pb-6 text-sm text-black/50 font-medium leading-relaxed">
+                          <div className="px-6 pb-6 text-sm text-muted-foreground font-medium leading-relaxed">
                             {faq.a}
                           </div>
                         </motion.div>
@@ -922,23 +922,23 @@ export default function Index() {
       </section>
 
       {/* Footer CTA & Contact Form */}
-      <footer id="contact" className="py-32 px-6 bg-[#fafafa]">
-        <div className="max-w-7xl mx-auto bg-white/70 backdrop-blur-xl p-12 md:p-20 rounded-[4rem] relative overflow-hidden border border-black/5 shadow-sm">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-black/[0.02] blur-[100px] rounded-full -translate-y-1/2" />
+      <footer id="contact" className="py-32 px-6 bg-background">
+        <div className="max-w-7xl mx-auto glass p-12 md:p-20 rounded-[4rem] relative overflow-hidden">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-primary/[0.02] blur-[100px] rounded-full -translate-y-1/2" />
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
             <ScrollReveal>
               <div className="max-w-xl">
-                <h2 className="text-5xl md:text-8xl font-bold tracking-tighter mb-10 leading-[0.9] text-[#0a0a0a]">
+                <h2 className="text-5xl md:text-8xl font-bold tracking-tighter mb-10 leading-[0.9]">
                   Let's Grow <br />
-                  <span className="text-black/30 italic">Together</span>
+                  <span className="text-muted-foreground italic">Together</span>
                 </h2>
-                <p className="text-xl text-black/50 mb-16 font-medium leading-relaxed">
+                <p className="text-xl text-muted-foreground mb-16 font-medium leading-relaxed">
                   Have a visionary project in mind? Let's turn your ideas into a high-performance digital reality.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-6">
                   <Magnetic>
-                    <Button size="lg" variant="outline" className="h-16 px-12 border-black/10 text-black hover:bg-black hover:text-white transition-colors" asChild>
+                    <Button size="lg" variant="outline" className="h-16 px-12 border-border hover:bg-foreground hover:text-background transition-colors" asChild>
                       <a href="https://linkedin.com/in/izere-joshua" target="_blank" rel="noopener noreferrer">
                         <Linkedin className="mr-3 w-5 h-5" />
                         LinkedIn
@@ -952,40 +952,40 @@ export default function Index() {
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              className="bg-white/80 backdrop-blur-xl p-8 md:p-12 rounded-[2.5rem] relative z-10 border border-black/5 shadow-xl"
+              className="glass p-8 md:p-12 rounded-[2.5rem] relative z-10 shadow-xl"
             >
-              <h3 className="text-2xl font-bold mb-8 text-[#0a0a0a]">Send a Message</h3>
+              <h3 className="text-2xl font-bold mb-8">Send a Message</h3>
               <div className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-xs uppercase tracking-widest text-black/40 font-bold mb-3">Your Name</label>
+                    <label className="block text-xs uppercase tracking-widest text-muted-foreground font-bold mb-3">Your Name</label>
                     <input
                       type="text"
                       value={contactName}
                       onChange={(e) => setContactName(e.target.value)}
                       placeholder="John Doe"
-                      className="w-full bg-black/[0.02] border border-black/10 rounded-2xl px-6 py-4 text-black placeholder:text-black/20 focus:outline-none focus:border-black/30 transition-colors"
+                      className="w-full bg-muted/30 border border-border rounded-2xl px-6 py-4 text-foreground placeholder:text-muted-foreground/30 focus:outline-none focus:border-primary/30 transition-colors"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs uppercase tracking-widest text-black/40 font-bold mb-3">Email Address</label>
+                    <label className="block text-xs uppercase tracking-widest text-muted-foreground font-bold mb-3">Email Address</label>
                     <input
                       type="email"
                       value={contactEmail}
                       onChange={(e) => setContactEmail(e.target.value)}
                       placeholder="john@example.com"
-                      className="w-full bg-black/[0.02] border border-black/10 rounded-2xl px-6 py-4 text-black placeholder:text-black/20 focus:outline-none focus:border-black/30 transition-colors"
+                      className="w-full bg-muted/30 border border-border rounded-2xl px-6 py-4 text-foreground placeholder:text-muted-foreground/30 focus:outline-none focus:border-primary/30 transition-colors"
                     />
                   </div>
                 </div>
                 <div>
-                  <label className="block text-xs uppercase tracking-widest text-black/40 font-bold mb-3">Message</label>
+                  <label className="block text-xs uppercase tracking-widest text-muted-foreground font-bold mb-3">Message</label>
                   <textarea
                     rows={4}
                     value={contactMessage}
                     onChange={(e) => setContactMessage(e.target.value)}
                     placeholder="Tell me about your project..."
-                    className="w-full bg-black/[0.02] border border-black/10 rounded-2xl px-6 py-4 text-black placeholder:text-black/20 focus:outline-none focus:border-black/30 transition-colors resize-none"
+                    className="w-full bg-muted/30 border border-border rounded-2xl px-6 py-4 text-foreground placeholder:text-muted-foreground/30 focus:outline-none focus:border-primary/30 transition-colors resize-none"
                   />
                 </div>
                 <Button
@@ -1026,11 +1026,11 @@ export default function Index() {
             </motion.div>
           </div>
 
-          <div className="mt-24 pt-12 border-t border-black/5 flex flex-col md:flex-row items-center justify-between gap-8">
-            <div className="text-sm font-bold tracking-tighter font-mono text-black/60">IZERE.SYSTEMS [v 2.5]</div>
-            <div className="flex items-center space-x-8 text-sm font-medium text-black/40">
-              <a href="#" className="hover:text-black transition-colors">Privacy</a>
-              <a href="#" className="hover:text-black transition-colors">Terms</a>
+          <div className="mt-24 pt-12 border-t border-border flex flex-col md:flex-row items-center justify-between gap-8">
+            <div className="text-sm font-bold tracking-tighter font-mono text-muted-foreground">IZERE.SYSTEMS [v 2.5]</div>
+            <div className="flex items-center space-x-8 text-sm font-medium text-muted-foreground">
+              <a href="#" className="hover:text-foreground transition-colors">Privacy</a>
+              <a href="#" className="hover:text-foreground transition-colors">Terms</a>
               <span>© 2025 IZERE JOSHUA</span>
             </div>
             <div className="flex items-center space-x-4">
@@ -1040,7 +1040,7 @@ export default function Index() {
                 { Icon: Mail, href: "https://mail.google.com/mail/?view=cm&to=izerejoshua94@gmail.com" }
               ].map((item, i) => (
                 <Magnetic key={i}>
-                  <a href={item.href} target={item.href.startsWith("http") ? "_blank" : undefined} className="w-10 h-10 bg-black/[0.03] border border-black/5 rounded-full flex items-center justify-center hover:bg-black/5 transition-colors text-black/60 hover:text-black">
+                  <a href={item.href} target={item.href.startsWith("http") ? "_blank" : undefined} className="w-10 h-10 bg-primary/5 border border-border rounded-full flex items-center justify-center hover:bg-primary/10 transition-colors text-muted-foreground hover:text-foreground">
                     <item.Icon className="w-4 h-4" />
                   </a>
                 </Magnetic>
@@ -1070,7 +1070,7 @@ export default function Index() {
               ease: "linear",
               delay: -Math.random() * 20
             }}
-            className="absolute w-1 h-1 bg-black rounded-full"
+            className="absolute w-1 h-1 bg-foreground rounded-full"
             style={{
               filter: `blur(${Math.random() * 2}px)`,
             }}
