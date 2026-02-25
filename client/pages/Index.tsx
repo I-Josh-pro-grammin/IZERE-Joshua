@@ -1,4 +1,5 @@
 import { Github, Linkedin, Mail, ArrowUpRight, Plus, Menu, X, Send, Loader2, CheckCircle, Check, Globe, Smartphone, Layout, Palette, Sun, Moon } from "lucide-react";
+import emailjs from '@emailjs/browser';
 const bCode = "/bcode.png";
 const akaguriro = "/akaguriroo.png";
 const projects = "/projects.png";
@@ -127,6 +128,7 @@ export default function Index() {
   const [contactMessage, setContactMessage] = useState("");
   const [isSending, setIsSending] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [showError, setShowError] = useState(false);
   const [theme, setTheme] = useState<"light" | "dark">("light");
 
   useEffect(() => {
@@ -156,19 +158,39 @@ export default function Index() {
     if (!contactName || !contactEmail || !contactMessage) return;
 
     setIsSending(true);
-    // Simulate network request
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    setShowError(false);
+    setShowSuccess(false);
 
-    setIsSending(false);
-    setShowSuccess(true);
+    try {
+      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
-    // Reset form
-    setContactName("");
-    setContactEmail("");
-    setContactMessage("");
+      if (!serviceId || !templateId || !publicKey || serviceId === "your_service_id") {
+        throw new Error("EmailJS configuration missing");
+      }
 
-    // Hide success message after 5 seconds
-    setTimeout(() => setShowSuccess(false), 5000);
+      const templateParams = {
+        from_name: contactName,
+        from_email: contactEmail,
+        message: contactMessage,
+        to_name: "IZERE Joshua",
+      };
+
+      await emailjs.send(serviceId, templateId, templateParams, publicKey);
+
+      setIsSending(false);
+      setShowSuccess(true);
+      setContactName("");
+      setContactEmail("");
+      setContactMessage("");
+      setTimeout(() => setShowSuccess(false), 5000);
+    } catch (error) {
+      console.error("EmailJS Error:", error);
+      setIsSending(false);
+      setShowError(true);
+      // We don't auto-hide error if it requires manual fallback
+    }
   };
 
   return (
@@ -773,7 +795,7 @@ export default function Index() {
                 { image: "/KIRENGA_Kenny.png", name: "KIRENGA Kenny", role: "Backend Developer at I-Code Rwanda", text: "He was instrumental in building the backend of IMove, delivering a scalable, secure, and well-architected system. Highly skilled, reliable, and committed to excellence — a backend developer you can truly trust.", rating: 5 },
                 { image: "/aaron.png", name: "Twarimitswe Aaron", role: "Mentor At Brainiacs and Minister of Discipline at RCA", text: "Joshua is a persistent and highly motivated Full Stack Engineer who approaches every project with determination and ownership. His commitment to delivering quality results and pushing through challenges makes him someone you can confidently rely on for complex and demanding work.", rating: 4.9 },
                 { image: "/darius.jpg", name: "Niyonkuru Darius", role: "Mentor At Brainiacs and Minister of Academics at RCA", text: "Joshua is not just a developer but a true programmer. He doesn’t only write code; he understands the logic behind it and thinks deeply to find better solutions. His way of thinking is unique and impactful. I’ve known him for a year, and he continues to impress me—not only technically, but also mentally and socially. Beyond his skills, he has been a great friend, and working with him is truly inspiring.", rating: 5 },
-                { image: "", name: "Ange", role: "Design Lead, Bloom", text: "His ability to bridge gap between complex backend logic and smooth frontend motion is incredible.", rating: 5 }
+                { image: "/Ange.jpeg", name: "Ange", role: "Design Lead, Bloom", text: "Joshua is a hardworking colleague who fearlessly risks himself to get the job done. He cooperates seamlessly with others and always drives team success.", rating: 5 }
               ].map((client, i) => (
                 <motion.div
                   key={i}
@@ -1015,6 +1037,33 @@ export default function Index() {
                     >
                       <CheckCircle className="w-5 h-5" />
                       <span className="font-bold text-sm">Message sent successfully!</span>
+                    </motion.div>
+                  )}
+                  {showError && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      className="mt-6 p-4 rounded-2xl bg-red-500/10 border border-red-500/20"
+                    >
+                      <div className="flex items-center space-x-3 text-red-600 mb-3">
+                        <X className="w-5 h-5" />
+                        <span className="font-bold text-sm">Network restriction detected.</span>
+                      </div>
+                      <p className="text-xs text-muted-foreground mb-4">
+                        It seems your network/proxy is blocking the request. You can send the message via your email app instead.
+                      </p>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="w-full border-red-500/20 text-red-600 hover:bg-red-500 hover:text-white transition-colors"
+                        onClick={() => {
+                          window.location.href = `mailto:izerejoshua94@gmail.com?subject=Contact from ${contactName}&body=${encodeURIComponent(contactMessage)}%0A%0AFrom: ${contactName} (${contactEmail})`;
+                        }}
+                      >
+                        <Mail className="w-4 h-4 mr-2" />
+                        Send via Email App
+                      </Button>
                     </motion.div>
                   )}
                 </AnimatePresence>
