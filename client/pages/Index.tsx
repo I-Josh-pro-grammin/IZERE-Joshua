@@ -1,5 +1,5 @@
 import { Github, Linkedin, Mail, ArrowUpRight, Plus, Menu, X, Send, Loader2, CheckCircle, Check, Globe, Smartphone, Layout, Palette, Sun, Moon } from "lucide-react";
-import emailjs from '@emailjs/browser';
+
 const bCode = "/bcode.png";
 const akaguriro = "/akaguriroo.png";
 const projects = "/projects.png";
@@ -162,22 +162,22 @@ export default function Index() {
     setShowSuccess(false);
 
     try {
-      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
-      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: contactName,
+          email: contactEmail,
+          message: contactMessage,
+        }),
+      });
 
-      if (!serviceId || !templateId || !publicKey || serviceId === "your_service_id") {
-        throw new Error("EmailJS configuration missing");
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to send message via server");
       }
-
-      const templateParams = {
-        from_name: contactName,
-        from_email: contactEmail,
-        message: contactMessage,
-        to_name: "IZERE Joshua",
-      };
-
-      await emailjs.send(serviceId, templateId, templateParams, publicKey);
 
       setIsSending(false);
       setShowSuccess(true);
@@ -186,7 +186,7 @@ export default function Index() {
       setContactMessage("");
       setTimeout(() => setShowSuccess(false), 5000);
     } catch (error) {
-      console.error("EmailJS Error:", error);
+      console.error("Submission Error:", error);
       setIsSending(false);
       setShowError(true);
       // We don't auto-hide error if it requires manual fallback
@@ -479,9 +479,18 @@ export default function Index() {
                     </div>
 
                     {/* Description */}
-                    <p className="text-muted-foreground font-medium mb-10 text-base leading-relaxed max-w-lg">
+                    <p className="text-muted-foreground font-medium mb-6 text-base leading-relaxed max-w-lg">
                       {project.desc}
                     </p>
+
+                    {/* Tech Stacks */}
+                    <div className="flex flex-wrap gap-2 mb-10">
+                      {project.tags?.map((tag, idx) => (
+                        <span key={idx} className="px-3 py-1 rounded-full bg-muted/50 border border-border text-[10px] font-mono font-bold tracking-tight text-muted-foreground uppercase">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
 
                     {/* Image Area */}
                     <div className={`relative mt-auto w-full ${project.imageHeight} rounded-[2rem] overflow-hidden border border-border bg-muted/30 group-hover:border-primary/10 transition-all duration-700`}>
@@ -1048,27 +1057,42 @@ export default function Index() {
                     >
                       <div className="flex items-center space-x-3 text-red-600 mb-3">
                         <X className="w-5 h-5" />
-                        <span className="font-bold text-sm">Network restriction detected.</span>
+                        <span className="font-bold text-sm">Message Delivery Interrupted.</span>
                       </div>
                       <p className="text-xs text-muted-foreground mb-4">
-                        It seems your network/proxy is blocking the request. You can send the message via your email app instead.
+                        Your current network or proxy might be blocking the request. You can try again or use the fallback below.
                       </p>
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        className="w-full border-red-500/20 text-red-600 hover:bg-red-500 hover:text-white transition-colors"
-                        onClick={() => {
-                          window.location.href = `mailto:izerejoshua94@gmail.com?subject=Contact from ${contactName}&body=${encodeURIComponent(contactMessage)}%0A%0AFrom: ${contactName} (${contactEmail})`;
-                        }}
-                      >
-                        <Mail className="w-4 h-4 mr-2" />
-                        Send via Email App
-                      </Button>
+                      <div className="flex flex-col sm:flex-row gap-3">
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="flex-1 border-red-500/20 text-red-600 hover:bg-red-500 hover:text-white transition-colors"
+                          asChild
+                        >
+                          <a href={`mailto:izerejoshua94@gmail.com?subject=Contact from ${contactName}&body=${encodeURIComponent(contactMessage)}%0A%0AFrom: ${contactName} (${contactEmail})`}>
+                            <Mail className="w-4 h-4 mr-2" />
+                            Send via Email App
+                          </a>
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="text-muted-foreground hover:text-foreground"
+                          onClick={() => {
+                            setContactName("");
+                            setContactEmail("");
+                            setContactMessage("");
+                            setShowError(false);
+                          }}
+                        >
+                          Clear Form
+                        </Button>
+                      </div>
                     </motion.div>
                   )}
                 </AnimatePresence>
 
-                <p className="text-center text-black/30 text-[10px] font-mono tracking-widest uppercase">
+                <p className="text-center text-muted-foreground/30 text-[10px] font-mono tracking-widest uppercase">
                   ✦ Direct Response Guaranteed
                 </p>
               </div>
