@@ -228,9 +228,14 @@ export default function Index() {
             >
               {theme === "light" ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
             </button>
-            <Button variant="outline" size="sm" className="hidden sm:inline-flex">
-              Let's talk
-            </Button>
+            <Magnetic>
+              <Button variant="outline" size="sm" className="hidden sm:inline-flex" asChild>
+                <a href="/IZERE_JOSHUA_CV.pdf" download="IZERE_JOSHUA_CV.pdf">
+                  <Download className="mr-2 w-4 h-4" />
+                  Download CV
+                </a>
+              </Button>
+            </Magnetic>
             <button
               className="md:hidden p-1"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
