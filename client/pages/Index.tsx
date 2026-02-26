@@ -291,7 +291,7 @@ export default function Index() {
                   className="w-full h-full object-cover grayscale brightness-110 group-hover:grayscale-0 transition-all duration-700"
                 />
               </div>
-              <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-background border border-border rounded-full flex items-center justify-center shadow-sm">
+              <div className="absolute bottom-7 right-7 w-8 h-8 bg-background border border-border rounded-full flex items-center justify-center shadow-sm">
                 <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
               </div>
             </motion.div>
@@ -343,7 +343,7 @@ export default function Index() {
               </Magnetic>
               <Magnetic>
                 <Button size="lg" variant="outline" className="h-16 px-12" asChild>
-                  <a href="https://mail.google.com/mail/?view=cm&to=izerejoshua94@gmail.com" target="_blank" rel="noopener noreferrer">Contact Now</a>
+                  <a href="https://mail.google.com/mail/?view=cm&to=izerejoshua94@gmail.com" target="_blank" rel="noopener noreferrer">Contact Me</a>
                 </Button>
               </Magnetic>
             </div>
@@ -818,7 +818,7 @@ export default function Index() {
                 { image: "/aaron.png", name: "Twarimitswe Aaron", role: "Mentor At Brainiacs and Minister of Discipline at RCA", text: "Joshua is a persistent and highly motivated Full Stack Engineer who approaches every project with determination and ownership. His commitment to delivering quality results and pushing through challenges makes him someone you can confidently rely on for complex and demanding work.", rating: 4.9 },
                 { image: "/darius.jpg", name: "Niyonkuru Darius", role: "Mentor At Brainiacs and Minister of Academics at RCA", text: "Joshua is not just a developer but a true programmer. He doesn’t only write code; he understands the logic behind it and thinks deeply to find better solutions. His way of thinking is unique and impactful. I’ve known him for a year, and he continues to impress me—not only technically, but also mentally and socially. Beyond his skills, he has been a great friend, and working with him is truly inspiring.", rating: 5 },
                 { image: "/Ange.jpeg", name: "Ange", role: "Design Lead, Bloom", text: "Joshua is a hardworking colleague who fearlessly risks himself to get the job done. He cooperates seamlessly with others and always drives team success.", rating: 5 },
-                { image: "/ashrafu.jpeg", name: "Ashrafu", role: "Design Lead, Bloom", text: "Joshua is a hardworking colleague who fearlessly risks himself to get the job done. He cooperates seamlessly with others and always drives team success.", rating: 5 }
+                { image: "/ashrafu.png", name: "Ashrafu", role: "Design Lead, Bloom", text: "Working with Joshua has been an incredibly rewarding experience. He brings a rare combination of technical skill, creativity, and genuine curiosity to every discussion. Whether we were brainstorming ideas or mentoring together at Brainiacs, he consistently showed strong leadership, thoughtful problem-solving, and a passion for helping others grow. Joshua doesn’t just build solutions — he elevates the people around him and turns ideas into clear, actionable outcomes. Any team would benefit from his energy and vision.", rating: 5 }
               ].map((client, i) => (
                 <motion.div
                   key={i}
