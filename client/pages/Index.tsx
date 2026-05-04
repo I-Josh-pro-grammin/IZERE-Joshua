@@ -202,8 +202,8 @@ export default function Index() {
       <div className="fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[500px] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
 
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 px-6 py-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-between glass px-6 py-3 rounded-full">
+      <nav className="fixed top-0 w-full z-50 px-6 py-4">
+        <div className="max-w-7xl mx-auto flex items-center justify-between glass px-6 py-4">
           <div className="flex items-center space-x-2">
             <span className="text-lg font-extrabold tracking-tighter">IZERE.</span>
           </div>
@@ -223,7 +223,7 @@ export default function Index() {
           <div className="flex items-center space-x-4">
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+              className="p-2 rounded-sm hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
               aria-label="Toggle theme"
             >
               {theme === "light" ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
@@ -284,7 +284,7 @@ export default function Index() {
               className="relative w-80 h-80 mb-10 group"
             >
               <div className="absolute -inset-10 bg-primary/5 rounded-full blur-2xl group-hover:bg-primary/10 transition-all duration-500" />
-              <div className="relative w-full h-full rounded-full border border-primary/10 overflow-hidden glass">
+              <div className="relative w-full h-full rounded-[5px] border border-primary/10 overflow-hidden glass">
                 <img
                   src={joshImg}
                   alt="IZERE JOSHUA"
@@ -471,6 +471,34 @@ export default function Index() {
                 colSpan: "md:col-span-12 lg:col-span-7",
                 rowSpan: "md:row-span-1",
                 imageHeight: "h-[250px]"
+              },
+              {
+                title: "Career Guidance",
+                label: "Vantage",
+                desc: "A mobile app that provides an advantage to students by recommending the optimal career path based on the RIASEC model.",
+                icon: <Smartphone className="w-6 h-6" />,
+                github: "#",
+                tags: ["React Native", "AI", "Mobile"],
+                colSpan: "md:col-span-12 lg:col-span-5",
+                rowSpan: "md:row-span-1",
+                imageHeight: "h-[250px]",
+                customContent: true,
+                customIcon: <Smartphone className="w-24 h-24" />,
+                customLabel: "Mobile Architecture"
+              },
+              {
+                title: "AI Recruitment",
+                label: "Bora AI",
+                desc: "An AI application built for job recruiters that provides accurate, automated screening results to streamline hiring.",
+                icon: <Layout className="w-6 h-6" />,
+                github: "#",
+                tags: ["OpenAI", "Next.js", "TypeScript"],
+                colSpan: "md:col-span-12 lg:col-span-7",
+                rowSpan: "md:row-span-1",
+                imageHeight: "h-[250px]",
+                customContent: true,
+                customIcon: <Layout className="w-24 h-24" />,
+                customLabel: "AI System Interface"
               }
             ].map((project, i) => (
               <motion.div
@@ -510,8 +538,8 @@ export default function Index() {
                       {project.customContent ? (
                         <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-primary/5 to-transparent backdrop-blur-3xl">
                           <div className="flex flex-col items-center gap-6 opacity-30 group-hover:opacity-50 transition-opacity">
-                            <Smartphone className="w-24 h-24" />
-                            <span className="font-mono text-sm tracking-widest uppercase">System Interface Architecture</span>
+                            {project.customIcon || <Smartphone className="w-24 h-24" />}
+                            <span className="font-mono text-sm tracking-widest uppercase text-center px-4">{project.customLabel || "System Interface Architecture"}</span>
                           </div>
                         </div>
                       ) : (
