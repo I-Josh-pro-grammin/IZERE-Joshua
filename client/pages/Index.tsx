@@ -3,7 +3,7 @@ import { Github, Linkedin, Mail, ArrowUpRight, Plus, Menu, X, Send, Loader2, Che
 const bCode = "/bcode.png";
 const akaguriro = "/akaguriroo.png";
 const projects = "/projects.png";
-const joshImg = "/Greenland2.jpg";
+const joshImg = "/nkera.jpeg";
 const ebuy = "/ebuy.png";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -14,6 +14,7 @@ import { cn } from "@/lib/utils";
 import { useMotionValue, useSpring, useTransform } from "framer-motion";
 
 // Helper for 3D Tilt effect
+import { Hero3DCarousel } from "@/components/ui/hero-3d-carousel";
 const TiltCard = ({ children, className }: { children: React.ReactNode, className?: string }) => {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -193,16 +194,26 @@ export default function Index() {
     }
   };
 
+  const heroCarouselProjects = useMemo(() => [
+    { title: "Web Platforms", label: "Brainly Code", tags: ["React", "Nest.js"] },
+    { title: "Digital Commerce", label: "Akaguriro", tags: ["TypeScript", "Supabase"] },
+    { title: "Mobile Architecture", label: "IMove App", tags: ["React Native", "MongoDB"] },
+    { title: "Visual Identity", label: "E-Buy Store", tags: ["Next.js", "Tailwind"] },
+    { title: "Career Guidance", label: "Vantage", tags: ["React Native", "AI"] },
+    { title: "AI Recruitment", label: "Bora AI", tags: ["OpenAI", "Next.js"] }
+  ], []);
+
   return (
-    <div className="min-h-screen bg-background text-foreground selection:bg-primary selection:text-primary-foreground cursor-none transition-colors duration-500">
+    <div className="min-h-screen border border-[0.5px] border-gray-600 mx-[6.5rem] px-[0.1rem] bg-background text-foreground selection:bg-primary selection:text-primary-foreground cursor-none transition-colors duration-500">
       <CustomCursor />
       {/* Background Decor */}
       <div className="fixed inset-0 grid-pattern pointer-events-none" />
       <div className="fixed inset-0 bg-[linear-gradient(rgba(0,0,0,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.02)_1px,transparent_1px)] dark:bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[length:40px_40px] pointer-events-none" />
+      
       <div className="fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[500px] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
 
       {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 px-6 py-4">
+      <nav className="fixed top-0 left-0 w-full z-50 px-6 py-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between glass px-6 py-4">
           <div className="flex items-center space-x-2">
             <span className="text-lg font-extrabold tracking-tighter">IZERE.</span>
@@ -229,7 +240,7 @@ export default function Index() {
               {theme === "light" ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
             </button>
             <Magnetic>
-              <Button variant="outline" size="sm" className="hidden sm:inline-flex" asChild>
+              <Button variant="outline" size="sm" className="hidden bg-blue-500 hover:bg-blue-600 sm:inline-flex" asChild>
                 <a href="/IZERE_JOSHUA_CV.pdf" download="IZERE_JOSHUA_CV.pdf">
                   <Download className="mr-2 w-4 h-4" />
                   Download CV
@@ -269,8 +280,10 @@ export default function Index() {
       )}
 
       {/* Hero Section */}
-      <section className="relative pt-44 pb-32 px-6">
-        <div className="max-w-7xl mx-auto">
+      <section className="relative pt-44 pb-32 px-6 border-b border-border/30">
+        <div className="max-w-7xl mx-auto border-x border-border/30 relative">
+          <div className="hidden md:block absolute -bottom-[1px] -left-[1px] w-1.5 h-1.5 bg-foreground/30 translate-y-1/2 -translate-x-1/2 z-10" />
+          <div className="hidden md:block absolute -bottom-[1px] -right-[1px] w-1.5 h-1.5 bg-foreground/30 translate-y-1/2 translate-x-1/2 z-10" />
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -281,19 +294,9 @@ export default function Index() {
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 1, delay: 0.2 }}
-              className="relative w-80 h-80 mb-10 group"
+              className="relative w-full max-w-4xl mx-auto mb-10"
             >
-              <div className="absolute -inset-10 bg-primary/5 rounded-full blur-2xl group-hover:bg-primary/10 transition-all duration-500" />
-              <div className="relative w-full h-full rounded-[5px] border border-primary/10 overflow-hidden glass">
-                <img
-                  src={joshImg}
-                  alt="IZERE JOSHUA"
-                  className="w-full h-full object-cover grayscale brightness-110 group-hover:grayscale-0 transition-all duration-700"
-                />
-              </div>
-              <div className="absolute bottom-7 right-7 w-8 h-8 bg-background border border-border rounded-full flex items-center justify-center shadow-sm">
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-              </div>
+              <Hero3DCarousel imageSrc={joshImg} projects={heroCarouselProjects} />
             </motion.div>
 
             <Badge variant="outline" className="mb-8 px-4 py-1.5 border-border bg-muted rounded-full text-[10px] font-mono tracking-widest uppercase text-muted-foreground">
@@ -329,7 +332,7 @@ export default function Index() {
 
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
               <Magnetic>
-                <Button size="lg" className="h-16 px-12" onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}>
+                <Button size="lg" className="h-16 bg-blue-500 hover:bg-blue-600 text-white px-12" onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}>
                   View Projects
                 </Button>
               </Magnetic>
@@ -372,8 +375,10 @@ export default function Index() {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="py-32 px-6 relative overflow-hidden bg-background">
-        <div className="max-w-7xl mx-auto">
+      <section id="services" className="py-32 px-6 relative overflow-hidden bg-background border-b border-border/30">
+        <div className="max-w-7xl mx-auto border-x border-border/30 relative">
+          <div className="hidden md:block absolute -bottom-[1px] -left-[1px] w-1.5 h-1.5 bg-foreground/30 translate-y-1/2 -translate-x-1/2 z-10" />
+          <div className="hidden md:block absolute -bottom-[1px] -right-[1px] w-1.5 h-1.5 bg-foreground/30 translate-y-1/2 translate-x-1/2 z-10" />
           <ScrollReveal>
             <h2 className="text-4xl md:text-6xl font-bold tracking-tighter mb-16">
               Design <span className="text-muted-foreground font-medium">Services</span>
@@ -408,8 +413,10 @@ export default function Index() {
       </section>
 
       {/* Featured Projects Section */}
-      <section id="projects" className="py-32 px-6 bg-muted/30 border-y border-border">
-        <div className="max-w-7xl mx-auto">
+      <section id="projects" className="py-32 px-6 bg-muted/30 border-b border-border/30">
+        <div className="max-w-7xl mx-auto border-x border-border/30 relative">
+          <div className="hidden md:block absolute -bottom-[1px] -left-[1px] w-1.5 h-1.5 bg-foreground/30 translate-y-1/2 -translate-x-1/2 z-10" />
+          <div className="hidden md:block absolute -bottom-[1px] -right-[1px] w-1.5 h-1.5 bg-foreground/30 translate-y-1/2 translate-x-1/2 z-10" />
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
             <ScrollReveal>
               <h2 className="text-4xl md:text-6xl font-bold tracking-tighter">
@@ -610,8 +617,10 @@ export default function Index() {
       </section>
 
       {/* Technical Expertise Section */}
-      <section id="services" className="py-32 px-6 relative overflow-hidden bg-background">
-        <div className="max-w-7xl mx-auto">
+      <section id="services" className="py-32 px-6 relative overflow-hidden bg-background border-b border-border/30">
+        <div className="max-w-7xl mx-auto border-x border-border/30 relative">
+          <div className="hidden md:block absolute -bottom-[1px] -left-[1px] w-1.5 h-1.5 bg-foreground/30 translate-y-1/2 -translate-x-1/2 z-10" />
+          <div className="hidden md:block absolute -bottom-[1px] -right-[1px] w-1.5 h-1.5 bg-foreground/30 translate-y-1/2 translate-x-1/2 z-10" />
           <ScrollReveal>
             <h2 className="text-4xl md:text-6xl font-bold tracking-tighter mb-16 text-foreground">
               Technical <span className="text-muted-foreground font-medium">Expertise</span>
@@ -737,8 +746,10 @@ export default function Index() {
 
       {/* Engineering Excellence Section */}
 
-      <section className="py-32 px-6 bg-muted/30 relative overflow-hidden border-y border-border">
-        <div className="max-w-7xl mx-auto">
+      <section className="py-32 px-6 bg-muted/30 relative overflow-hidden border-b border-border/30">
+        <div className="max-w-7xl mx-auto border-x border-border/30 relative">
+          <div className="hidden md:block absolute -bottom-[1px] -left-[1px] w-1.5 h-1.5 bg-foreground/30 translate-y-1/2 -translate-x-1/2 z-10" />
+          <div className="hidden md:block absolute -bottom-[1px] -right-[1px] w-1.5 h-1.5 bg-foreground/30 translate-y-1/2 translate-x-1/2 z-10" />
           <div className="text-center mb-20">
             <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-foreground">
               Engineering <span className="text-muted-foreground font-medium">Excellence</span>
@@ -766,8 +777,10 @@ export default function Index() {
       </section>
 
       {/* Testimonials / Clients */}
-      <section id="testimonials" className="py-32 px-6">
-        <div className="max-w-7xl mx-auto">
+      <section id="testimonials" className="py-32 px-6 border-b border-border/30">
+        <div className="max-w-7xl mx-auto border-x border-border/30 relative">
+          <div className="hidden md:block absolute -bottom-[1px] -left-[1px] w-1.5 h-1.5 bg-foreground/30 translate-y-1/2 -translate-x-1/2 z-10" />
+          <div className="hidden md:block absolute -bottom-[1px] -right-[1px] w-1.5 h-1.5 bg-foreground/30 translate-y-1/2 translate-x-1/2 z-10" />
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
 
             {/* Left: Sticky Panel */}
@@ -896,8 +909,10 @@ export default function Index() {
       </section>
 
       {/* Combined Process & FAQ Section */}
-      <section className="py-32 px-6 bg-muted/30 border-y border-border">
-        <div className="max-w-7xl mx-auto">
+      <section className="py-32 px-6 bg-muted/30 border-b border-border/30">
+        <div className="max-w-7xl mx-auto border-x border-border/30 relative">
+          <div className="hidden md:block absolute -bottom-[1px] -left-[1px] w-1.5 h-1.5 bg-foreground/30 translate-y-1/2 -translate-x-1/2 z-10" />
+          <div className="hidden md:block absolute -bottom-[1px] -right-[1px] w-1.5 h-1.5 bg-foreground/30 translate-y-1/2 translate-x-1/2 z-10" />
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-start">
 
             {/* Left Column: Development Lifecycle */}
@@ -995,7 +1010,7 @@ export default function Index() {
       </section>
 
       {/* Footer CTA & Contact Form */}
-      <footer id="contact" className="py-32 px-6 bg-background">
+      <footer id="contact" className="py-32 px-6 bg-background border-t border-border/30">
         <div className="max-w-7xl mx-auto glass p-12 md:p-20 rounded-[4rem] relative overflow-hidden">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-primary/[0.02] blur-[100px] rounded-full -translate-y-1/2" />
 
