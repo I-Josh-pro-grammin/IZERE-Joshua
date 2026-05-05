@@ -120,6 +120,108 @@ const CustomCursor = () => {
   );
 };
 
+const SectionReveal = ({ children, index }: { children: React.ReactNode, index: number }) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start 100%", "start 0%"]
+  });
+
+  const scale = useTransform(scrollYProgress, [0, 1], [0.01, 1]);
+  const borderRadius = useTransform(scrollYProgress, [0, 0.5, 1], ["50%", "30%", "0%"]);
+  const y = useTransform(scrollYProgress, [0, 1], ["-50vh", "0vh"]);
+  const rotateZ = useTransform(scrollYProgress, [0, 1], [index % 2 === 0 ? 45 : -45, 0]);
+  const opacity = useTransform(scrollYProgress, [0, 0.2, 1], [0, 1, 1]);
+  const boxShadow = useTransform(
+    scrollYProgress,
+    [0, 0.5, 1],
+    ["0px 0px 0px 0px rgba(59, 130, 246, 0)", "0px 0px 100px 30px rgba(59, 130, 246, 0.4)", "0px 0px 0px 0px rgba(59, 130, 246, 0)"]
+  );
+
+  return (
+    <div ref={ref} className="w-full relative z-10 pt-[50vh]">
+      <motion.div 
+        style={{ scale, borderRadius, y, rotateZ, opacity, boxShadow }}
+        className="origin-center overflow-hidden bg-background border-t border-blue-500/20"
+      >
+        {children}
+      </motion.div>
+    </div>
+  );
+};
+
+const IntroDealer = ({ scrollY, vh }: { scrollY: any, vh: number }) => {
+  const sections = ["Services", "Projects", "Expertise", "Testimonials", "Process", "Contact"];
+  
+  return (
+    <div className="fixed inset-0 z-[100] pointer-events-none">
+      {sections.map((title, i) => {
+        const start = (i + 1) * vh;
+        const end = (i + 2) * vh;
+        
+        // This section's animation progress
+        const progress = useTransform(scrollY, [start, end], [0, 1]);
+        
+        const scale = useTransform(progress, [0, 1], [0.01, 1]);
+        const opacity = useTransform(progress, [0, 0.2, 1], [0, 1, 1]);
+        const borderRadius = useTransform(progress, [0, 0.5, 1], ["50%", "30%", "2rem"]);
+        
+        // Fly from center to a "stack" at the bottom
+        // Each card stays at the bottom, slightly offset from each other
+        const y = useTransform(progress, [0, 1], ["0vh", `${85 + i * 2}vh`]);
+        const rotateZ = useTransform(progress, [0, 1], [i % 2 === 0 ? 15 : -15, 0]);
+        const rotateX = useTransform(progress, [0, 1], [45, 0]);
+        const zIndex = 100 + i;
+
+        return (
+          <motion.div
+            key={title}
+            style={{ 
+              scale, 
+              opacity, 
+              borderRadius, 
+              y, 
+              rotateZ, 
+              rotateX,
+              zIndex,
+              backgroundColor: "var(--background)",
+              boxShadow: "0 -20px 80px rgba(59, 130, 246, 0.3)",
+              border: "1px solid rgba(59, 130, 246, 0.2)"
+            }}
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90vw] md:w-[70vw] h-[65vh] flex items-center justify-center overflow-hidden"
+          >
+            <div className="text-center p-12">
+              <span className="text-blue-500 font-mono text-xs tracking-[0.5em] uppercase mb-4 block">Manifesting</span>
+              <h3 className="text-4xl md:text-7xl font-bold tracking-tighter mb-8 leading-[0.8]">{title}</h3>
+              <div className="w-24 h-1.5 bg-gradient-to-r from-blue-500 to-transparent mx-auto rounded-full" />
+            </div>
+            
+            {/* Holographic lines */}
+            <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[length:100%_4px]" />
+            
+            <div className="absolute top-8 left-10 font-mono text-[10px] opacity-40 flex items-center gap-2">
+              <div className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-ping" />
+              <span>SECTION_{i+1} // INITIALIZING</span>
+            </div>
+            <div className="absolute bottom-8 right-10 font-mono text-[10px] opacity-40">IZERE.SYSTEMS_CORE_v2.5</div>
+          </motion.div>
+        );
+      })}
+
+      {/* Scroll to Initialize Hint */}
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2 }}
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 text-center"
+      >
+        <div className="text-[10px] font-mono tracking-[0.3em] uppercase text-muted-foreground mb-4">Scroll to Deal</div>
+        <div className="w-[1px] h-12 bg-gradient-to-b from-blue-500 to-transparent mx-auto" />
+      </motion.div>
+    </div>
+  );
+};
+
 export default function Index() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -131,16 +233,40 @@ export default function Index() {
   const [showSuccess, setShowSuccess] = useState(false);
   const [showError, setShowError] = useState(false);
   const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [vh, setVh] = useState(800);
+  const { scrollY } = useScroll();
+  const introEnd = vh * 6; // 6 stages of dealing
+  const isIntroDone = useTransform(scrollY, [introEnd, introEnd + 100], [0, 1]);
+  const introOpacity = useTransform(scrollY, [introEnd, introEnd + 200], [1, 0]);
+  const mainContentOpacity = useTransform(scrollY, [introEnd - 100, introEnd], [0, 1]);
 
   useEffect(() => {
     setIsLoaded(true);
+    setVh(window.innerHeight);
+    const handleResize = () => setVh(window.innerHeight);
+    window.addEventListener('resize', handleResize);
+    
     const savedTheme = localStorage.getItem("theme") as "light" | "dark";
     if (savedTheme) {
       setTheme(savedTheme);
     } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
       setTheme("dark");
     }
+    
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  const { scrollY: scrollYRaw } = useScroll();
+  const heroTextOpacity = useTransform(scrollYRaw, [0, vh * 0.4], [1, 0]);
+
+  const sections = [
+    { id: "services", title: "Services" },
+    { id: "projects", title: "Projects" },
+    { id: "expertise", title: "Expertise" },
+    { id: "testimonials", title: "Testimonials" },
+    { id: "process", title: "Process" },
+    { id: "contact", title: "Contact" }
+  ];
 
   useEffect(() => {
     if (theme === "dark") {
@@ -204,17 +330,14 @@ export default function Index() {
   ], []);
 
   return (
-    <div className="min-h-screen border border-[0.5px] border-gray-600 mx-[6.5rem] px-[0.1rem] bg-background text-foreground selection:bg-primary selection:text-primary-foreground cursor-none transition-colors duration-500">
+    <div className="min-h-screen bg-background text-foreground selection:bg-primary selection:text-primary-foreground cursor-none transition-colors duration-500">
       <CustomCursor />
-      {/* Background Decor */}
-      <div className="fixed inset-0 grid-pattern pointer-events-none" />
-      <div className="fixed inset-0 bg-[linear-gradient(rgba(0,0,0,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.02)_1px,transparent_1px)] dark:bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[length:40px_40px] pointer-events-none" />
       
-      <div className="fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[500px] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
-
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 w-full z-50 px-6 py-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-between glass px-6 py-4">
+      {/* Navigation - Always Visible */}
+      <nav 
+        className="fixed top-0 left-0 right-0 z-[101] border-b border-border/30 bg-background/80 backdrop-blur-xl transition-all duration-500"
+      >
+        <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
           <div className="flex items-center space-x-2">
             <span className="text-lg font-extrabold tracking-tighter">IZERE.</span>
           </div>
@@ -240,7 +363,7 @@ export default function Index() {
               {theme === "light" ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
             </button>
             <Magnetic>
-              <Button variant="outline" size="sm" className="hidden bg-blue-500 hover:bg-blue-600 sm:inline-flex" asChild>
+              <Button variant="outline" size="sm" className="hidden bg-blue-500 text-white hover:bg-blue-600 sm:inline-flex" asChild>
                 <a href="/IZERE_JOSHUA_CV.pdf" download="IZERE_JOSHUA_CV.pdf">
                   <Download className="mr-2 w-4 h-4" />
                   Download CV
@@ -257,39 +380,33 @@ export default function Index() {
         </div>
       </nav>
 
-      {/* Mobile Menu Overlay */}
-      {isMobileMenuOpen && (
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="fixed inset-0 z-40 bg-background/95 backdrop-blur-xl pt-24 px-6 md:hidden"
-        >
-          <div className="flex flex-col space-y-6 text-2xl font-bold text-foreground">
-            {["Services", "Projects", "Process", "Contact"].map((item) => (
-              <a
-                key={item}
-                href={`#${item.toLowerCase()}`}
-                className="hover:text-muted-foreground transition-colors"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {item}
-              </a>
+      {/* Phase 1: Intro Dealer (Fixed Overlay) */}
+      <motion.div style={{ opacity: introOpacity }} className="z-[100]">
+        <IntroDealer scrollY={scrollY} vh={vh} />
+      </motion.div>
+
+      {/* The Sticky Stage: Hero + Spacer */}
+      <div style={{ height: `calc(${introEnd}px + 100vh)` }} className="relative z-0">
+        <div className="sticky top-0 h-screen overflow-hidden">
+          <section className="h-screen pt-44 pb-32 px-6 border-b border-border/30">
+            {/* Hero text and Carousel are here */}
+            {/* We will hide the text during dealing but keep carousel visible */}
+        {/* Marquee Background Name */}
+        <div className="absolute top-[45%] -translate-y-1/2 left-0 w-full overflow-hidden z-0 pointer-events-none select-none opacity-[0.03] dark:opacity-[0.05]">
+          <div className="animate-marquee whitespace-nowrap flex items-center">
+            {[...Array(10)].map((_, i) => (
+              <span key={i} className="text-[12rem] md:text-[20rem] font-black tracking-tighter mx-8 text-foreground">
+                IZERE JOSHUA
+              </span>
             ))}
           </div>
-        </motion.div>
-      )}
+        </div>
 
-      {/* Hero Section */}
-      <section className="relative pt-44 pb-32 px-6 border-b border-border/30">
-        <div className="max-w-7xl mx-auto border-x border-border/30 relative">
+        <div className="max-w-7xl mx-auto border-x border-border/30 relative z-10">
           <div className="hidden md:block absolute -bottom-[1px] -left-[1px] w-1.5 h-1.5 bg-foreground/30 translate-y-1/2 -translate-x-1/2 z-10" />
           <div className="hidden md:block absolute -bottom-[1px] -right-[1px] w-1.5 h-1.5 bg-foreground/30 translate-y-1/2 translate-x-1/2 z-10" />
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="flex flex-col items-center text-center"
-          >
+          <div className="flex flex-col items-center text-center">
+            {/* The Image Carousel - Visible during intro dealing */}
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
@@ -299,83 +416,88 @@ export default function Index() {
               <Hero3DCarousel imageSrc={joshImg} projects={heroCarouselProjects} />
             </motion.div>
 
-            <Badge variant="outline" className="mb-8 px-4 py-1.5 border-border bg-muted rounded-full text-[10px] font-mono tracking-widest uppercase text-muted-foreground">
-              ✦ SYSTEM ARCHITECT & FULL-STACK ENGINEER
-            </Badge>
+            {/* The Hero Content - Hidden during dealing, fades in after */}
+            <motion.div 
+              style={{ opacity: mainContentOpacity }} 
+              className="flex flex-col items-center"
+            >
+              <motion.div style={{ opacity: heroTextOpacity }} className="flex flex-col items-center">
+                <Badge variant="outline" className="mb-8 px-4 py-1.5 border-blue-500/30 bg-blue-500/5 rounded-full text-[10px] font-mono tracking-widest uppercase text-blue-500">
+                  ✦ SYSTEM ARCHITECT & FULL-STACK ENGINEER
+                </Badge>
 
-            <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold tracking-tighter mb-10 leading-[0.9] gradient-text overflow-hidden">
-              {"IZERE JOSHUA".split("").map((char, i) => (
-                <motion.span
-                  key={i}
-                  initial={{ y: "100%" }}
-                  animate={{ y: 0 }}
-                  transition={{ delay: i * 0.03, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                  className="inline-block"
+                <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter mb-10 leading-[0.9] gradient-text overflow-hidden z-10 relative">
+                  <motion.span
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.8, duration: 1 }}
+                    className="text-foreground font-medium"
+                  >
+                    Engineering Solutions
+                  </motion.span>
+                </h2>
+
+                <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mb-12 font-medium leading-relaxed">
+                  Building high-performance, scalable systems and immersive digital experiences with modern technology.
+                </p>
+
+                <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+                  <Magnetic>
+                    <Button size="lg" className="h-16 bg-blue-500 hover:bg-blue-600 text-white px-12" onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}>
+                      View Projects
+                    </Button>
+                  </Magnetic>
+                  <Magnetic>
+                    <Button size="lg" variant="outline" className="h-16 px-12 border-blue-500/30 hover:bg-blue-500/10 text-foreground transition-colors" asChild>
+                      <a href="/IZERE_JOSHUA_CV.pdf" download="IZERE_JOSHUA_CV.pdf">
+                        <Download className="mr-2 w-5 h-5 text-blue-500" />
+                        Download CV
+                      </a>
+                    </Button>
+                  </Magnetic>
+                  <Magnetic>
+                    <Button size="lg" variant="outline" className="h-16 px-12 border-blue-500/30 text-blue-500 hover:bg-blue-500 hover:text-white transition-colors" asChild>
+                      <a href="https://mail.google.com/mail/?view=cm&to=izerejoshua94@gmail.com" target="_blank" rel="noopener noreferrer">Contact Me</a>
+                    </Button>
+                  </Magnetic>
+                </div>
+              </motion.div>
+
+              {/* Featured Stats or Tags */}
+              <motion.div style={{ opacity: heroTextOpacity }}>
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.5, duration: 1 }}
+                  className="mt-32 grid grid-cols-2 md:grid-cols-4 gap-4"
                 >
-                  {char === " " ? "\u00A0" : char}
-                </motion.span>
-              ))}
-              <br />
-              <motion.span
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.8, duration: 1 }}
-                className="text-muted-foreground font-medium"
-              >
-                Engineering Solutions
-              </motion.span>
-            </h1>
-
-            <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mb-12 font-medium leading-relaxed">
-              Building high-performance, scalable systems and immersive digital experiences with modern technology.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-              <Magnetic>
-                <Button size="lg" className="h-16 bg-blue-500 hover:bg-blue-600 text-white px-12" onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}>
-                  View Projects
-                </Button>
-              </Magnetic>
-              <Magnetic>
-                <Button size="lg" variant="outline" className="h-16 px-12" asChild>
-                  <a href="/IZERE_JOSHUA_CV.pdf" download="IZERE_JOSHUA_CV.pdf">
-                    <Download className="mr-2 w-5 h-5" />
-                    Download CV
-                  </a>
-                </Button>
-              </Magnetic>
-              <Magnetic>
-                <Button size="lg" variant="outline" className="h-16 px-12" asChild>
-                  <a href="https://mail.google.com/mail/?view=cm&to=izerejoshua94@gmail.com" target="_blank" rel="noopener noreferrer">Contact Me</a>
-                </Button>
-              </Magnetic>
-            </div>
-          </motion.div>
-
-          {/* Featured Stats or Tags in Design Style */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.5, duration: 1 }}
-            className="mt-32 grid grid-cols-2 md:grid-cols-4 gap-4"
-          >
-            {[
-              { label: "Experience", value: "2+ Years" },
-              { label: "Projects", value: "15+ Completed" },
-              { label: "Design", value: "Minimalist" },
-              { label: "Stack", value: "Full-Stack" },
-            ].map((stat, i) => (
-              <div key={i} className="glass p-8 flex flex-col justify-between h-40 rounded-[2rem]">
-                <span className="text-xs uppercase tracking-widest text-muted-foreground font-bold">{stat.label}</span>
-                <span className="text-2xl font-bold">{stat.value}</span>
-              </div>
-            ))}
-          </motion.div>
+                  {[
+                    { label: "Experience", value: "2+ Years" },
+                    { label: "Projects", value: "15+ Completed" },
+                    { label: "Design", value: "Minimalist" },
+                    { label: "Stack", value: "Full-Stack" },
+                  ].map((stat, i) => (
+                    <div key={i} className="glass p-8 flex flex-col justify-between h-40 rounded-[2rem]">
+                      <span className="text-xs uppercase tracking-widest text-muted-foreground font-bold">{stat.label}</span>
+                      <span className="text-2xl font-bold">{stat.value}</span>
+                    </div>
+                  ))}
+                </motion.div>
+              </motion.div>
+            </motion.div>
+          </div>
         </div>
-      </section>
+        </section>
+      </div>
 
-      {/* Services Section */}
-      <section id="services" className="py-32 px-6 relative overflow-hidden bg-background border-b border-border/30">
+      {/* Main Content Phase 2 - Hidden during Dealing */}
+      <motion.div style={{ opacity: mainContentOpacity }}>
+        {/* Services Section */}
+        <SectionReveal index={0}>
+        <section 
+          id="services" 
+          className="py-32 px-6 relative overflow-hidden bg-background z-10"
+        >
         <div className="max-w-7xl mx-auto border-x border-border/30 relative">
           <div className="hidden md:block absolute -bottom-[1px] -left-[1px] w-1.5 h-1.5 bg-foreground/30 translate-y-1/2 -translate-x-1/2 z-10" />
           <div className="hidden md:block absolute -bottom-[1px] -right-[1px] w-1.5 h-1.5 bg-foreground/30 translate-y-1/2 translate-x-1/2 z-10" />
@@ -398,8 +520,8 @@ export default function Index() {
                 transition={{ duration: 0.6, delay: i * 0.1 }}
                 className="glass p-10 rounded-[2.5rem] group hover:bg-primary/[0.02] transition-colors"
               >
-                <div className="w-12 h-12 rounded-2xl bg-muted flex items-center justify-center mb-8 border border-border group-hover:border-primary/20 transition-colors">
-                  <Plus className="w-5 h-5 text-muted-foreground group-hover:text-foreground group-hover:rotate-90 transition-all" />
+                <div className="w-12 h-12 rounded-2xl bg-muted flex items-center justify-center mb-8 border border-border group-hover:border-blue-500/30 group-hover:bg-blue-500/5 transition-colors">
+                  <Plus className="w-5 h-5 text-muted-foreground group-hover:text-blue-500 group-hover:rotate-90 transition-all" />
                 </div>
                 <h3 className="text-2xl font-bold mb-4">{service.title}</h3>
                 <p className="text-muted-foreground mb-8 leading-relaxed font-medium">{service.desc}</p>
@@ -410,10 +532,15 @@ export default function Index() {
             ))}
           </div>
         </div>
-      </section>
+        </section>
+      </SectionReveal>
 
       {/* Featured Projects Section */}
-      <section id="projects" className="py-32 px-6 bg-muted/30 border-b border-border/30">
+      <SectionReveal index={1}>
+        <section 
+          id="projects" 
+          className="py-32 px-6 bg-muted/30 border-b border-border/30 relative z-10"
+        >
         <div className="max-w-7xl mx-auto border-x border-border/30 relative">
           <div className="hidden md:block absolute -bottom-[1px] -left-[1px] w-1.5 h-1.5 bg-foreground/30 translate-y-1/2 -translate-x-1/2 z-10" />
           <div className="hidden md:block absolute -bottom-[1px] -right-[1px] w-1.5 h-1.5 bg-foreground/30 translate-y-1/2 translate-x-1/2 z-10" />
@@ -423,7 +550,7 @@ export default function Index() {
                 Engineering <span className="text-muted-foreground font-medium">Projects</span>
               </h2>
             </ScrollReveal>
-            <Button variant="outline" className="rounded-full px-8 border-border hover:bg-muted" onClick={() => window.open("https://github.com/I-Josh-pro-grammin", "_blank")}>
+            <Button variant="outline" className="rounded-full px-8 border-blue-500/30 text-blue-500 hover:bg-blue-500 hover:text-white transition-colors" onClick={() => window.open("https://github.com/I-Josh-pro-grammin", "_blank")}>
               <Github className="mr-2 w-4 h-4" />
               View Full GitHub
             </Button>
@@ -520,7 +647,7 @@ export default function Index() {
                   <div className={`relative h-full flex flex-col overflow-hidden p-8 md:p-10 rounded-[2.5rem] glass group-hover:bg-primary/[0.01]`}>
                     {/* Card Header: Icon + Title */}
                     <div className="flex items-center space-x-4 mb-6">
-                      <div className="w-12 h-12 rounded-2xl bg-muted flex items-center justify-center border border-border group-hover:border-primary/10 transition-colors">
+                      <div className="w-12 h-12 rounded-2xl bg-muted flex items-center justify-center border border-border group-hover:border-blue-500/30 group-hover:bg-blue-500/5 group-hover:text-blue-500 transition-colors">
                         {project.icon}
                       </div>
                       <h3 className="text-xl md:text-2xl font-bold tracking-tight">{project.title}</h3>
@@ -565,7 +692,7 @@ export default function Index() {
                       </div>
 
                       {/* Click Indicator */}
-                      <div className="absolute top-6 right-6 w-12 h-12 bg-primary text-primary-foreground rounded-full flex items-center justify-center -translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 shadow-2xl">
+                      <div className="absolute top-6 right-6 w-12 h-12 bg-blue-500 text-white rounded-full flex items-center justify-center -translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 shadow-2xl shadow-blue-500/20">
                         <ArrowUpRight className="w-6 h-6" />
                       </div>
                     </div>
@@ -574,50 +701,16 @@ export default function Index() {
               </motion.div>
             ))}
           </div>
-
-          {/* <div className="flex mt-10 items-center justify-center">
-            <h2 className="text-2xl  md:text-xl font-bold tracking-tighter">
-              Other Projects
-            </h2>
-          </div>
-          {/* Secondary Projects Grid (Monospace/Technical Style) */}
-          {/* <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
-
-            {[
-              { title: "Springboot backend", github: "https://github.com/I-Josh-pro-grammin/springboot-backend-app", tags: ["Java", "Spring Boot", "Docker"] },
-              { title: "Sapient API", github: "https://github.com/I-Josh-pro-grammin/sapient-backend-app", tags: ["Spring Boot", "PostgreSQL", "AWS"] },
-              { title: "Budgetly", github: "https://github.com/I-Josh-pro-grammin/budgetly", tags: ["Next.js", "Django", "Firebase"] },
-              { title: "Commerce Flow", github: "https://github.com/I-Josh-pro-grammin/commerce-flow", tags: ["React", "Tailwind", "Vite"] },
-              { title: "Motion Lab", github: "https://github.com/I-Josh-pro-grammin/motion-lab", tags: ["Framer Motion", "GSAP"] },
-              { title: "E-Commerce API", github: "https://github.com/I-Josh-pro-grammin/e-commerce-backend-app", tags: ["Node.js", "Prisma", "Redis"] },
-              { title: "Design Systems", github: "https://github.com/I-Josh-pro-grammin/design-templates", tags: ["Figma", "Storybook", "CSS"] },
-              { title: "Portfolio V1", github: "https://github.com/I-Josh-pro-grammin/Portfolio-With-Next", tags: ["Next.js", "Tailwind", "Framer"] },
-            ].map((project, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                className="glass p-8 rounded-[2rem] hover:bg-white/5 transition-colors cursor-pointer group"
-                onClick={() => window.open(project.github, "_blank")}
-              >
-                <div className="flex justify-between items-start mb-6">
-                  <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center border border-white/10 group-hover:border-white/30">
-                    <Github className="w-5 h-5 opacity-40 group-hover:opacity-100" />
-                  </div>
-                  <ArrowUpRight className="w-4 h-4 text-white/20 group-hover:text-white" />
-                </div>
-                <h4 className="text-xl font-bold mb-3">{project.title}</h4>
-                <div className="flex flex-wrap gap-2">
-                  {project.tags.map(tag => <span key={tag} className="text-[10px] font-mono text-white/40">{tag}</span>)}
-                </div>
-              </motion.div>
-            ))}
-          </div> */}
         </div>
-      </section>
+        </section>
+      </SectionReveal>
 
       {/* Technical Expertise Section */}
-      <section id="services" className="py-32 px-6 relative overflow-hidden bg-background border-b border-border/30">
+      <SectionReveal index={2}>
+        <section 
+          id="expertise" 
+          className="py-32 px-6 relative overflow-hidden bg-background border-b border-border/30 z-10"
+        >
         <div className="max-w-7xl mx-auto border-x border-border/30 relative">
           <div className="hidden md:block absolute -bottom-[1px] -left-[1px] w-1.5 h-1.5 bg-foreground/30 translate-y-1/2 -translate-x-1/2 z-10" />
           <div className="hidden md:block absolute -bottom-[1px] -right-[1px] w-1.5 h-1.5 bg-foreground/30 translate-y-1/2 translate-x-1/2 z-10" />
@@ -641,8 +734,8 @@ export default function Index() {
               >
                 <TiltCard className="h-full">
                   <div className="glass p-10 rounded-[2.5rem] group-hover:bg-primary/[0.01] transition-colors h-full">
-                    <div className="w-12 h-12 rounded-2xl bg-muted flex items-center justify-center mb-8 border border-border group-hover:border-primary/10 transition-colors">
-                      <Plus className="w-5 h-5 text-muted-foreground group-hover:text-foreground group-hover:rotate-90 transition-all" />
+                    <div className="w-12 h-12 rounded-2xl bg-muted flex items-center justify-center mb-8 border border-border group-hover:border-blue-500/30 group-hover:bg-blue-500/5 transition-colors">
+                      <Plus className="w-5 h-5 text-muted-foreground group-hover:text-blue-500 group-hover:rotate-90 transition-all" />
                     </div>
                     <h3 className="text-2xl font-bold mb-4">{expertise.title}</h3>
                     <p className="text-muted-foreground mb-8 leading-relaxed font-medium">{expertise.desc}</p>
@@ -655,7 +748,8 @@ export default function Index() {
             ))}
           </div>
         </div>
-      </section>
+        </section>
+      </SectionReveal>
 
       {/* Animated Skills Ticker */}
       <style>{`
@@ -746,7 +840,10 @@ export default function Index() {
 
       {/* Engineering Excellence Section */}
 
-      <section className="py-32 px-6 bg-muted/30 relative overflow-hidden border-b border-border/30">
+      <SectionReveal index={3}>
+        <section 
+          className="py-32 px-6 bg-muted/30 relative overflow-hidden border-b border-border/30 z-10"
+        >
         <div className="max-w-7xl mx-auto border-x border-border/30 relative">
           <div className="hidden md:block absolute -bottom-[1px] -left-[1px] w-1.5 h-1.5 bg-foreground/30 translate-y-1/2 -translate-x-1/2 z-10" />
           <div className="hidden md:block absolute -bottom-[1px] -right-[1px] w-1.5 h-1.5 bg-foreground/30 translate-y-1/2 translate-x-1/2 z-10" />
@@ -774,10 +871,15 @@ export default function Index() {
             ))}
           </div>
         </div>
-      </section>
+        </section>
+      </SectionReveal>
 
       {/* Testimonials / Clients */}
-      <section id="testimonials" className="py-32 px-6 border-b border-border/30">
+      <SectionReveal index={4}>
+        <section 
+          id="testimonials" 
+          className="py-32 px-6 border-b border-border/30 relative z-10 bg-background"
+        >
         <div className="max-w-7xl mx-auto border-x border-border/30 relative">
           <div className="hidden md:block absolute -bottom-[1px] -left-[1px] w-1.5 h-1.5 bg-foreground/30 translate-y-1/2 -translate-x-1/2 z-10" />
           <div className="hidden md:block absolute -bottom-[1px] -right-[1px] w-1.5 h-1.5 bg-foreground/30 translate-y-1/2 translate-x-1/2 z-10" />
@@ -791,9 +893,9 @@ export default function Index() {
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.6, delay: 0.4 }}
                 >
-                  <Badge variant="outline" className="px-4 py-1.5 border-border bg-muted/50 rounded-full text-[10px] font-mono tracking-widest uppercase relative overflow-hidden group">
-                    <span className="relative z-10">✦ Happy Clients</span>
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/5 to-transparent -translate-x-full group-hover:animate-shimmer" />
+                  <Badge variant="outline" className="px-4 py-1.5 border-blue-500/30 bg-blue-500/5 rounded-full text-[10px] font-mono tracking-widest uppercase relative overflow-hidden group">
+                    <span className="relative z-10 text-blue-500">✦ Happy Clients</span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-500/10 to-transparent -translate-x-full group-hover:animate-shimmer" />
                   </Badge>
                 </motion.div>
 
@@ -840,10 +942,10 @@ export default function Index() {
                   transition={{ duration: 0.8, delay: 0.9 }}
                   className="flex flex-col sm:flex-row gap-4"
                 >
-                  <Button variant="outline" className="rounded-full px-8 h-12" onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}>
+                  <Button variant="outline" className="rounded-full px-8 h-12 border-blue-500/30 text-blue-500 hover:bg-blue-500 hover:text-white transition-colors" onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}>
                     See All Projects
                   </Button>
-                  <Button className="rounded-full px-8 h-12" asChild>
+                  <Button className="rounded-full px-8 h-12 bg-blue-500 text-white hover:bg-blue-600 transition-colors" asChild>
                     <a href="mailto:izerejoshua94@gmail.com">Contact Now</a>
                   </Button>
                 </motion.div>
@@ -906,10 +1008,15 @@ export default function Index() {
             </div>
           </div>
         </div>
-      </section>
+        </section>
+      </SectionReveal>
 
       {/* Combined Process & FAQ Section */}
-      <section className="py-32 px-6 bg-muted/30 border-b border-border/30">
+      <SectionReveal index={5}>
+        <section 
+          id="process"
+          className="py-32 px-6 bg-muted/30 border-b border-border/30 relative z-10"
+        >
         <div className="max-w-7xl mx-auto border-x border-border/30 relative">
           <div className="hidden md:block absolute -bottom-[1px] -left-[1px] w-1.5 h-1.5 bg-foreground/30 translate-y-1/2 -translate-x-1/2 z-10" />
           <div className="hidden md:block absolute -bottom-[1px] -right-[1px] w-1.5 h-1.5 bg-foreground/30 translate-y-1/2 translate-x-1/2 z-10" />
@@ -1007,10 +1114,15 @@ export default function Index() {
 
           </div>
         </div>
-      </section>
+        </section>
+      </SectionReveal>
 
       {/* Footer CTA & Contact Form */}
-      <footer id="contact" className="py-32 px-6 bg-background border-t border-border/30">
+      <SectionReveal index={6}>
+        <footer 
+          id="contact" 
+          className="py-32 px-6 bg-background border-t border-border/30 relative z-10"
+        >
         <div className="max-w-7xl mx-auto glass p-12 md:p-20 rounded-[4rem] relative overflow-hidden">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-primary/[0.02] blur-[100px] rounded-full -translate-y-1/2" />
 
@@ -1026,7 +1138,7 @@ export default function Index() {
                 </p>
                 <div className="flex flex-col sm:flex-row gap-6">
                   <Magnetic>
-                    <Button size="lg" variant="outline" className="h-16 px-12 border-border hover:bg-foreground hover:text-background transition-colors" asChild>
+                    <Button size="lg" variant="outline" className="h-16 px-12 border-blue-500/30 text-blue-500 hover:bg-blue-500 hover:text-white transition-colors" asChild>
                       <a href="tel:+250739587054">
                         <Phone className="mr-3 w-5 h-5" />
                         Call Me
@@ -1078,8 +1190,7 @@ export default function Index() {
                 </div>
                 <Button
                   size="lg"
-                  variant="cyber"
-                  className="w-full h-16 group relative"
+                  className="w-full h-16 group relative bg-blue-500 text-white hover:bg-blue-600 transition-colors"
                   onClick={handleSubmit}
                   disabled={isSending || !contactName || !contactEmail || !contactMessage}
                 >
@@ -1170,7 +1281,7 @@ export default function Index() {
                 { Icon: Mail, href: "https://mail.google.com/mail/?view=cm&to=izerejoshua94@gmail.com" }
               ].map((item, i) => (
                 <Magnetic key={i}>
-                  <a href={item.href} target={item.href.startsWith("http") ? "_blank" : undefined} className="w-10 h-10 bg-primary/5 border border-border rounded-full flex items-center justify-center hover:bg-primary/10 transition-colors text-muted-foreground hover:text-foreground">
+                  <a href={item.href} target={item.href.startsWith("http") ? "_blank" : undefined} className="w-10 h-10 bg-primary/5 border border-border rounded-full flex items-center justify-center hover:bg-blue-500/10 hover:border-blue-500/30 transition-colors text-muted-foreground hover:text-blue-500">
                     <item.Icon className="w-4 h-4" />
                   </a>
                 </Magnetic>
@@ -1179,6 +1290,8 @@ export default function Index() {
           </div>
         </div>
       </footer>
+    </SectionReveal>
+      </motion.div>
 
       {/* Floating Particles */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
@@ -1207,6 +1320,7 @@ export default function Index() {
           />
         ))}
       </div>
-    </div >
+    </div>
+    </div>
   );
 }
