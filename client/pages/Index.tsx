@@ -336,12 +336,21 @@ export default function Index() {
   };
 
   const heroCarouselProjects = useMemo(() => [
-    { title: "Web Platforms", label: "Brainly Code", tags: ["React", "Nest.js"] },
-    { title: "Digital Commerce", label: "Akaguriro", tags: ["TypeScript", "Supabase"] },
-    { title: "Mobile Architecture", label: "IMove App", tags: ["React Native", "MongoDB"] },
-    { title: "Visual Identity", label: "E-Buy Store", tags: ["Next.js", "Tailwind"] },
-    { title: "Career Guidance", label: "Vantage", tags: ["React Native", "AI"] },
-    { title: "AI Recruitment", label: "Bora AI", tags: ["OpenAI", "Next.js"] }
+    { title: "Web Platforms", label: "Brainly Code", tags: ["React", "Nest.js"], type: 'project' as const },
+    { title: "Digital Commerce", label: "Akaguriro", tags: ["TypeScript", "Supabase"], type: 'project' as const },
+    { title: "Mobile Architecture", label: "IMove App", tags: ["React Native", "MongoDB"], type: 'project' as const },
+    { title: "Visual Identity", label: "E-Buy Store", tags: ["Next.js", "Tailwind"], type: 'project' as const },
+    { title: "Career Guidance", label: "Vantage", tags: ["React Native", "AI"], type: 'project' as const },
+    { title: "AI Recruitment", label: "Bora AI", tags: ["OpenAI", "Next.js"], type: 'project' as const }
+  ], []);
+
+  const heroAchievements = useMemo(() => [
+    { title: "Recognition", label: "Global Innovation Award", tags: ["First Place", "2024"], type: 'achievement' as const },
+    { title: "Impact", label: "2M+ Active Users Reached", tags: ["Scalability", "Growth"], type: 'achievement' as const },
+    { title: "Certification", label: "AWS Solution Architect", tags: ["Cloud", "Security"], type: 'achievement' as const },
+    { title: "Success", label: "Top Rated @ Upwork", tags: ["Excellence", "100% JS"], type: 'achievement' as const },
+    { title: "Achievement", label: "Open Source Contributor", tags: ["React", "Motion"], type: 'achievement' as const },
+    { title: "Milestone", label: "Built 20+ High-End Apps", tags: ["Experience", "Velocity"], type: 'achievement' as const }
   ], []);
 
   return (
@@ -428,7 +437,11 @@ export default function Index() {
               transition={{ duration: 1, delay: 0.2 }}
               className="relative w-full max-w-4xl mx-auto mb-10"
             >
-              <Hero3DCarousel imageSrc={joshImg} projects={heroCarouselProjects} />
+              <Hero3DCarousel 
+                imageSrc={joshImg} 
+                projects={heroCarouselProjects} 
+                achievements={heroAchievements}
+              />
             </motion.div>
 
             {/* The Hero Content - Hidden during dealing, fades in after */}
