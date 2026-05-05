@@ -154,7 +154,7 @@ const IntroDealer = ({ scrollY, vh }: { scrollY: any, vh: number }) => {
   const sections = ["Services", "Projects", "Expertise", "Testimonials", "Process", "Contact"];
   
   return (
-    <div className="fixed inset-0 z-[100] pointer-events-none">
+    <div className="fixed inset-0 z-10 pointer-events-none" style={{ perspective: "2000px" }}>
       {sections.map((title, i) => {
         const start = (i + 1) * vh;
         const end = (i + 2) * vh;
@@ -162,16 +162,19 @@ const IntroDealer = ({ scrollY, vh }: { scrollY: any, vh: number }) => {
         // This section's animation progress
         const progress = useTransform(scrollY, [start, end], [0, 1]);
         
-        const scale = useTransform(progress, [0, 1], [0.01, 1]);
-        const opacity = useTransform(progress, [0, 0.2, 1], [0, 1, 1]);
-        const borderRadius = useTransform(progress, [0, 0.5, 1], ["50%", "30%", "2rem"]);
+        // 3D Flying effect from "behind" the image
+        // 0.0 -> 0.4: Emerge and fly towards viewer
+        // 0.4 -> 1.0: Fly down to the stack
+        const scale = useTransform(progress, [0, 0.4, 1], [0.1, 1.1, 1]);
+        const opacity = useTransform(progress, [0, 0.1, 0.9, 1], [0, 1, 1, 0.9]);
+        const borderRadius = useTransform(progress, [0, 0.5, 1], ["50%", "30%", "2.5rem"]);
         
-        // Fly from center to a "stack" at the bottom
-        // Each card stays at the bottom, slightly offset from each other
-        const y = useTransform(progress, [0, 1], ["0vh", `${85 + i * 2}vh`]);
-        const rotateZ = useTransform(progress, [0, 1], [i % 2 === 0 ? 15 : -15, 0]);
-        const rotateX = useTransform(progress, [0, 1], [45, 0]);
-        const zIndex = 100 + i;
+        const y = useTransform(progress, [0, 0.4, 1], ["0vh", "-5vh", `${85 + i * 2}vh`]);
+        const translateZ = useTransform(progress, [0, 0.4, 1], [-1500, 300, 0]);
+        const rotateX = useTransform(progress, [0, 0.4, 1], [110, -20, 0]);
+        const rotateZ = useTransform(progress, [0, 0.4, 1], [i % 2 === 0 ? 20 : -20, i % 2 === 0 ? 5 : -5, 0]);
+        
+        const zIndex = 10 + i;
 
         return (
           <motion.div
@@ -181,29 +184,41 @@ const IntroDealer = ({ scrollY, vh }: { scrollY: any, vh: number }) => {
               opacity, 
               borderRadius, 
               y, 
-              rotateZ, 
+              z: translateZ,
               rotateX,
+              rotateZ, 
               zIndex,
               backgroundColor: "var(--background)",
-              boxShadow: "0 -20px 80px rgba(59, 130, 246, 0.3)",
-              border: "1px solid rgba(59, 130, 246, 0.2)"
+              boxShadow: "0 20px 100px rgba(59, 130, 246, 0.2), 0 0 40px rgba(59, 130, 246, 0.1)",
+              border: "1px solid rgba(59, 130, 246, 0.15)",
+              backdropFilter: "blur(20px)"
             }}
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90vw] md:w-[70vw] h-[65vh] flex items-center justify-center overflow-hidden"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90vw] md:w-[75vw] h-[60vh] flex items-center justify-center overflow-hidden"
           >
-            <div className="text-center p-12">
-              <span className="text-blue-500 font-mono text-xs tracking-[0.5em] uppercase mb-4 block">Manifesting</span>
-              <h3 className="text-4xl md:text-7xl font-bold tracking-tighter mb-8 leading-[0.8]">{title}</h3>
-              <div className="w-24 h-1.5 bg-gradient-to-r from-blue-500 to-transparent mx-auto rounded-full" />
+            <div className="text-center p-12 relative z-10">
+              <motion.span 
+                style={{ opacity: useTransform(progress, [0.3, 0.5], [0, 1]) }}
+                className="text-blue-500 font-mono text-xs tracking-[0.6em] uppercase mb-6 block"
+              >
+                Initializing Module
+              </motion.span>
+              <h3 className="text-5xl md:text-8xl font-black tracking-tighter mb-10 leading-[0.8] gradient-text">
+                {title.toUpperCase()}
+              </h3>
+              <div className="w-32 h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent mx-auto rounded-full opacity-50" />
             </div>
             
-            {/* Holographic lines */}
-            <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[length:100%_4px]" />
+            {/* Holographic grid effect */}
+            <div className="absolute inset-0 pointer-events-none opacity-[0.05] bg-[linear-gradient(rgba(59,130,246,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(59,130,246,0.1)_1px,transparent_1px)] bg-[length:40px_40px]" />
+            <div className="absolute inset-0 bg-gradient-to-b from-blue-500/[0.02] to-transparent pointer-events-none" />
             
-            <div className="absolute top-8 left-10 font-mono text-[10px] opacity-40 flex items-center gap-2">
-              <div className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-ping" />
-              <span>SECTION_{i+1} // INITIALIZING</span>
+            <div className="absolute top-10 left-12 font-mono text-[10px] opacity-30 flex items-center gap-3">
+              <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" />
+              <span className="tracking-[0.2em]">S_ID: {i.toString().padStart(2, '0')} // STATUS: ACTIVE</span>
             </div>
-            <div className="absolute bottom-8 right-10 font-mono text-[10px] opacity-40">IZERE.SYSTEMS_CORE_v2.5</div>
+            <div className="absolute bottom-10 right-12 font-mono text-[10px] opacity-30 tracking-widest uppercase">
+              Secure Transmission Protocol v2.5
+            </div>
           </motion.div>
         );
       })}
@@ -402,7 +417,7 @@ export default function Index() {
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto border-x border-border/30 relative z-10">
+        <div className="max-w-7xl mx-auto border-x border-border/30 relative z-20">
           <div className="hidden md:block absolute -bottom-[1px] -left-[1px] w-1.5 h-1.5 bg-foreground/30 translate-y-1/2 -translate-x-1/2 z-10" />
           <div className="hidden md:block absolute -bottom-[1px] -right-[1px] w-1.5 h-1.5 bg-foreground/30 translate-y-1/2 translate-x-1/2 z-10" />
           <div className="flex flex-col items-center text-center">
