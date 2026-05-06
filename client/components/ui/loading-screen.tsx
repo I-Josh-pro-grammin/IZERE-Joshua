@@ -8,23 +8,24 @@ interface LoadingScreenProps {
 
 // Tick counter shown as streaming hex lines
 const HEX_CHARS = "0123456789ABCDEF";
-const randomHex = (len: number) =>
-  Array.from({ length: len }, () => HEX_CHARS[Math.floor(Math.random() * 16)]).join("");
+const randomBinary = (len: number) =>
+  Array.from({ length: len }, () => (Math.random() > 0.5 ? "1" : "0")).join("");
 
 function StreamLine({ delay }: { delay: number }) {
-  const [text, setText] = useState(randomHex(32));
+  // Much longer string to cover wide screens
+  const [text, setText] = useState(randomBinary(128));
 
   useEffect(() => {
-    const id = setInterval(() => setText(randomHex(32)), 80 + Math.random() * 120);
+    const id = setInterval(() => setText(randomBinary(128)), 100 + Math.random() * 150);
     return () => clearInterval(id);
   }, []);
 
   return (
     <motion.div
-      initial={{ opacity: 0, x: -8 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ delay, duration: 0.3 }}
-      className="font-mono text-[10px] tracking-widest text-white/20 whitespace-nowrap overflow-hidden"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay, duration: 0.5 }}
+      className="font-mono text-[20px] line-height-[0px] leading-none tracking-[0.3em] text-white/[0.07] whitespace-nowrap overflow-hidden"
     >
       {text}
     </motion.div>
@@ -70,10 +71,10 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
           transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
           className="fixed inset-0 z-[9999] bg-[#080808] flex flex-col items-center justify-center overflow-hidden"
         >
-          {/* Background streaming hex lines */}
-          <div className="absolute inset-0 flex flex-col justify-center gap-[6px] px-8 py-12 pointer-events-none select-none overflow-hidden opacity-60">
-            {Array.from({ length: 18 }).map((_, i) => (
-              <StreamLine key={i} delay={i * 0.04} />
+          {/* Background streaming hex lines - DENSE FILL */}
+          <div className="absolute inset-0 flex flex-col gap-[2px] pointer-events-none select-none overflow-hidden opacity-50">
+            {Array.from({ length: 120 }).map((_, i) => (
+              <StreamLine key={i} delay={i * 0.01} />
             ))}
           </div>
 
