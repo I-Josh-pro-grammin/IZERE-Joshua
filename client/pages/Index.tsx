@@ -13,6 +13,151 @@ import { useEffect, useState, useRef, useMemo } from "react";
 import { cn } from "@/lib/utils";
 import { useMotionValue, useSpring, useTransform } from "framer-motion";
 
+// Reusable Technical HUD Card
+const TechnicalCard = ({ 
+  children, 
+  title, 
+  label, 
+  meta, 
+  icon, 
+  className 
+}: { 
+  children?: React.ReactNode, 
+  title?: string, 
+  label?: string, 
+  meta?: string, 
+  icon?: React.ReactNode, 
+  className?: string 
+}) => {
+  return (
+    <div 
+      className={cn("relative bg-[#080808] border border-blue-500/10 rounded-sm overflow-hidden group transition-all duration-500 hover:border-blue-500/40 p-10", className)}
+    >
+      {/* HUD Accents */}
+      <div className="absolute top-0 left-0 w-4 h-4 border-t border-l border-blue-500/40" />
+      <div className="absolute top-2 right-2 flex gap-1">
+        <div className="w-1 h-1 bg-blue-500/20" />
+        <div className="w-1 h-1 bg-blue-500/20" />
+      </div>
+      
+      {icon && (
+        <div className="w-12 h-12 rounded-sm bg-blue-500/5 border border-blue-500/20 flex items-center justify-center mb-8 group-hover:bg-blue-500 group-hover:text-white transition-all duration-500">
+          {icon}
+        </div>
+      )}
+      
+      {label && <div className="text-[9px] font-mono text-blue-500/50 uppercase tracking-[0.3em] mb-2">{label}</div>}
+      {title && <h3 className="text-2xl font-bold mb-4 tracking-tighter uppercase">{title}</h3>}
+      {children}
+      {meta && (
+        <div className="mt-8 pt-8 border-t border-blue-500/10 flex flex-wrap gap-2">
+          <span className="text-[10px] uppercase font-mono tracking-widest text-blue-500/60 font-bold">{meta}</span>
+        </div>
+      )}
+      
+      {/* HUD Scanline */}
+      <div className="absolute inset-0 pointer-events-none opacity-[0.02] bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%)] bg-[length:100%_4px]" />
+    </div>
+  );
+};
+
+// Technical HUD Card for Projects (F1 Style)
+const ProjectTechnicalCard = ({ project }: { project: any }) => {
+  return (
+    <div 
+      className="relative w-full h-full bg-[#080808] border border-blue-500/20 rounded-sm overflow-hidden group transition-all duration-500 hover:border-blue-500/50"
+    >
+      {/* Technical Frame Accents */}
+      <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-blue-500/60 z-20" />
+      <div className="absolute top-4 right-4 w-12 h-[1px] bg-blue-500/20" />
+      <div className="absolute bottom-4 left-4 w-[1px] h-12 bg-blue-500/20" />
+
+      {/* Main Grid Layout */}
+      <div className="relative h-full flex flex-row">
+        
+        {/* Left: Vertical Brand Label */}
+        <div className="w-12 md:w-16 flex items-center justify-center border-r border-blue-500/10 bg-blue-500/[0.02]">
+          <span className="rotate-[-90deg] whitespace-nowrap text-2xl md:text-4xl font-black tracking-tighter text-blue-500/80 uppercase">
+            {project.label}
+          </span>
+        </div>
+
+        {/* Right Content Area */}
+        <div className="flex-1 flex flex-col p-6 md:p-8">
+          
+          {/* Top Row: Meta Data */}
+          <div className="flex flex-wrap items-start justify-between gap-6 mb-8">
+            <div className="flex gap-10">
+              <div className="flex flex-col">
+                <span className="text-[9px] font-mono text-blue-500/60 uppercase tracking-widest mb-1">Architecture</span>
+                <span className="text-xl md:text-2xl font-bold tracking-tight text-foreground uppercase">{project.title}</span>
+              </div>
+              <div className="hidden sm:flex flex-col">
+                <span className="text-[9px] font-mono text-blue-500/60 uppercase tracking-widest mb-1">Integrity</span>
+                <span className="text-xl md:text-2xl font-bold tracking-tight text-foreground uppercase">Verified</span>
+              </div>
+            </div>
+            
+            <div className="max-w-[240px] text-right">
+               <span className="text-[9px] font-mono text-blue-500/60 uppercase tracking-widest mb-2 block">Project Brief</span>
+               <p className="text-[11px] md:text-xs leading-relaxed text-muted-foreground font-medium uppercase tracking-wider">
+                {project.desc}
+               </p>
+            </div>
+          </div>
+
+          {/* Center: Image/Visual Area */}
+          <div className="relative flex-1 min-h-[200px] mb-8 bg-blue-500/[0.01] border border-blue-500/10 rounded-sm overflow-hidden flex items-center justify-center group-hover:border-blue-500/30 transition-colors">
+            {project.customContent ? (
+              <div className="flex flex-col items-center gap-4 opacity-40 group-hover:opacity-100 transition-all duration-700">
+                <div className="relative">
+                   <div className="absolute inset-0 bg-blue-500/20 blur-2xl rounded-full scale-150 animate-pulse" />
+                   {project.customIcon || <Smartphone className="w-16 h-16 text-blue-500" />}
+                </div>
+                <span className="font-mono text-[10px] tracking-[0.5em] text-blue-500 uppercase">{project.customLabel || "Technical Architecture"}</span>
+              </div>
+            ) : (
+              <img 
+                src={project.image} 
+                alt={project.label}
+                className="w-full h-full object-cover opacity-40 grayscale group-hover:grayscale-0 group-hover:opacity-80 group-hover:scale-105 transition-all duration-700" 
+              />
+            )}
+            
+            {/* HUD Overlay Scanline Effect */}
+            <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,128,0.06))] bg-[length:100%_2px,3px_100%]" />
+          </div>
+
+          {/* Bottom Row: Tech & Actions */}
+          <div className="flex items-end justify-between gap-4">
+            <div className="flex flex-wrap gap-2">
+               {project.tags?.map((tag: string, idx: number) => (
+                 <div key={idx} className="px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-sm">
+                   <span className="text-[9px] font-mono font-bold text-blue-400 uppercase tracking-widest">{tag}</span>
+                 </div>
+               ))}
+            </div>
+
+            <div className="flex gap-2">
+              <div className="w-10 h-10 bg-blue-500/10 border border-blue-500/20 flex items-center justify-center rounded-sm hover:bg-blue-500 hover:text-white transition-all">
+                <Github className="w-4 h-4" />
+              </div>
+              <div className="w-10 h-10 bg-blue-500 flex items-center justify-center rounded-sm shadow-[0_0_20px_rgba(59,130,246,0.3)]">
+                <ArrowUpRight className="w-5 h-5 text-white" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      {/* Bottom Data Tape Strip */}
+      <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-blue-500/10 overflow-hidden">
+        <div className="w-full h-full bg-blue-500/40 animate-marquee" />
+      </div>
+    </div>
+  );
+};
+
 // Helper for 3D Tilt effect
 import { Hero3DCarousel } from "@/components/ui/hero-3d-carousel";
 import { LoadingScreen } from "@/components/ui/loading-screen";
@@ -128,22 +273,22 @@ const SectionReveal = ({ children, index }: { children: React.ReactNode, index: 
     offset: ["start 100%", "start 0%"]
   });
 
-  const scale = useTransform(scrollYProgress, [0, 1], [0.01, 1]);
-  const borderRadius = useTransform(scrollYProgress, [0, 0.5, 1], ["50%", "30%", "0%"]);
-  const y = useTransform(scrollYProgress, [0, 1], ["-50vh", "0vh"]);
-  const rotateZ = useTransform(scrollYProgress, [0, 1], [index % 2 === 0 ? 45 : -45, 0]);
-  const opacity = useTransform(scrollYProgress, [0, 0.2, 1], [0, 1, 1]);
+  const scale = useTransform(scrollYProgress, [0, 0.4], [0.85, 1]);
+  const borderRadius = useTransform(scrollYProgress, [0, 0.4], ["4rem", "0%"]);
+  const y = useTransform(scrollYProgress, [0, 0.4], ["100px", "0px"]);
+  const rotateZ = useTransform(scrollYProgress, [0, 0.4], [index % 2 === 0 ? 5 : -5, 0]);
+  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.4], [0, 1, 1]);
   const boxShadow = useTransform(
     scrollYProgress,
-    [0, 0.5, 1],
-    ["0px 0px 0px 0px rgba(59, 130, 246, 0)", "0px 0px 100px 30px rgba(59, 130, 246, 0.4)", "0px 0px 0px 0px rgba(59, 130, 246, 0)"]
+    [0, 0.4],
+    ["0px 0px 100px 30px rgba(59, 130, 246, 0.15)", "0px 0px 0px 0px rgba(59, 130, 246, 0)"]
   );
 
   return (
-    <div ref={ref} className="w-full relative z-10 pt-[50vh]">
+    <div ref={ref} className="w-full relative z-10 pt-20 md:pt-40">
       <motion.div 
         style={{ scale, borderRadius, y, rotateZ, opacity, boxShadow }}
-        className="origin-center overflow-hidden bg-background border-t border-blue-500/20"
+        className="origin-center overflow-visible bg-background border-t border-blue-500/20"
       >
         {children}
       </motion.div>
@@ -249,7 +394,7 @@ export default function Index() {
   const [imageOffsetVh, setImageOffsetVh] = useState(0);
   const carouselRef = useRef<HTMLDivElement>(null);
   const { scrollY } = useScroll();
-  const introEnd = vh * 6; // 6 stages of dealing
+  const introEnd = vh * 2.5; // Consistently snappier dealing flow
   const isIntroDone = useTransform(scrollY, [introEnd, introEnd + 100], [0, 1]);
   const introOpacity = useTransform(scrollY, [introEnd, introEnd + 200], [1, 0]);
   const mainContentOpacity = useTransform(scrollY, [introEnd - 100, introEnd], [0, 1]);
@@ -574,16 +719,17 @@ export default function Index() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: i * 0.1 }}
-                className="glass p-10 rounded-[2.5rem] group hover:bg-primary/[0.02] transition-colors"
+                className="group"
               >
-                <div className="w-12 h-12 rounded-2xl bg-muted flex items-center justify-center mb-8 border border-border group-hover:border-blue-500/30 group-hover:bg-blue-500/5 transition-colors">
-                  <Plus className="w-5 h-5 text-muted-foreground group-hover:text-blue-500 group-hover:rotate-90 transition-all" />
-                </div>
-                <h3 className="text-2xl font-bold mb-4">{service.title}</h3>
-                <p className="text-muted-foreground mb-8 leading-relaxed font-medium">{service.desc}</p>
-                <div className="pt-8 border-t border-border flex flex-wrap gap-2">
-                  <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">{service.meta}</span>
-                </div>
+                <TechnicalCard 
+                  title={service.title} 
+                  label="Service Module" 
+                  meta={service.meta}
+                  icon={<Plus className="w-5 h-5 text-muted-foreground group-hover:text-white transition-all" />}
+                  className="h-full"
+                >
+                  <p className="text-muted-foreground leading-relaxed font-medium">{service.desc}</p>
+                </TechnicalCard>
               </motion.div>
             ))}
           </div>
@@ -699,61 +845,7 @@ export default function Index() {
                 className={`${project.colSpan} ${project.rowSpan} group cursor-pointer`}
                 onClick={() => project.github && window.open(project.github, "_blank")}
               >
-                <TiltCard className="h-full">
-                  <div className={`relative h-full flex flex-col overflow-hidden p-8 md:p-10 rounded-[2.5rem] glass group-hover:bg-primary/[0.01]`}>
-                    {/* Card Header: Icon + Title */}
-                    <div className="flex items-center space-x-4 mb-6">
-                      <div className="w-12 h-12 rounded-2xl bg-muted flex items-center justify-center border border-border group-hover:border-blue-500/30 group-hover:bg-blue-500/5 group-hover:text-blue-500 transition-colors">
-                        {project.icon}
-                      </div>
-                      <h3 className="text-xl md:text-2xl font-bold tracking-tight">{project.title}</h3>
-                    </div>
-
-                    {/* Description */}
-                    <p className="text-muted-foreground font-medium mb-6 text-base leading-relaxed max-w-lg">
-                      {project.desc}
-                    </p>
-
-                    {/* Tech Stacks */}
-                    <div className="flex flex-wrap gap-2 mb-10">
-                      {project.tags?.map((tag, idx) => (
-                        <span key={idx} className="px-3 py-1 rounded-full bg-muted/50 border border-border text-[10px] font-mono font-bold tracking-tight text-muted-foreground uppercase">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-
-                    {/* Image Area */}
-                    <div className={`relative mt-auto w-full ${project.imageHeight} rounded-[2rem] overflow-hidden border border-border bg-muted/30 group-hover:border-primary/10 transition-all duration-700`}>
-                      {project.customContent ? (
-                        <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-primary/5 to-transparent backdrop-blur-3xl">
-                          <div className="flex flex-col items-center gap-6 opacity-30 group-hover:opacity-50 transition-opacity">
-                            {project.customIcon || <Smartphone className="w-24 h-24" />}
-                            <span className="font-mono text-sm tracking-widest uppercase text-center px-4">{project.customLabel || "System Interface Architecture"}</span>
-                          </div>
-                        </div>
-                      ) : (
-                        <img
-                          src={project.image}
-                          alt={project.label}
-                          className="w-full h-full object-cover opacity-60 group-hover:scale-105 group-hover:opacity-90 transition-all duration-700"
-                        />
-                      )}
-
-                      {/* Label Overlay */}
-                      <div className="absolute bottom-6 left-6 flex items-center space-x-3">
-                        <div className="px-4 py-2 rounded-full border border-primary/10 bg-background/60 backdrop-blur-md">
-                          <span className="text-xs font-bold tracking-wide uppercase">{project.label}</span>
-                        </div>
-                      </div>
-
-                      {/* Click Indicator */}
-                      <div className="absolute top-6 right-6 w-12 h-12 bg-blue-500 text-white rounded-full flex items-center justify-center -translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 shadow-2xl shadow-blue-500/20">
-                        <ArrowUpRight className="w-6 h-6" />
-                      </div>
-                    </div>
-                  </div>
-                </TiltCard>
+                <ProjectTechnicalCard project={project} />
               </motion.div>
             ))}
           </div>
@@ -788,18 +880,15 @@ export default function Index() {
                 transition={{ duration: 0.6, delay: i * 0.1 }}
                 className="group"
               >
-                <TiltCard className="h-full">
-                  <div className="glass p-10 rounded-[2.5rem] group-hover:bg-primary/[0.01] transition-colors h-full">
-                    <div className="w-12 h-12 rounded-2xl bg-muted flex items-center justify-center mb-8 border border-border group-hover:border-blue-500/30 group-hover:bg-blue-500/5 transition-colors">
-                      <Plus className="w-5 h-5 text-muted-foreground group-hover:text-blue-500 group-hover:rotate-90 transition-all" />
-                    </div>
-                    <h3 className="text-2xl font-bold mb-4">{expertise.title}</h3>
-                    <p className="text-muted-foreground mb-8 leading-relaxed font-medium">{expertise.desc}</p>
-                    <div className="pt-8 border-t border-border flex flex-wrap gap-2">
-                      <span className="text-[10px] uppercase font-mono tracking-widest text-muted-foreground font-bold">{expertise.meta}</span>
-                    </div>
-                  </div>
-                </TiltCard>
+                <TechnicalCard 
+                  title={expertise.title} 
+                  label="Core Expertise" 
+                  meta={expertise.meta}
+                  icon={<Plus className="w-5 h-5 text-muted-foreground group-hover:text-white transition-all" />}
+                  className="h-full"
+                >
+                  <p className="text-muted-foreground leading-relaxed font-medium">{expertise.desc}</p>
+                </TechnicalCard>
               </motion.div>
             ))}
           </div>
@@ -1019,47 +1108,42 @@ export default function Index() {
                 { image: "/Ange.jpeg", name: "Ange", role: "Design Lead, Bloom", text: "Joshua is a hardworking colleague who fearlessly risks himself to get the job done. He cooperates seamlessly with others and always drives team success.", rating: 5 },
                 { image: "/ashrafu.png", name: "Ashrafu", role: "Design Lead, Bloom", text: "Working with Joshua has been an incredibly rewarding experience. He brings a rare combination of technical skill, creativity, and genuine curiosity to every discussion. Whether we were brainstorming ideas or mentoring together at Brainiacs, he consistently showed strong leadership, thoughtful problem-solving, and a passion for helping others grow. Joshua doesn’t just build solutions — he elevates the people around him and turns ideas into clear, actionable outcomes. Any team would benefit from his energy and vision.", rating: 5 }
               ].map((client, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{
-                    duration: 0.8,
-                    ease: "easeOut",
-                    delay: 1.8 + (i * 0.2)
-                  }}
-                  viewport={{ once: true }}
-                  className="sticky top-32 mb-12 sm:mb-24"
-                  style={{ zIndex: i + 1, top: 120 + i * 20 }}
-                >
-                  <TiltCard className="h-full">
-                    <div className="glass p-8 md:p-12 rounded-[2.5rem] relative group-hover:bg-primary/[0.01] transition-all shadow-xl">
-                      <div className="flex items-center space-x-6 mb-10">
-                        <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-muted border border-border flex items-center justify-center overflow-hidden">
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, ease: "easeOut", delay: i * 0.1 }}
+                    viewport={{ once: true }}
+                    className="sticky mb-12 sm:mb-24"
+                    style={{ zIndex: i + 1, top: 120 + i * 20 }}
+                  >
+                    <TechnicalCard 
+                      title={client.name} 
+                      label={`Verification ID: 00${i+1}`}
+                      className="border-blue-500/20"
+                    >
+                      <div className="flex items-center space-x-6 mb-8">
+                        <div className="w-16 h-16 md:w-20 md:h-20 rounded-sm bg-muted border border-blue-500/20 flex items-center justify-center overflow-hidden">
                           {client.image ? (
-                            <img src={client.image} alt={client.name} className="w-full h-full object-cover" />
+                            <img src={client.image} alt={client.name} className="w-full h-full object-cover grayscale" />
                           ) : (
                             <span className="text-2xl font-bold text-muted-foreground">{client.name[0]}</span>
                           )}
                         </div>
                         <div>
-                          <div className="text-2xl font-bold mb-1">{client.name}</div>
-                          <div className="text-sm text-muted-foreground font-mono tracking-wider uppercase">{client.role}</div>
+                          <div className="text-sm text-blue-500 font-mono tracking-[0.2em] uppercase">{client.role}</div>
+                          <div className="flex items-center mt-2 space-x-1">
+                            {[...Array(5)].map((_, s) => (
+                              <span key={s} className={cn("text-xs", s < Math.floor(client.rating) ? "text-blue-500" : "text-blue-500/10")}>★</span>
+                            ))}
+                          </div>
                         </div>
                       </div>
-                      <div className="flex items-center mb-8 space-x-1">
-                        <span className="text-base font-bold mr-3">{client.rating.toFixed(1)}</span>
-                        {[...Array(5)].map((_, s) => (
-                          <span key={s} className={cn("text-base", s < Math.floor(client.rating) ? "text-yellow-500" : "text-muted opacity-20")}>★</span>
-                        ))}
-                      </div>
-                      <p className="text-xl md:text-2xl font-medium text-muted-foreground leading-relaxed italic">
+                      <p className="text-xl md:text-2xl font-medium text-muted-foreground leading-relaxed italic border-l-2 border-blue-500/20 pl-6">
                         "{client.text}"
                       </p>
-                      <div className="absolute top-12 right-12 w-3 h-3 rounded-full bg-primary/20 group-hover:bg-green-500 transition-colors duration-500" />
-                    </div>
-                  </TiltCard>
-                </motion.div>
+                    </TechnicalCard>
+                  </motion.div>
               ))}
             </div>
           </div>
@@ -1106,14 +1190,13 @@ export default function Index() {
                     transition={{ duration: 0.6, delay: i * 0.1 }}
                     className="group"
                   >
-                    <TiltCard className="h-full">
-                      <div className="relative glass p-8 rounded-[2.5rem] group-hover:bg-primary/[0.01] transition-all h-full">
-                        <div className="text-3xl font-bold text-muted-foreground/10 group-hover:text-primary/20 transition-colors mb-6 font-mono">{item.step}</div>
-                        <h3 className="text-xl font-bold mb-3">{item.title}</h3>
-                        <p className="text-sm text-muted-foreground leading-relaxed font-medium">{item.desc}</p>
-                        <div className="absolute top-0 right-0 w-24 h-24 bg-primary/[0.02] blur-3xl rounded-full translate-x-10 -translate-y-10 group-hover:bg-primary/[0.04] transition-all" />
-                      </div>
-                    </TiltCard>
+                    <TechnicalCard 
+                      title={item.title} 
+                      label={`Phase ${item.step}`}
+                      className="h-full"
+                    >
+                      <p className="text-sm text-muted-foreground leading-relaxed font-medium">{item.desc}</p>
+                    </TechnicalCard>
                   </motion.div>
                 ))}
               </div>
@@ -1174,27 +1257,52 @@ export default function Index() {
       </SectionReveal>
 
       {/* Footer CTA & Contact Form */}
-      <SectionReveal index={6}>
-        <footer 
-          id="contact" 
-          className="py-32 px-6 bg-background border-t border-border/30 relative z-10"
-        >
-        <div className="max-w-7xl mx-auto glass p-12 md:p-20 rounded-[4rem] relative overflow-hidden">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-primary/[0.02] blur-[100px] rounded-full -translate-y-1/2" />
+<SectionReveal index={6}>
+  <footer
+    id="contact"
+    className="py-32 px-6 bg-background border-t border-border/30 relative z-10"
+  >
+    <div className="max-w-7xl mx-auto">
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+      {/* CUSTOM SHAPE CONTAINER */}
+      <div className="relative">
+
+        {/* MAIN BACKGROUND */}
+        <div
+          className="relative bg-[#080808] border border-blue-500/20 p-12 md:p-24 overflow-hidden rounded-[2rem]"
+        >
+          {/* Glow */}
+          <div className="absolute inset-0 pointer-events-none shadow-[0_0_30px_rgba(59,130,246,0.15)]" />
+
+          {/* Scanline */}
+          <div className="absolute inset-0 opacity-[0.02] pointer-events-none bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%)] bg-[length:100%_4px]" />
+
+          {/* Top glow */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-blue-500/[0.05] blur-[100px] rounded-full -translate-y-1/2" />
+
+          {/* CONTENT */}
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+
+            {/* LEFT SIDE */}
             <ScrollReveal>
               <div className="max-w-xl">
                 <h2 className="text-5xl md:text-8xl font-bold tracking-tighter mb-10 leading-[0.9]">
                   Let's Grow <br />
                   <span className="text-muted-foreground italic">Together</span>
                 </h2>
+
                 <p className="text-xl text-muted-foreground mb-16 font-medium leading-relaxed">
                   Have a visionary project in mind? Let's turn your ideas into a high-performance digital reality.
                 </p>
+
                 <div className="flex flex-col sm:flex-row gap-6">
                   <Magnetic>
-                    <Button size="lg" variant="outline" className="h-16 px-12 border-blue-500/30 text-blue-500 hover:bg-blue-500 hover:text-white transition-colors" asChild>
+                    <Button
+                      size="lg"
+                      variant="outline"
+                      className="h-16 px-12 border-blue-500/30 text-blue-500 hover:bg-blue-500 hover:text-white transition-colors"
+                      asChild
+                    >
                       <a href="tel:+250739587054">
                         <Phone className="mr-3 w-5 h-5" />
                         Call Me
@@ -1205,149 +1313,93 @@ export default function Index() {
               </div>
             </ScrollReveal>
 
+            {/* RIGHT SIDE — TRANSMISSION */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              className="glass p-8 md:p-12 rounded-[2.5rem] relative z-10 shadow-xl"
+              className="relative z-10 w-full"
             >
-              <h3 className="text-2xl font-bold mb-8">Send a Message</h3>
-              <div className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-xs uppercase tracking-widest text-muted-foreground font-bold mb-3">Your Name</label>
-                    <input
-                      type="text"
-                      value={contactName}
-                      onChange={(e) => setContactName(e.target.value)}
-                      placeholder="John Doe"
-                      className="w-full bg-muted/30 border border-border rounded-2xl px-6 py-4 text-foreground placeholder:text-muted-foreground/30 focus:outline-none focus:border-primary/30 transition-colors"
-                    />
+              <div className="relative w-full bg-[#080808] border border-blue-500/20 rounded-sm overflow-hidden hover:border-blue-500/50 transition-all">
+
+                {/* Corner accents */}
+                <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-blue-500/40" />
+                <div className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-blue-500/40" />
+
+                <div className="relative flex flex-row min-h-[450px]">
+
+                  {/* Vertical label */}
+                  <div className="w-10 md:w-14 flex items-center justify-center border-r border-blue-500/10 bg-blue-500/[0.03]">
+                    <span className="rotate-[-90deg] whitespace-nowrap text-xl md:text-2xl font-black tracking-tighter text-blue-500/60 uppercase">
+                      TRANSMISSION
+                    </span>
                   </div>
-                  <div>
-                    <label className="block text-xs uppercase tracking-widest text-muted-foreground font-bold mb-3">Email Address</label>
-                    <input
-                      type="email"
-                      value={contactEmail}
-                      onChange={(e) => setContactEmail(e.target.value)}
-                      placeholder="john@example.com"
-                      className="w-full bg-muted/30 border border-border rounded-2xl px-6 py-4 text-foreground placeholder:text-muted-foreground/30 focus:outline-none focus:border-primary/30 transition-colors"
-                    />
+
+                  {/* FORM */}
+                  <div className="flex-1 flex flex-col p-6 md:p-8">
+
+                    {/* Header */}
+                    <div className="flex justify-between mb-8 pb-4 border-b border-blue-500/10">
+                      <div className="flex gap-6">
+                        <div>
+                          <span className="text-[8px] font-mono text-blue-500/40 uppercase">Status</span>
+                          <div className="text-sm font-bold uppercase animate-pulse">Ready</div>
+                        </div>
+                        <div>
+                          <span className="text-[8px] font-mono text-blue-500/40 uppercase">Protocol</span>
+                          <div className="text-sm font-bold uppercase">SMTP_SEC</div>
+                        </div>
+                      </div>
+
+                      <div className="hidden sm:block text-right">
+                        <span className="text-[8px] font-mono text-blue-500/40 uppercase">Security</span>
+                        <div className="text-blue-500 text-[10px] font-bold uppercase">AES-256</div>
+                      </div>
+                    </div>
+
+                    {/* Inputs */}
+                    <div className="space-y-6 flex-1">
+                      <input className="w-full bg-blue-500/[0.03] border border-blue-500/10 px-4 py-3 text-xs font-mono uppercase text-foreground placeholder:text-blue-500/20 focus:outline-none focus:border-blue-500/40 transition-colors" placeholder="NAME_REQ" />
+                      <input className="w-full bg-blue-500/[0.03] border border-blue-500/10 px-4 py-3 text-xs font-mono uppercase text-foreground placeholder:text-blue-500/20 focus:outline-none focus:border-blue-500/40 transition-colors" placeholder="EMAIL@PROTO.SYS" />
+                      <textarea rows={4} className="w-full bg-blue-500/[0.03] border border-blue-500/10 px-4 py-3 text-xs font-mono uppercase text-foreground placeholder:text-blue-500/20 focus:outline-none focus:border-blue-500/40 transition-colors resize-none" placeholder="ENTER_DATA_PACKET..." />
+                    </div>
+
+                    {/* Button */}
+                    <div className="mt-6 flex justify-end">
+                      <Button className="bg-blue-500 text-white hover:bg-blue-600 shadow-[0_0_20px_rgba(59,130,246,0.3)]">
+                        Execute Transmission
+                      </Button>
+                    </div>
                   </div>
                 </div>
-                <div>
-                  <label className="block text-xs uppercase tracking-widest text-muted-foreground font-bold mb-3">Message</label>
-                  <textarea
-                    rows={4}
-                    value={contactMessage}
-                    onChange={(e) => setContactMessage(e.target.value)}
-                    placeholder="Tell me about your project..."
-                    className="w-full bg-muted/30 border border-border rounded-2xl px-6 py-4 text-foreground placeholder:text-muted-foreground/30 focus:outline-none focus:border-primary/30 transition-colors resize-none"
-                  />
-                </div>
-                <Button
-                  size="lg"
-                  className="w-full h-16 group relative bg-blue-500 text-white hover:bg-blue-600 transition-colors"
-                  onClick={handleSubmit}
-                  disabled={isSending || !contactName || !contactEmail || !contactMessage}
-                >
-                  {isSending ? (
-                    <Loader2 className="w-5 h-5 animate-spin" />
-                  ) : (
-                    <>
-                      <Send className="mr-3 w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                      Email Me
-                    </>
-                  )}
-                </Button>
-
-                <AnimatePresence>
-                  {showSuccess && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.95 }}
-                      className="mt-6 flex items-center justify-center space-x-3 text-green-600 bg-green-500/10 border border-green-500/20 p-4 rounded-2xl"
-                    >
-                      <CheckCircle className="w-5 h-5" />
-                      <span className="font-bold text-sm">Message sent successfully!</span>
-                    </motion.div>
-                  )}
-                  {showError && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.95 }}
-                      className="mt-6 p-4 rounded-2xl bg-red-500/10 border border-red-500/20"
-                    >
-                      <div className="flex items-center space-x-3 text-red-600 mb-3">
-                        <X className="w-5 h-5" />
-                        <span className="font-bold text-sm">Message Delivery Interrupted.</span>
-                      </div>
-                      <p className="text-xs text-muted-foreground mb-4">
-                        Your current network or proxy might be blocking the request. You can try again or use the fallback below.
-                      </p>
-                      <div className="flex flex-col sm:flex-row gap-3">
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          className="flex-1 border-red-500/20 text-red-600 hover:bg-red-500 hover:text-white transition-colors"
-                          asChild
-                        >
-                          <a href={`mailto:izerejoshua94@gmail.com?subject=Contact from ${contactName}&body=${encodeURIComponent(contactMessage)}%0A%0AFrom: ${contactName} (${contactEmail})`}>
-                            <Mail className="w-4 h-4 mr-2" />
-                            Send via Email App
-                          </a>
-                        </Button>
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          className="text-muted-foreground hover:text-foreground"
-                          onClick={() => {
-                            setContactName("");
-                            setContactEmail("");
-                            setContactMessage("");
-                            setShowError(false);
-                          }}
-                        >
-                          Clear Form
-                        </Button>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-
-                <p className="text-center text-muted-foreground/30 text-[10px] font-mono tracking-widest uppercase">
-                  ✦ Direct Response Guaranteed
-                </p>
               </div>
             </motion.div>
           </div>
 
-          <div className="mt-24 pt-12 border-t border-border flex flex-col md:flex-row items-center justify-between gap-8">
-            <div className="text-sm font-bold tracking-tighter font-mono text-muted-foreground">IZERE.SYSTEMS [v 2.5]</div>
-            <div className="flex items-center space-x-8 text-sm font-medium text-muted-foreground">
-              <a href="#" className="hover:text-foreground transition-colors">Privacy</a>
-              <a href="#" className="hover:text-foreground transition-colors">Terms</a>
-              <span>© 2025 IZERE JOSHUA</span>
-            </div>
-            <div className="flex items-center space-x-4">
-              {[
-                { Icon: Github, href: "https://github.com/I-Josh-pro-grammin" },
-                { Icon: Linkedin, href: "https://linkedin.com/in/izere-joshua" },
-                { Icon: Mail, href: "https://mail.google.com/mail/?view=cm&to=izerejoshua94@gmail.com" }
-              ].map((item, i) => (
-                <Magnetic key={i}>
-                  <a href={item.href} target={item.href.startsWith("http") ? "_blank" : undefined} className="w-10 h-10 bg-primary/5 border border-border rounded-full flex items-center justify-center hover:bg-blue-500/10 hover:border-blue-500/30 transition-colors text-muted-foreground hover:text-blue-500">
-                    <item.Icon className="w-4 h-4" />
-                  </a>
-                </Magnetic>
-              ))}
-            </div>
+          {/* Bottom right text */}
+          <div className="absolute bottom-10 right-14 text-xs font-mono uppercase flex gap-2">
+            <span className="text-white/40">Discoball</span>
+            <span className="text-blue-500 font-bold">2025</span>
           </div>
         </div>
-      </footer>
-    </SectionReveal>
-      </motion.div>
+      </div>
+
+      {/* Footer bottom */}
+      <div className="mt-24 pt-12 border-t border-blue-500/10 flex flex-col md:flex-row justify-between items-center gap-8">
+        <div className="text-sm font-mono text-blue-500/60">
+          IZERE.SYSTEMS [v 2.5]
+        </div>
+
+        <div className="flex gap-8 text-sm text-muted-foreground">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <span>© 2025 IZERE JOSHUA</span>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+</SectionReveal>
+</motion.div>
 
       {/* Floating Particles */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
