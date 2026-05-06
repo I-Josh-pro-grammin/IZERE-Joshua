@@ -15,6 +15,7 @@ import { useMotionValue, useSpring, useTransform } from "framer-motion";
 
 // Helper for 3D Tilt effect
 import { Hero3DCarousel } from "@/components/ui/hero-3d-carousel";
+import { LoadingScreen } from "@/components/ui/loading-screen";
 const TiltCard = ({ children, className }: { children: React.ReactNode, className?: string }) => {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -150,11 +151,11 @@ const SectionReveal = ({ children, index }: { children: React.ReactNode, index: 
   );
 };
 
-const IntroDealer = ({ scrollY, vh }: { scrollY: any, vh: number }) => {
+const IntroDealer = ({ scrollY, vh, imageOffsetVh }: { scrollY: any, vh: number, imageOffsetVh: number }) => {
   const sections = ["Services", "Projects", "Expertise", "Testimonials", "Process", "Contact"];
   
   return (
-    <div className="fixed inset-0 z-10 pointer-events-none" style={{ perspective: "2000px" }}>
+    <div className="fixed inset-0 z-10 pointer-events-none">
       {sections.map((title, i) => {
         const start = (i + 1) * vh;
         const end = (i + 2) * vh;
@@ -162,17 +163,15 @@ const IntroDealer = ({ scrollY, vh }: { scrollY: any, vh: number }) => {
         // This section's animation progress
         const progress = useTransform(scrollY, [start, end], [0, 1]);
         
-        // 3D Flying effect from "behind" the image
-        // 0.0 -> 0.4: Emerge and fly towards viewer
-        // 0.4 -> 1.0: Fly down to the stack
-        const scale = useTransform(progress, [0, 0.4, 1], [0.1, 1.1, 1]);
-        const opacity = useTransform(progress, [0, 0.1, 0.9, 1], [0, 1, 1, 0.9]);
-        const borderRadius = useTransform(progress, [0, 0.5, 1], ["50%", "30%", "2.5rem"]);
-        
-        const y = useTransform(progress, [0, 0.4, 1], ["0vh", "-5vh", `${85 + i * 2}vh`]);
-        const translateZ = useTransform(progress, [0, 0.4, 1], [-1500, 300, 0]);
-        const rotateX = useTransform(progress, [0, 0.4, 1], [110, -20, 0]);
-        const rotateZ = useTransform(progress, [0, 0.4, 1], [i % 2 === 0 ? 20 : -20, i % 2 === 0 ? 5 : -5, 0]);
+        // Use the measured offset so cards always emerge from the exact Josh image center.
+        // imageOffsetVh = (carouselCenterPx - viewportCenterPx) / viewportHeightPx * 100
+        const IMG_Y = `${imageOffsetVh}vh`;
+        const peakY = `${imageOffsetVh - 38}vh`;  // arc this far ABOVE the image
+        const holdY = `${imageOffsetVh - 28}vh`;
+        const scale = useTransform(progress, [0, 0.28, 0.58, 1], [0, 1.12, 1.06, 1]);
+        const opacity = useTransform(progress, [0, 0.04, 0.82, 1], [0, 1, 1, 0.95]);
+        const borderRadius = useTransform(progress, [0, 0.28, 0.58, 1], ["50%", "14%", "6%", "2.5rem"]);
+        const y = useTransform(progress, [0, 0.28, 0.58, 1], [IMG_Y, peakY, holdY, `${84 + i * 2}vh`]);
         
         const zIndex = 10 + i;
 
@@ -183,10 +182,7 @@ const IntroDealer = ({ scrollY, vh }: { scrollY: any, vh: number }) => {
               scale, 
               opacity, 
               borderRadius, 
-              y, 
-              z: translateZ,
-              rotateX,
-              rotateZ, 
+              y,
               zIndex,
               backgroundColor: "var(--background)",
               boxShadow: "0 20px 100px rgba(59, 130, 246, 0.2), 0 0 40px rgba(59, 130, 246, 0.1)",
@@ -239,6 +235,7 @@ const IntroDealer = ({ scrollY, vh }: { scrollY: any, vh: number }) => {
 
 export default function Index() {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
   const [contactName, setContactName] = useState("");
@@ -249,6 +246,8 @@ export default function Index() {
   const [showError, setShowError] = useState(false);
   const [theme, setTheme] = useState<"light" | "dark">("light");
   const [vh, setVh] = useState(800);
+  const [imageOffsetVh, setImageOffsetVh] = useState(0);
+  const carouselRef = useRef<HTMLDivElement>(null);
   const { scrollY } = useScroll();
   const introEnd = vh * 6; // 6 stages of dealing
   const isIntroDone = useTransform(scrollY, [introEnd, introEnd + 100], [0, 1]);
@@ -258,17 +257,38 @@ export default function Index() {
   useEffect(() => {
     setIsLoaded(true);
     setVh(window.innerHeight);
-    const handleResize = () => setVh(window.innerHeight);
+
+    const measureCarousel = () => {
+      if (carouselRef.current) {
+        const rect = carouselRef.current.getBoundingClientRect();
+        const carouselCenterY = rect.top + rect.height / 2;
+        const viewportCenter = window.innerHeight / 2;
+        // Positive = carousel is BELOW viewport center
+        const offsetVh = ((carouselCenterY - viewportCenter) / window.innerHeight) * 100;
+        setImageOffsetVh(offsetVh);
+      }
+    };
+
+    const handleResize = () => {
+      setVh(window.innerHeight);
+      measureCarousel();
+    };
+
+    // Measure once fonts/images load so layout is stable
+    const timer = setTimeout(measureCarousel, 500);
     window.addEventListener('resize', handleResize);
-    
+
     const savedTheme = localStorage.getItem("theme") as "light" | "dark";
     if (savedTheme) {
       setTheme(savedTheme);
     } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
       setTheme("dark");
     }
-    
-    return () => window.removeEventListener('resize', handleResize);
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   const { scrollY: scrollYRaw } = useScroll();
@@ -354,6 +374,13 @@ export default function Index() {
   ], []);
 
   return (
+    <>
+      <AnimatePresence>
+        {isLoading && (
+          <LoadingScreen onComplete={() => setIsLoading(false)} />
+        )}
+      </AnimatePresence>
+
     <div className="min-h-screen bg-background text-foreground selection:bg-primary selection:text-primary-foreground cursor-none transition-colors duration-500">
       <CustomCursor />
       
@@ -406,7 +433,7 @@ export default function Index() {
 
       {/* Phase 1: Intro Dealer (Fixed Overlay) */}
       <motion.div style={{ opacity: introOpacity }} className="z-[100]">
-        <IntroDealer scrollY={scrollY} vh={vh} />
+        <IntroDealer scrollY={scrollY} vh={vh} imageOffsetVh={imageOffsetVh} />
       </motion.div>
 
       {/* The Sticky Stage: Hero + Spacer */}
@@ -432,6 +459,7 @@ export default function Index() {
           <div className="flex flex-col items-center text-center">
             {/* The Image Carousel - Visible during intro dealing */}
             <motion.div
+              ref={carouselRef}
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 1, delay: 0.2 }}
@@ -1350,5 +1378,6 @@ export default function Index() {
       </div>
     </div>
     </div>
+    </>
   );
 }
