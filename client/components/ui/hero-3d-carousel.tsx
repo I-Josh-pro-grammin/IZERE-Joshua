@@ -214,15 +214,6 @@ export const Hero3DCarousel: React.FC<Hero3DCarouselProps> = ({
       
       <div className="absolute inset-0 bg-blue-500/5 rounded-full blur-[180px] pointer-events-none -z-10" />
       
-      {/* Interaction Hint */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-[10px] font-mono text-muted-foreground uppercase tracking-[0.4em] pointer-events-none opacity-50 flex flex-col items-center gap-2 text-center">
-        <div className="flex flex-wrap gap-4 justify-center">
-          <span>[Left Drag] Inner Ring</span>
-          <span>[Middle Drag] Center Image</span>
-          <span>[Right Drag] Outer Ring</span>
-        </div>
-        <span>[Double Click] Reset All</span>
-      </div>
     </div>
   );
 };

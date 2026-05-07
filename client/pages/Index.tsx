@@ -5,6 +5,7 @@ const akaguriro = "/akaguriroo.png";
 const projects = "/projects.png";
 const joshImg = "/nkera.jpeg";
 const ebuy = "/ebuy.png";
+const Bora = "/Bora.png";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
@@ -118,7 +119,7 @@ const ProjectTechnicalCard = ({ project }: { project: any }) => {
               </div>
             ) : (
               <img 
-                src={project.image} 
+                src={project.image}
                 alt={project.label}
                 className="w-full h-full object-cover opacity-40 grayscale group-hover:grayscale-0 group-hover:opacity-80 group-hover:scale-105 transition-all duration-700" 
               />
@@ -296,85 +297,9 @@ const SectionReveal = ({ children, index }: { children: React.ReactNode, index: 
   );
 };
 
-const IntroDealer = ({ scrollY, vh, imageOffsetVh }: { scrollY: any, vh: number, imageOffsetVh: number }) => {
-  const sections = ["Services", "Projects", "Expertise", "Testimonials", "Process", "Contact"];
-  
+const IntroDealer = ({ scrollY, vh }: { scrollY: any, vh: number }) => {
   return (
-    <div className="fixed inset-0 z-10 pointer-events-none">
-      {sections.map((title, i) => {
-        const start = (i + 1) * vh;
-        const end = (i + 2) * vh;
-        
-        // This section's animation progress
-        const progress = useTransform(scrollY, [start, end], [0, 1]);
-        
-        // Use the measured offset so cards always emerge from the exact Josh image center.
-        // imageOffsetVh = (carouselCenterPx - viewportCenterPx) / viewportHeightPx * 100
-        const IMG_Y = `${imageOffsetVh}vh`;
-        const peakY = `${imageOffsetVh - 38}vh`;  // arc this far ABOVE the image
-        const holdY = `${imageOffsetVh - 28}vh`;
-        const scale = useTransform(progress, [0, 0.28, 0.58, 1], [0, 1.12, 1.06, 1]);
-        const opacity = useTransform(progress, [0, 0.04, 0.82, 1], [0, 1, 1, 0.95]);
-        const borderRadius = useTransform(progress, [0, 0.28, 0.58, 1], ["50%", "14%", "6%", "2.5rem"]);
-        const y = useTransform(progress, [0, 0.28, 0.58, 1], [IMG_Y, peakY, holdY, `${84 + i * 2}vh`]);
-        
-        const zIndex = 10 + i;
-
-        return (
-          <motion.div
-            key={title}
-            style={{ 
-              scale, 
-              opacity, 
-              borderRadius, 
-              y,
-              zIndex,
-              backgroundColor: "var(--background)",
-              boxShadow: "0 20px 100px rgba(59, 130, 246, 0.2), 0 0 40px rgba(59, 130, 246, 0.1)",
-              border: "1px solid rgba(59, 130, 246, 0.15)",
-              backdropFilter: "blur(20px)"
-            }}
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90vw] md:w-[75vw] h-[60vh] flex items-center justify-center overflow-hidden"
-          >
-            <div className="text-center p-12 relative z-10">
-              <motion.span 
-                style={{ opacity: useTransform(progress, [0.3, 0.5], [0, 1]) }}
-                className="text-blue-500 font-mono text-xs tracking-[0.6em] uppercase mb-6 block"
-              >
-                Initializing Module
-              </motion.span>
-              <h3 className="text-5xl md:text-8xl font-black tracking-tighter mb-10 leading-[0.8] gradient-text">
-                {title.toUpperCase()}
-              </h3>
-              <div className="w-32 h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent mx-auto rounded-full opacity-50" />
-            </div>
-            
-            {/* Holographic grid effect */}
-            <div className="absolute inset-0 pointer-events-none opacity-[0.05] bg-[linear-gradient(rgba(59,130,246,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(59,130,246,0.1)_1px,transparent_1px)] bg-[length:40px_40px]" />
-            <div className="absolute inset-0 bg-gradient-to-b from-blue-500/[0.02] to-transparent pointer-events-none" />
-            
-            <div className="absolute top-10 left-12 font-mono text-[10px] opacity-30 flex items-center gap-3">
-              <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" />
-              <span className="tracking-[0.2em]">S_ID: {i.toString().padStart(2, '0')} // STATUS: ACTIVE</span>
-            </div>
-            <div className="absolute bottom-10 right-12 font-mono text-[10px] opacity-30 tracking-widest uppercase">
-              Secure Transmission Protocol v2.5
-            </div>
-          </motion.div>
-        );
-      })}
-
-      {/* Scroll to Initialize Hint */}
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 text-center"
-      >
-        <div className="text-[10px] font-mono tracking-[0.3em] uppercase text-muted-foreground mb-4">Scroll to Deal</div>
-        <div className="w-[1px] h-12 bg-gradient-to-b from-blue-500 to-transparent mx-auto" />
-      </motion.div>
-    </div>
+    <div className="fixed inset-0 z-10 pointer-events-none" />
   );
 };
 
@@ -394,10 +319,10 @@ export default function Index() {
   const [imageOffsetVh, setImageOffsetVh] = useState(0);
   const carouselRef = useRef<HTMLDivElement>(null);
   const { scrollY } = useScroll();
-  const introEnd = vh * 2.5; // Consistently snappier dealing flow
-  const isIntroDone = useTransform(scrollY, [introEnd, introEnd + 100], [0, 1]);
-  const introOpacity = useTransform(scrollY, [introEnd, introEnd + 200], [1, 0]);
-  const mainContentOpacity = useTransform(scrollY, [introEnd - 100, introEnd], [0, 1]);
+  const introEnd = 0; // Removed dealing phase
+  const isIntroDone = useTransform(scrollY, [0, 100], [0, 1]);
+  const introOpacity = useTransform(scrollY, [0, 200], [1, 0]);
+  const mainContentOpacity = useTransform(scrollY, [0, 300], [0, 1]);
 
   useEffect(() => {
     setIsLoaded(true);
@@ -577,8 +502,9 @@ export default function Index() {
       </nav>
 
       {/* Phase 1: Intro Dealer (Fixed Overlay) */}
+      {/* Intro Phase (Hint only) */}
       <motion.div style={{ opacity: introOpacity }} className="z-[100]">
-        <IntroDealer scrollY={scrollY} vh={vh} imageOffsetVh={imageOffsetVh} />
+        <IntroDealer scrollY={scrollY} vh={vh} />
       </motion.div>
 
       {/* The Sticky Stage: Hero + Spacer */}
@@ -813,7 +739,7 @@ export default function Index() {
                 label: "Vantage",
                 desc: "A mobile app that provides an advantage to students by recommending the optimal career path based on the RIASEC model.",
                 icon: <Smartphone className="w-6 h-6" />,
-                github: "#",
+                github: "https://vantage-frontend-beta.vercel.app/",
                 tags: ["React Native", "AI", "Mobile"],
                 colSpan: "md:col-span-12 lg:col-span-5",
                 rowSpan: "md:row-span-1",
@@ -826,13 +752,14 @@ export default function Index() {
                 title: "AI Recruitment",
                 label: "Bora AI",
                 desc: "An AI application built for job recruiters that provides accurate, automated screening results to streamline hiring.",
+                image: Bora,
                 icon: <Layout className="w-6 h-6" />,
-                github: "#",
+                github: "https://bora-ai-web.vercel.app/",
                 tags: ["OpenAI", "Next.js", "TypeScript"],
                 colSpan: "md:col-span-12 lg:col-span-7",
                 rowSpan: "md:row-span-1",
                 imageHeight: "h-[250px]",
-                customContent: true,
+                // customContent: true,
                 customIcon: <Layout className="w-24 h-24" />,
                 customLabel: "AI System Interface"
               }
