@@ -289,7 +289,7 @@ const SectionReveal = ({ children, index }: { children: React.ReactNode, index: 
     <div ref={ref} className="w-full relative z-10 pt-20 md:pt-40">
       <motion.div 
         style={{ scale, borderRadius, y, rotateZ, opacity, boxShadow }}
-        className="origin-center overflow-visible bg-background border-t border-blue-500/20"
+        className="origin-center overflow-hidden bg-background border-t border-blue-500/20"
       >
         {children}
       </motion.div>
@@ -451,7 +451,7 @@ export default function Index() {
         )}
       </AnimatePresence>
 
-    <div className="min-h-screen bg-background text-foreground selection:bg-primary selection:text-primary-foreground cursor-none transition-colors duration-500">
+    <div className="min-h-screen overflow-x-hidden bg-background text-foreground selection:bg-primary selection:text-primary-foreground cursor-none transition-colors duration-500">
       <CustomCursor />
       
       {/* Navigation - Always Visible */}
