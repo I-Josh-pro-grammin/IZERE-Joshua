@@ -6,6 +6,7 @@ const projects = "/projects.png";
 const joshImg = "/nkera.jpeg";
 const ebuy = "/ebuy.png";
 const Bora = "/Bora.png";
+const vantage = "/Vantage.png";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
@@ -289,7 +290,7 @@ const SectionReveal = ({ children, index }: { children: React.ReactNode, index: 
     <div ref={ref} className="w-full relative z-10 pt-20 md:pt-40">
       <motion.div 
         style={{ scale, borderRadius, y, rotateZ, opacity, boxShadow }}
-        className="origin-center overflow-hidden bg-background border-t border-blue-500/20"
+        className="origin-center overflow-visible bg-background border-t border-blue-500/20"
       >
         {children}
       </motion.div>
@@ -320,9 +321,9 @@ export default function Index() {
   const carouselRef = useRef<HTMLDivElement>(null);
   const { scrollY } = useScroll();
   const introEnd = 0; // Removed dealing phase
-  const isIntroDone = useTransform(scrollY, [0, 100], [0, 1]);
-  const introOpacity = useTransform(scrollY, [0, 200], [1, 0]);
-  const mainContentOpacity = useTransform(scrollY, [0, 300], [0, 1]);
+  const isIntroDone = 1;
+  const introOpacity = 1;
+  const mainContentOpacity = 1;
 
   useEffect(() => {
     setIsLoaded(true);
@@ -451,7 +452,7 @@ export default function Index() {
         )}
       </AnimatePresence>
 
-    <div className="min-h-screen overflow-x-hidden bg-background text-foreground selection:bg-primary selection:text-primary-foreground cursor-none transition-colors duration-500">
+    <div className="min-h-screen relative overflow-x-hidden bg-background text-foreground selection:bg-primary selection:text-primary-foreground cursor-none transition-colors duration-500">
       <CustomCursor />
       
       {/* Navigation - Always Visible */}
@@ -507,14 +508,13 @@ export default function Index() {
         <IntroDealer scrollY={scrollY} vh={vh} />
       </motion.div>
 
-      {/* The Sticky Stage: Hero + Spacer */}
-      <div style={{ height: `calc(${introEnd}px + 100vh)` }} className="relative z-0">
-        <div className="sticky top-0 h-screen overflow-hidden">
-          <section className="h-screen pt-44 pb-32 px-6 border-b border-border/30">
+      {/* Hero Section */}
+      <div className="relative z-0">
+        <section className="min-h-screen pt-44 pb-32 px-6 border-b border-border/30 relative">
             {/* Hero text and Carousel are here */}
             {/* We will hide the text during dealing but keep carousel visible */}
         {/* Marquee Background Name */}
-        <div className="absolute top-[45%] -translate-y-1/2 left-0 w-full overflow-hidden z-0 pointer-events-none select-none opacity-[0.03] dark:opacity-[0.05]">
+        <div className="absolute top-[15rem] -translate-y-1/2 left-0 w-full overflow-hidden z-0 pointer-events-none select-none opacity-[0.03] dark:opacity-[0.05]">
           <div className="animate-marquee whitespace-nowrap flex items-center">
             {[...Array(10)].map((_, i) => (
               <span key={i} className="text-[12rem] md:text-[20rem] font-black tracking-tighter mx-8 text-foreground">
@@ -524,7 +524,7 @@ export default function Index() {
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto border-x border-border/30 relative z-20">
+        <div className="max-w-7xl -mt-20 mx-auto border-x border-border/30 relative z-20">
           <div className="hidden md:block absolute -bottom-[1px] -left-[1px] w-1.5 h-1.5 bg-foreground/30 translate-y-1/2 -translate-x-1/2 z-10" />
           <div className="hidden md:block absolute -bottom-[1px] -right-[1px] w-1.5 h-1.5 bg-foreground/30 translate-y-1/2 translate-x-1/2 z-10" />
           <div className="flex flex-col items-center text-center">
@@ -614,8 +614,7 @@ export default function Index() {
             </motion.div>
           </div>
         </div>
-        </section>
-      </div>
+      </section>
 
       {/* Main Content Phase 2 - Hidden during Dealing */}
       <motion.div style={{ opacity: mainContentOpacity }}>
@@ -738,6 +737,7 @@ export default function Index() {
                 title: "Career Guidance",
                 label: "Vantage",
                 desc: "A mobile app that provides an advantage to students by recommending the optimal career path based on the RIASEC model.",
+                image: vantage,
                 icon: <Smartphone className="w-6 h-6" />,
                 github: "https://vantage-frontend-beta.vercel.app/",
                 tags: ["React Native", "AI", "Mobile"],

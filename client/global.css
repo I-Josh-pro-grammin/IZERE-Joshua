@@ -58,12 +58,10 @@
     @apply bg-background text-foreground;
     font-family: 'Inter', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
   }
 
   html {
     scroll-behavior: smooth;
-    overflow-x: hidden;
   }
 }
 
