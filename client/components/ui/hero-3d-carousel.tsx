@@ -57,14 +57,14 @@ const RotatingGroup = ({
               scale={0.25}
               className="pointer-events-none select-none"
             >
-              <div className={`w-[768px] glass rounded-[4rem] p-12 border-4 border-primary/20 backdrop-blur-md shadow-2xl flex flex-col gap-6 items-center text-center relative group transition-all duration-500 hover:scale-[1.05] hover:border-primary/40 ${cardClassName}`}>
+              <div className={`w-[768px] glass rounded-none p-12 border-4 border-primary/20 backdrop-blur-md shadow-2xl flex flex-col gap-6 items-center text-center relative group transition-all duration-500 hover:scale-[1.05] hover:border-primary/40 ${cardClassName}`}>
                 <span className="text-3xl uppercase tracking-[0.4em] text-muted-foreground font-bold">{item.title}</span>
                 <span className="text-7xl font-extrabold text-foreground tracking-tight leading-tight">{item.label}</span>
                 
                 {item.tags && item.tags.length > 0 && (
                   <div className="flex flex-wrap gap-4 justify-center mt-6">
                     {item.tags.slice(0, 3).map((tag, idx) => (
-                      <span key={idx} className="px-8 py-3 rounded-full bg-primary/5 border-2 border-primary/10 text-2xl font-mono text-primary/60 font-bold shadow-sm">
+                      <span key={idx} className="px-8 py-3 rounded-none bg-primary/5 border-2 border-primary/10 text-2xl font-mono text-primary/60 font-bold shadow-sm">
                         {tag}
                       </span>
                     ))}
@@ -72,7 +72,7 @@ const RotatingGroup = ({
                 )}
 
                 {item.type === 'achievement' && (
-                  <div className="absolute -top-6 -right-6 px-10 py-4 bg-blue-500 rounded-full text-white text-2xl font-black uppercase tracking-widest shadow-xl rotate-12">
+                  <div className="absolute -top-6 -right-6 px-10 py-4 bg-blue-500 rounded-none text-white text-2xl font-black uppercase tracking-widest shadow-xl rotate-12">
                     Verified
                   </div>
                 )}

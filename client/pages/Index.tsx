@@ -33,7 +33,7 @@ const TechnicalCard = ({
 }) => {
   return (
     <div 
-      className={cn("relative bg-[#080808] border border-blue-500/10 rounded-sm overflow-hidden group transition-all duration-500 hover:border-blue-500/40 p-10", className)}
+      className={cn("relative bg-[#080808] border border-blue-500/10 rounded-none overflow-hidden group transition-all duration-500 hover:border-blue-500/40 p-10", className)}
     >
       {/* HUD Accents */}
       <div className="absolute top-0 left-0 w-4 h-4 border-t border-l border-blue-500/40" />
@@ -43,7 +43,7 @@ const TechnicalCard = ({
       </div>
       
       {icon && (
-        <div className="w-12 h-12 rounded-sm bg-blue-500/5 border border-blue-500/20 flex items-center justify-center mb-8 group-hover:bg-blue-500 group-hover:text-white transition-all duration-500">
+        <div className="w-12 h-12 rounded-none bg-blue-500/5 border border-blue-500/20 flex items-center justify-center mb-8 group-hover:bg-blue-500 group-hover:text-white transition-all duration-500">
           {icon}
         </div>
       )}
@@ -67,7 +67,7 @@ const TechnicalCard = ({
 const ProjectTechnicalCard = ({ project }: { project: any }) => {
   return (
     <div 
-      className="relative w-full h-full bg-[#080808] border border-blue-500/20 rounded-sm overflow-hidden group transition-all duration-500 hover:border-blue-500/50"
+      className="relative w-full h-full bg-[#080808] border border-blue-500/20 rounded-none overflow-hidden group transition-all duration-500 hover:border-blue-500/50"
     >
       {/* Technical Frame Accents */}
       <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-blue-500/60 z-20" />
@@ -109,7 +109,7 @@ const ProjectTechnicalCard = ({ project }: { project: any }) => {
           </div>
 
           {/* Center: Image/Visual Area */}
-          <div className="relative flex-1 min-h-[200px] mb-8 bg-blue-500/[0.01] border border-blue-500/10 rounded-sm overflow-hidden flex items-center justify-center group-hover:border-blue-500/30 transition-colors">
+          <div className="relative flex-1 min-h-[200px] mb-8 bg-blue-500/[0.01] border border-blue-500/10 rounded-none overflow-hidden flex items-center justify-center group-hover:border-blue-500/30 transition-colors">
             {project.customContent ? (
               <div className="flex flex-col items-center gap-4 opacity-40 group-hover:opacity-100 transition-all duration-700">
                 <div className="relative">
@@ -134,17 +134,17 @@ const ProjectTechnicalCard = ({ project }: { project: any }) => {
           <div className="flex items-end justify-between gap-4">
             <div className="flex flex-wrap gap-2">
                {project.tags?.map((tag: string, idx: number) => (
-                 <div key={idx} className="px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-sm">
+                 <div key={idx} className="px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-none">
                    <span className="text-[9px] font-mono font-bold text-blue-400 uppercase tracking-widest">{tag}</span>
                  </div>
                ))}
             </div>
 
             <div className="flex gap-2">
-              <div className="w-10 h-10 bg-blue-500/10 border border-blue-500/20 flex items-center justify-center rounded-sm hover:bg-blue-500 hover:text-white transition-all">
+              <div className="w-10 h-10 bg-blue-500/10 border border-blue-500/20 flex items-center justify-center rounded-none hover:bg-blue-500 hover:text-white transition-all">
                 <Github className="w-4 h-4" />
               </div>
-              <div className="w-10 h-10 bg-blue-500 flex items-center justify-center rounded-sm shadow-[0_0_20px_rgba(59,130,246,0.3)]">
+              <div className="w-10 h-10 bg-blue-500 flex items-center justify-center rounded-none shadow-[0_0_20px_rgba(59,130,246,0.3)]">
                 <ArrowUpRight className="w-5 h-5 text-white" />
               </div>
             </div>
@@ -479,7 +479,7 @@ export default function Index() {
           <div className="flex items-center space-x-4">
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-sm hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+              className="p-2 rounded-none hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
               aria-label="Toggle theme"
             >
               {theme === "light" ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
@@ -549,7 +549,7 @@ export default function Index() {
               className="flex flex-col items-center"
             >
               <motion.div style={{ opacity: heroTextOpacity }} className="flex flex-col items-center">
-                <Badge variant="outline" className="mb-8 px-4 py-1.5 border-blue-500/30 bg-blue-500/5 rounded-full text-[10px] font-mono tracking-widest uppercase text-blue-500">
+                <Badge variant="outline" className="mb-8 px-4 py-1.5 border-blue-500/30 bg-blue-500/5 rounded-none text-[10px] font-mono tracking-widest uppercase text-blue-500">
                   ✦ SYSTEM ARCHITECT & FULL-STACK ENGINEER
                 </Badge>
 
@@ -604,7 +604,7 @@ export default function Index() {
                     { label: "Design", value: "Minimalist" },
                     { label: "Stack", value: "Full-Stack" },
                   ].map((stat, i) => (
-                    <div key={i} className="glass p-8 flex flex-col justify-between h-40 rounded-[2rem]">
+                    <div key={i} className="glass p-8 flex flex-col justify-between h-40 rounded-none">
                       <span className="text-xs uppercase tracking-widest text-muted-foreground font-bold">{stat.label}</span>
                       <span className="text-2xl font-bold">{stat.value}</span>
                     </div>
@@ -677,7 +677,7 @@ export default function Index() {
                 Engineering <span className="text-muted-foreground font-medium">Projects</span>
               </h2>
             </ScrollReveal>
-            <Button variant="outline" className="rounded-full px-8 border-blue-500/30 text-blue-500 hover:bg-blue-500 hover:text-white transition-colors" onClick={() => window.open("https://github.com/I-Josh-pro-grammin", "_blank")}>
+            <Button variant="outline" className="rounded-none px-8 border-blue-500/30 text-blue-500 hover:bg-blue-500 hover:text-white transition-colors" onClick={() => window.open("https://github.com/I-Josh-pro-grammin", "_blank")}>
               <Github className="mr-2 w-4 h-4" />
               View Full GitHub
             </Button>
@@ -842,7 +842,7 @@ export default function Index() {
           padding: 0.6rem 1.25rem;
           background: var(--card);
           border: 1px solid var(--border);
-          border-radius: 9999px;
+          border-radius: 0;
           font-size: 0.875rem;
           font-weight: 600;
           color: var(--muted-foreground);
@@ -935,7 +935,7 @@ export default function Index() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="glass p-8 rounded-[2rem] flex items-center space-x-4 group hover:bg-primary/[0.02] transition-colors"
+                className="glass p-8 rounded-none flex items-center space-x-4 group hover:bg-primary/[0.02] transition-colors"
               >
                 <div className="w-2 h-2 rounded-full bg-primary opacity-20" />
                 <span className="font-bold text-sm tracking-tight">{point}</span>
@@ -965,7 +965,7 @@ export default function Index() {
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.6, delay: 0.4 }}
                 >
-                  <Badge variant="outline" className="px-4 py-1.5 border-blue-500/30 bg-blue-500/5 rounded-full text-[10px] font-mono tracking-widest uppercase relative overflow-hidden group">
+                  <Badge variant="outline" className="px-4 py-1.5 border-blue-500/30 bg-blue-500/5 rounded-none text-[10px] font-mono tracking-widest uppercase relative overflow-hidden group">
                     <span className="relative z-10 text-blue-500">✦ Happy Clients</span>
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-500/10 to-transparent -translate-x-full group-hover:animate-shimmer" />
                   </Badge>
@@ -1000,7 +1000,7 @@ export default function Index() {
                       initial={{ opacity: 0, scale: 0.8 }}
                       whileInView={{ opacity: 1, scale: 1 }}
                       transition={{ duration: 0.5, delay: 0.6 + (i * 0.1) }}
-                      className="glass p-5 rounded-2xl group hover:bg-primary/[0.02] transition-colors"
+                      className="glass p-5 rounded-none group hover:bg-primary/[0.02] transition-colors"
                     >
                       <div className="text-2xl font-bold mb-1 transition-colors">{stat.value}</div>
                       <div className="text-[10px] text-muted-foreground font-bold uppercase tracking-tight">{stat.label}</div>
@@ -1014,10 +1014,10 @@ export default function Index() {
                   transition={{ duration: 0.8, delay: 0.9 }}
                   className="flex flex-col sm:flex-row gap-4"
                 >
-                  <Button variant="outline" className="rounded-full px-8 h-12 border-blue-500/30 text-blue-500 hover:bg-blue-500 hover:text-white transition-colors" onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}>
+                  <Button variant="outline" className="rounded-none px-8 h-12 border-blue-500/30 text-blue-500 hover:bg-blue-500 hover:text-white transition-colors" onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}>
                     See All Projects
                   </Button>
-                  <Button className="rounded-full px-8 h-12 bg-blue-500 text-white hover:bg-blue-600 transition-colors" asChild>
+                   <Button className="rounded-none px-8 h-12 bg-blue-500 text-white hover:bg-blue-600 transition-colors" asChild>
                     <a href="mailto:izerejoshua94@gmail.com">Contact Now</a>
                   </Button>
                 </motion.div>
@@ -1050,7 +1050,7 @@ export default function Index() {
                       className="border-blue-500/20"
                     >
                       <div className="flex items-center space-x-6 mb-8">
-                        <div className="w-16 h-16 md:w-20 md:h-20 rounded-sm bg-muted border border-blue-500/20 flex items-center justify-center overflow-hidden">
+                        <div className="w-16 h-16 md:w-20 md:h-20 rounded-none bg-muted border border-blue-500/20 flex items-center justify-center overflow-hidden">
                           {client.image ? (
                             <img src={client.image} alt={client.name} className="w-full h-full object-cover grayscale" />
                           ) : (
@@ -1149,7 +1149,7 @@ export default function Index() {
                     key={i}
                     initial={{ opacity: 0, x: 20 }}
                     whileInView={{ opacity: 1, x: 0 }}
-                    className="glass rounded-[1.5rem] overflow-hidden"
+                    className="glass rounded-none overflow-hidden"
                   >
                     <button
                       className="w-full p-6 text-left flex items-center justify-between group"
@@ -1196,7 +1196,7 @@ export default function Index() {
 
         {/* MAIN BACKGROUND */}
         <div
-          className="relative bg-[#080808] border border-blue-500/20 p-12 md:p-24 overflow-hidden rounded-[2rem]"
+          className="relative bg-[#080808] border border-blue-500/20 p-12 md:p-24 overflow-hidden rounded-none"
         >
           {/* Glow */}
           <div className="absolute inset-0 pointer-events-none shadow-[0_0_30px_rgba(59,130,246,0.15)]" />
@@ -1246,7 +1246,7 @@ export default function Index() {
               whileInView={{ opacity: 1, x: 0 }}
               className="relative z-10 w-full"
             >
-              <div className="relative w-full bg-[#080808] border border-blue-500/20 rounded-sm overflow-hidden hover:border-blue-500/50 transition-all">
+              <div className="relative w-full bg-[#080808] border border-blue-500/20 rounded-none overflow-hidden hover:border-blue-500/50 transition-all">
 
                 {/* Corner accents */}
                 <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-blue-500/40" />
