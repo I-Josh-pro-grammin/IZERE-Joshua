@@ -452,7 +452,7 @@ export default function Index() {
         )}
       </AnimatePresence>
 
-    <div className="min-h-screen relative overflow-x-hidden bg-background text-foreground selection:bg-primary selection:text-primary-foreground cursor-none transition-colors duration-500">
+    <div className="min-h-screen relative bg-background text-foreground selection:bg-primary selection:text-primary-foreground cursor-none transition-colors duration-500">
       <CustomCursor />
       
       {/* Navigation - Always Visible */}
@@ -548,7 +548,7 @@ export default function Index() {
               style={{ opacity: mainContentOpacity }} 
               className="flex flex-col items-center"
             >
-              <motion.div style={{ opacity: heroTextOpacity }} className="flex flex-col items-center">
+              <motion.div className="flex flex-col items-center">
                 <Badge variant="outline" className="mb-8 px-4 py-1.5 border-blue-500/30 bg-blue-500/5 rounded-none text-[10px] font-mono tracking-widest uppercase text-blue-500">
                   ✦ SYSTEM ARCHITECT & FULL-STACK ENGINEER
                 </Badge>
@@ -591,7 +591,7 @@ export default function Index() {
               </motion.div>
 
               {/* Featured Stats or Tags */}
-              <motion.div style={{ opacity: heroTextOpacity }}>
+              <motion.div>
                 <motion.div
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
