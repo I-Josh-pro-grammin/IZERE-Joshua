@@ -52,13 +52,13 @@ export const ProjectModal = ({ isOpen, onClose, project }: ProjectModalProps) =>
           />
 
           {/* Modal Content */}
-          <div className="fixed inset-0 z-[101] pointer-events-none flex items-center justify-center p-4 md:p-6 lg:p-12">
+          <div className="fixed mt-10 inset-0 z-[101] pointer-events-none flex items-center justify-center md:p-6 lg:p-12">
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="relative w-full max-w-6xl max-h-full bg-[#080808] border border-blue-500/30 overflow-y-auto pointer-events-auto shadow-2xl flex flex-col md:flex-row"
+              className="relative w-full max-w-6xl max-h-full bg-[#080808] border border-blue-500/30  pointer-events-auto shadow-2xl flex flex-col md:flex-row"
             >
               {/* Corner Accents */}
               <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-blue-500/60 z-20 pointer-events-none" />
@@ -68,7 +68,7 @@ export const ProjectModal = ({ isOpen, onClose, project }: ProjectModalProps) =>
               {/* Close Button */}
               <button 
                 onClick={onClose}
-                className="absolute top-4 right-4 z-30 p-2 bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 transition-colors text-blue-500 hover:text-white"
+                className="absolute top-1 right-4 z-30 p-2 bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 transition-colors text-blue-500 hover:text-white"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -76,7 +76,7 @@ export const ProjectModal = ({ isOpen, onClose, project }: ProjectModalProps) =>
               {/* Left Column: Visuals & Core Info */}
               <div className="w-full md:w-2/5 border-b md:border-b-0 md:border-r border-blue-500/20 bg-blue-500/[0.02] flex flex-col relative">
                 {/* Image/Visual Area */}
-                <div className="relative h-64 md:h-80 w-full overflow-hidden border-b border-blue-500/20 bg-blue-500/5 flex items-center justify-center">
+                <div className="relative h-[800px] w-full overflow-hidden border-b border-blue-500/20 bg-blue-500/5 flex items-center justify-center">
                    {project.customContent ? (
                       <div className="flex flex-col items-center gap-4 text-blue-500">
                         <div className="absolute inset-0 bg-blue-500/20 blur-2xl rounded-full scale-150 animate-pulse" />
@@ -104,10 +104,10 @@ export const ProjectModal = ({ isOpen, onClose, project }: ProjectModalProps) =>
                   </p>
 
                   <div className="space-y-4">
-                    <Button className="w-full h-12 bg-blue-500 hover:bg-blue-600 text-white rounded-none shadow-[0_0_15px_rgba(59,130,246,0.3)]" onClick={() => project.github && window.open(project.github, "_blank")}>
+                    {/* <Button className="w-full h-12 bg-blue-500 hover:bg-blue-600 text-white rounded-none shadow-[0_0_15px_rgba(59,130,246,0.3)]" onClick={() => project.github && window.open(project.github, "_blank")}>
                       <Github className="w-4 h-4 mr-2" />
                       View Source Code
-                    </Button>
+                    </Button> */}
                     {project.liveUrl && (
                        <Button variant="outline" className="w-full h-12 border-blue-500/30 text-blue-500 hover:bg-blue-500 hover:text-white rounded-none" onClick={() => window.open(project.liveUrl, "_blank")}>
                         <ExternalLink className="w-4 h-4 mr-2" />

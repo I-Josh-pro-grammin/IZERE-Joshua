@@ -453,10 +453,10 @@ export default function Index() {
           <LoadingScreen onComplete={() => setIsLoading(false)} />
         )}
       </AnimatePresence>
-      <ProjectModal 
-        isOpen={!!selectedProject} 
-        onClose={() => setSelectedProject(null)} 
-        project={selectedProject} 
+      <ProjectModal
+        isOpen={!!selectedProject}
+        onClose={() => setSelectedProject(null)}
+        project={selectedProject}
       />
 
     <div className="min-h-screen relative bg-background text-foreground selection:bg-primary selection:text-primary-foreground cursor-none transition-colors duration-500">
@@ -556,9 +556,14 @@ export default function Index() {
               className="flex flex-col items-center"
             >
               <motion.div className="flex flex-col items-center">
-                <Badge variant="outline" className="mb-8 px-4 py-1.5 border-blue-500/30 bg-blue-500/5 rounded-none text-[10px] font-mono tracking-widest uppercase text-blue-500">
-                  ✦ SYSTEM ARCHITECT & FULL-STACK ENGINEER
-                </Badge>
+                <div className="flex flex-wrap justify-center gap-4 mb-8">
+                  <Badge variant="outline" className="px-5 py-2 border-blue-500/60 bg-blue-500/10 rounded-none text-xs font-bold font-mono tracking-widest uppercase text-blue-500 shadow-[0_0_20px_rgba(59,130,246,0.4)] animate-pulse">
+                    ✦ 10X+ ENGINEER
+                  </Badge>
+                  <Badge variant="outline" className="px-4 py-2 border-border/30 bg-muted/5 rounded-none text-[10px] font-mono tracking-widest uppercase text-muted-foreground flex items-center">
+                    SYSTEM ARCHITECT & FULL-STACK ENGINEER
+                  </Badge>
+                </div>
 
                 <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter mb-10 leading-[0.9] gradient-text overflow-hidden z-10 relative">
                   <motion.span
@@ -713,7 +718,8 @@ export default function Index() {
                 desc: "Real‑time analytics dashboard with animated charts and seamless UX, built for high-performance data visualization.",
                 image: bCode,
                 icon: <Globe className="w-6 h-6" />,
-                github: "https://brainlycode.dpdns.org",
+                // github: "https://brainlycode.dpdns.org",
+                liveUrl: "https://brainlycode.dpdns.org",
                 tags: ["React", "Nest.js", "PostgreSQL", "Docker"],
                 colSpan: "md:col-span-12 lg:col-span-7",
                 rowSpan: "md:row-span-2",
@@ -725,7 +731,8 @@ export default function Index() {
                 desc: "Full-stack E-commerce platform for the Burundian market with optimized performance and localized payment flows.",
                 image: akaguriro,
                 icon: <Layout className="w-6 h-6" />,
-                github: "https://akaguriroo.com",
+                // github: "https://akaguriroo.com",
+                liveUrl: "https://akaguriroo.com",
                 tags: ["TypeScript", "Supabase", "Vite"],
                 colSpan: "md:col-span-12 lg:col-span-5",
                 rowSpan: "md:row-span-1",
@@ -737,6 +744,7 @@ export default function Index() {
                 desc: "Mobile app for finding nearest riders with real-time booking and geolocation tracking for seamless transit.",
                 icon: <Smartphone className="w-6 h-6" />,
                 github: "https://i-move-admin-frontend.vercel.app/",
+                liveUrl: "https://i-move-admin-frontend.vercel.app/",
                 tags: ["React Native", "Expo", "MongoDB"],
                 colSpan: "md:col-span-12 lg:col-span-5",
                 rowSpan: "md:row-span-2",
@@ -749,7 +757,8 @@ export default function Index() {
                 desc: "Futuristic component library and global commerce experience with a focus on high-fidelity motion and design systems.",
                 image: ebuy,
                 icon: <Palette className="w-6 h-6" />,
-                github: "https://github.com/I-Josh-pro-grammin/E-buy",
+                // github: "https://github.com/I-Josh-pro-grammin/E-buy",
+                liveUrl: "https://e-buy-store.vercel.app/",
                 tags: ["Next.js", "Node.js", "Tailwind"],
                 colSpan: "md:col-span-12 lg:col-span-7",
                 rowSpan: "md:row-span-1",
@@ -761,7 +770,7 @@ export default function Index() {
                 desc: "A mobile app that provides an advantage to students by recommending the optimal career path based on the RIASEC model.",
                 image: vantage,
                 icon: <Smartphone className="w-6 h-6" />,
-                github: "https://vantage-frontend-beta.vercel.app/",
+                liveUrl: "https://vantage-frontend-beta.vercel.app/",
                 tags: ["React Native", "AI", "Mobile"],
                 colSpan: "md:col-span-12 lg:col-span-5",
                 rowSpan: "md:row-span-1",
@@ -776,7 +785,7 @@ export default function Index() {
                 desc: "An AI application built for job recruiters that provides accurate, automated screening results to streamline hiring.",
                 image: Bora,
                 icon: <Layout className="w-6 h-6" />,
-                github: "https://bora-ai-web.vercel.app/",
+                liveUrl: "https://bora-ai-web.vercel.app/",
                 tags: ["OpenAI", "Next.js", "TypeScript"],
                 colSpan: "md:col-span-12 lg:col-span-7",
                 rowSpan: "md:row-span-1",
