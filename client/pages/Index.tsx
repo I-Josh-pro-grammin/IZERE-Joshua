@@ -1,4 +1,4 @@
-import { Github, Linkedin, Mail, ArrowUpRight, Plus, Menu, X, Send, Loader2, CheckCircle, Check, Globe, Smartphone, Layout, Palette, Sun, Moon, Phone, Download } from "lucide-react";
+import { Github, Linkedin, Mail, ArrowUpRight, Plus, Menu, X, Send, Loader2, CheckCircle, Check, Globe, Smartphone, Layout, Palette, Sun, Moon, Phone, Download, Server } from "lucide-react";
 
 const bCode = "/bcode.png";
 const akaguriro = "/akaguriroo.png";
@@ -14,6 +14,7 @@ import { motion, AnimatePresence, useScroll } from "framer-motion";
 import { useEffect, useState, useRef, useMemo } from "react";
 import { cn } from "@/lib/utils";
 import { useMotionValue, useSpring, useTransform } from "framer-motion";
+import { ProjectModal } from "@/components/ui/project-modal";
 
 // Reusable Technical HUD Card
 const TechnicalCard = ({ 
@@ -309,6 +310,7 @@ export default function Index() {
   const [isLoading, setIsLoading] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
+  const [selectedProject, setSelectedProject] = useState<any | null>(null);
   const [contactName, setContactName] = useState("");
   const [contactEmail, setContactEmail] = useState("");
   const [contactMessage, setContactMessage] = useState("");
@@ -451,6 +453,11 @@ export default function Index() {
           <LoadingScreen onComplete={() => setIsLoading(false)} />
         )}
       </AnimatePresence>
+      <ProjectModal 
+        isOpen={!!selectedProject} 
+        onClose={() => setSelectedProject(null)} 
+        project={selectedProject} 
+      />
 
     <div className="min-h-screen relative bg-background text-foreground selection:bg-primary selection:text-primary-foreground cursor-none transition-colors duration-500">
       <CustomCursor />
@@ -565,7 +572,7 @@ export default function Index() {
                 </h2>
 
                 <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mb-12 font-medium leading-relaxed">
-                  Building high-performance, scalable systems and immersive digital experiences with modern technology.
+                  Full-stack engineer building AI-powered products, scalable distributed systems, and modern digital architectures.
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
@@ -618,10 +625,10 @@ export default function Index() {
 
       {/* Main Content Phase 2 - Hidden during Dealing */}
       <motion.div style={{ opacity: mainContentOpacity }}>
-        {/* Services Section */}
+        {/* Case Studies Section */}
         <SectionReveal index={0}>
         <section 
-          id="services" 
+          id="case-studies" 
           className="py-32 px-6 relative overflow-hidden bg-background z-10"
         >
         <div className="max-w-7xl mx-auto border-x border-border/30 relative">
@@ -629,16 +636,25 @@ export default function Index() {
           <div className="hidden md:block absolute -bottom-[1px] -right-[1px] w-1.5 h-1.5 bg-foreground/30 translate-y-1/2 translate-x-1/2 z-10" />
           <ScrollReveal>
             <h2 className="text-4xl md:text-6xl font-bold tracking-tighter mb-16">
-              Design <span className="text-muted-foreground font-medium">Services</span>
+              Engineering <span className="text-muted-foreground font-medium">Case Studies</span>
             </h2>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {[
-              { title: "Product Design", desc: "Crafting intuitive digital products from concept to launch.", meta: "User Research · Wireframing · Prototyping" },
-              { title: "Visual Design", desc: "Creating stunning visual identities and marketing materials.", meta: "Branding · Illustrations · Social Media" },
-              { title: "Web Development", desc: "Building high-performance, responsive websites and apps.", meta: "React · Next.js · Node.js" },
-            ].map((service, i) => (
+              { 
+                title: "Scaling WebSocket Infrastructure", 
+                desc: "How I designed and scaled a real-time collaborative editor to support 100k+ concurrent users with sub-50ms latency.", 
+                meta: "System Design · WebSockets · Redis · Node.js",
+                metrics: ["Latency: <50ms", "Users: 100k+", "Uptime: 99.99%"]
+              },
+              { 
+                title: "Optimizing Database Performance", 
+                desc: "A deep dive into indexing strategies, query refactoring, and connection pooling that reduced PostgreSQL query times from 3s to 40ms.", 
+                meta: "PostgreSQL · Performance · Indexing · Profiling",
+                metrics: ["Speed: 75x Faster", "CPU Load: -60%", "Memory: Optimized"]
+              }
+            ].map((study, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
@@ -647,13 +663,19 @@ export default function Index() {
                 className="group"
               >
                 <TechnicalCard 
-                  title={service.title} 
-                  label="Service Module" 
-                  meta={service.meta}
-                  icon={<Plus className="w-5 h-5 text-muted-foreground group-hover:text-white transition-all" />}
-                  className="h-full"
+                  title={study.title} 
+                  label={`Case Study 0${i + 1}`} 
+                  meta={study.meta}
+                  className="h-full cursor-pointer hover:border-blue-500/50"
                 >
-                  <p className="text-muted-foreground leading-relaxed font-medium">{service.desc}</p>
+                  <p className="text-muted-foreground leading-relaxed font-medium mb-6">{study.desc}</p>
+                  <div className="flex gap-4 border-t border-blue-500/10 pt-4">
+                     {study.metrics.map((metric, idx) => (
+                       <div key={idx} className="text-xs font-mono text-blue-500/80 font-bold tracking-tight">
+                         {metric}
+                       </div>
+                     ))}
+                  </div>
                 </TechnicalCard>
               </motion.div>
             ))}
@@ -770,7 +792,7 @@ export default function Index() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1 }}
                 className={`${project.colSpan} ${project.rowSpan} group cursor-pointer`}
-                onClick={() => project.github && window.open(project.github, "_blank")}
+                onClick={() => setSelectedProject(project)}
               >
                 <ProjectTechnicalCard project={project} />
               </motion.div>
@@ -780,7 +802,7 @@ export default function Index() {
         </section>
       </SectionReveal>
 
-      {/* Technical Expertise Section */}
+      {/* Skills Section - Categorized */}
       <SectionReveal index={2}>
         <section 
           id="expertise" 
@@ -791,124 +813,140 @@ export default function Index() {
           <div className="hidden md:block absolute -bottom-[1px] -right-[1px] w-1.5 h-1.5 bg-foreground/30 translate-y-1/2 translate-x-1/2 z-10" />
           <ScrollReveal>
             <h2 className="text-4xl md:text-6xl font-bold tracking-tighter mb-16 text-foreground">
-              Technical <span className="text-muted-foreground font-medium">Expertise</span>
+              Technical <span className="text-muted-foreground font-medium">Capabilities</span>
             </h2>
           </ScrollReveal>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
             {[
-              { title: "Backend Systems", desc: "Architecting scalable, secure server-side solutions and robust APIs.", meta: "Spring Boot · Node.js · PostgreSQL · Docker" },
-              { title: "Frontend Engineering", desc: "Building high-performance, responsive web interfaces with smooth motion.", meta: "React · Next.js · TypeScript · Tailwind" },
-              { title: "Mobile Development", desc: "Developing cross-platform mobile applications with native-like performance.", meta: "React Native · Expo · Android SDK" },
-            ].map((expertise, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: i * 0.1 }}
-                className="group"
-              >
-                <TechnicalCard 
-                  title={expertise.title} 
-                  label="Core Expertise" 
-                  meta={expertise.meta}
-                  icon={<Plus className="w-5 h-5 text-muted-foreground group-hover:text-white transition-all" />}
-                  className="h-full"
-                >
-                  <p className="text-muted-foreground leading-relaxed font-medium">{expertise.desc}</p>
-                </TechnicalCard>
-              </motion.div>
+              { title: "Backend", skills: ["Node.js", "Spring Boot", "NestJS", "Python"] },
+              { title: "Frontend", skills: ["React", "Next.js", "TypeScript", "Tailwind CSS"] },
+              { title: "Infrastructure", skills: ["Docker", "Kubernetes", "AWS", "CI/CD Pipelines"] },
+              { title: "Data", skills: ["PostgreSQL", "MongoDB", "Redis", "Prisma"] },
+              { title: "AI / ML", skills: ["LLM Integration", "OpenAI API", "Vector DBs", "RAG Systems"] },
+              { title: "Architecture", skills: ["Microservices", "Event-Driven", "REST & GraphQL", "WebSockets"] }
+            ].map((category, i) => (
+              <div key={i} className="border-t border-blue-500/20 pt-6">
+                <h3 className="text-xl font-bold text-foreground uppercase tracking-widest mb-6 flex items-center gap-2">
+                  <div className="w-2 h-2 bg-blue-500" />
+                  {category.title}
+                </h3>
+                <div className="flex flex-col gap-3">
+                  {category.skills.map((skill, idx) => (
+                    <div key={idx} className="flex items-center text-sm font-mono text-muted-foreground hover:text-blue-500 transition-colors">
+                      <span className="opacity-50 mr-3">{'//'}</span>
+                      {skill}
+                    </div>
+                  ))}
+                </div>
+              </div>
             ))}
           </div>
         </div>
         </section>
       </SectionReveal>
 
-      {/* Animated Skills Ticker */}
-      <style>{`
-        @keyframes ticker-left {
-          0%   { transform: translateX(0px); }
-          100% { transform: translateX(-50%); }
-        }
-        @keyframes ticker-right {
-          0%   { transform: translateX(-50%); }
-          100% { transform: translateX(0px); }
-        }
-        .ticker-row-left  { animation: ticker-left  30s linear infinite; display: flex; gap: 1rem; width: max-content; }
-        .ticker-row-right { animation: ticker-right 32s linear infinite; display: flex; gap: 1rem; width: max-content; }
-        .ticker-chip {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.5rem;
-          padding: 0.6rem 1.25rem;
-          background: var(--card);
-          border: 1px solid var(--border);
-          border-radius: 0;
-          font-size: 0.875rem;
-          font-weight: 600;
-          color: var(--muted-foreground);
-          white-space: nowrap;
-          cursor: default;
-          transition: all 0.2s;
-        }
-        .ticker-chip:hover { 
-          color: var(--foreground); 
-          background: var(--muted); 
-          border-color: var(--primary); 
-        }
-        .ticker-icon { 
-          filter: grayscale(1);
-          opacity: 0.5;
-          font-style: normal; 
-          font-size: 1rem; 
-          line-height: 1; 
-        }
-      `}</style>
-
-      <div style={{ padding: "4rem 0", overflow: "hidden", position: "relative" }}>
-        {/* Fade edges */}
-        <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: "6rem", zIndex: 10, pointerEvents: "none", background: "linear-gradient(to right, hsl(var(--background)), transparent)" }} />
-        <div style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: "6rem", zIndex: 10, pointerEvents: "none", background: "linear-gradient(to left, hsl(var(--background)), transparent)" }} />
-
-        {/* Row 1 — scrolls left */}
-        <div style={{ overflow: "hidden", marginBottom: "1rem" }}>
-          <div className="ticker-row-left">
-            {(([
-              ["⊛", "React"], ["△", "Next.js"], ["⬡", "Node.js"], ["◈", "NestJS"], ["◉", "Vue.js"],
-              ["◆", "TypeScript"], ["⬢", "Spring Boot"], ["◎", "PostgreSQL"], ["⊕", "MongoDB"],
-              ["□", "Docker"], ["◇", "AWS"], ["△", "Firebase"], ["◫", "React Native"], ["⚡", "GraphQL"],
-              /* repeat for seamless loop */
-              ["⊛", "React"], ["△", "Next.js"], ["⬡", "Node.js"], ["◈", "NestJS"], ["◉", "Vue.js"],
-              ["◆", "TypeScript"], ["⬢", "Spring Boot"], ["◎", "PostgreSQL"], ["⊕", "MongoDB"],
-              ["□", "Docker"], ["◇", "AWS"], ["△", "Firebase"], ["◫", "React Native"], ["⚡", "GraphQL"],
-            ]) as [string, string][]).map(([icon, label], i) => (
-              <span key={i} className="ticker-chip">
-                <em className="ticker-icon">{icon}</em>
-                {label}
-              </span>
-            ))}
+      {/* System Design / Architecture Section */}
+      <SectionReveal index={3}>
+        <section id="system-design" className="py-32 px-6 relative overflow-hidden bg-muted/30 border-b border-border/30 z-10">
+          <div className="max-w-7xl mx-auto border-x border-border/30 relative">
+            <ScrollReveal>
+              <h2 className="text-4xl md:text-6xl font-bold tracking-tighter mb-16 text-foreground">
+                System <span className="text-muted-foreground font-medium">Architecture</span>
+              </h2>
+            </ScrollReveal>
+            <div className="bg-[#080808] border border-blue-500/20 p-12 relative flex flex-col items-center justify-center min-h-[400px]">
+               <div className="absolute inset-0 bg-blue-500/5 blur-[100px] pointer-events-none" />
+               <div className="text-center max-w-2xl relative z-10">
+                 <Server className="w-16 h-16 text-blue-500 mx-auto mb-6 opacity-80" />
+                 <h3 className="text-2xl font-bold uppercase tracking-widest mb-4">Event-Driven Microservices</h3>
+                 <p className="text-muted-foreground leading-relaxed mb-8 font-medium">
+                   [Interactive Diagram Placeholder: Visualizing scalable Kafka-backed event-driven architecture, rate limiters, and custom API gateways.]
+                 </p>
+                 <Button className="bg-blue-500 text-white hover:bg-blue-600 rounded-none h-12 px-8">Explore Architecture Simulation</Button>
+               </div>
+            </div>
           </div>
-        </div>
+        </section>
+      </SectionReveal>
 
-        {/* Row 2 — scrolls right */}
-        <div style={{ overflow: "hidden" }}>
-          <div className="ticker-row-right">
-            {([
-              ["◐", "Python"], ["☕", "Java"], ["⬟", "Rust"], ["◧", "PHP"], ["◈", "Redis"],
-              ["◉", "Prisma"], ["✓", "Jest"], ["◌", "Framer Motion"], ["◯", "Tailwind CSS"],
-              ["⇌", "REST APIs"], ["◆", "JWT Auth"], ["⬡", "Webpack"], ["⟳", "CI/CD"], ["◎", "GitHub"],
-              /* repeat for seamless loop */
-              ["◐", "Python"], ["☕", "Java"], ["⬟", "Rust"], ["◧", "PHP"], ["◈", "Redis"],
-              ["◉", "Prisma"], ["✓", "Jest"], ["◌", "Framer Motion"], ["◯", "Tailwind CSS"],
-              ["⇌", "REST APIs"], ["◆", "JWT Auth"], ["⬡", "Webpack"], ["⟳", "CI/CD"], ["◎", "GitHub"],
-            ] as [string, string][]).map(([icon, label], i) => (
-              <span key={i} className="ticker-chip">
-                <em className="ticker-icon">{icon}</em>
-                {label}
-              </span>
-            ))}
+      {/* Technical Writing Section */}
+      <SectionReveal index={4}>
+        <section id="writing" className="py-32 px-6 relative overflow-hidden bg-background border-b border-border/30 z-10">
+          <div className="max-w-7xl mx-auto border-x border-border/30 relative">
+            <ScrollReveal>
+              <h2 className="text-4xl md:text-6xl font-bold tracking-tighter mb-16 text-foreground">
+                Technical <span className="text-muted-foreground font-medium">Writing</span>
+              </h2>
+            </ScrollReveal>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[
+                { title: "Building a Multi-Tenant SaaS Architecture", date: "Oct 2025", tag: "Architecture" },
+                { title: "Rust vs Go for High-Throughput Microservices", date: "Aug 2025", tag: "Performance" },
+                { title: "Debugging Memory Leaks in Node.js at Scale", date: "Jun 2025", tag: "Debugging" },
+              ].map((post, i) => (
+                <TechnicalCard key={i} title={post.title} meta={post.tag} label={post.date} className="cursor-pointer hover:border-blue-500/50 h-full" />
+              ))}
+            </div>
           </div>
-        </div>
-      </div>
+        </section>
+      </SectionReveal>
+
+      {/* Open Source Section */}
+      <SectionReveal index={5}>
+        <section id="opensource" className="py-32 px-6 relative overflow-hidden bg-muted/30 border-b border-border/30 z-10">
+          <div className="max-w-7xl mx-auto border-x border-border/30 relative">
+            <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
+              <ScrollReveal>
+                <h2 className="text-4xl md:text-6xl font-bold tracking-tighter text-foreground">
+                  Open <span className="text-muted-foreground font-medium">Source</span>
+                </h2>
+              </ScrollReveal>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+               {[
+                 { project: "React Flow", desc: "Implemented AST parsing optimization reducing compile time by 18%.", pr: "#1425 Merged" },
+                 { project: "Next.js", desc: "Fixed memory leak in image optimization middleware for high concurrency loads.", pr: "#8931 Merged" }
+               ].map((oss, i) => (
+                 <div key={i} className="p-8 border border-blue-500/20 bg-[#080808] hover:border-blue-500/50 transition-all flex justify-between items-start group">
+                   <div>
+                     <h3 className="text-2xl font-bold text-foreground mb-2 group-hover:text-blue-500 transition-colors">{oss.project}</h3>
+                     <p className="text-sm text-muted-foreground font-medium">{oss.desc}</p>
+                   </div>
+                   <Badge variant="outline" className="border-green-500/30 text-green-500 rounded-none bg-green-500/10 whitespace-nowrap ml-4">{oss.pr}</Badge>
+                 </div>
+               ))}
+            </div>
+          </div>
+        </section>
+      </SectionReveal>
+
+      {/* Experience Timeline Section */}
+      <SectionReveal index={6}>
+        <section id="experience" className="py-32 px-6 relative overflow-hidden bg-background border-b border-border/30 z-10">
+           <div className="max-w-7xl mx-auto border-x border-border/30 relative">
+             <ScrollReveal>
+                <h2 className="text-4xl md:text-6xl font-bold tracking-tighter mb-16 text-foreground">
+                  Engineering <span className="text-muted-foreground font-medium">Experience</span>
+                </h2>
+              </ScrollReveal>
+              <div className="pl-4 md:pl-12 border-l border-blue-500/20 space-y-16">
+                 {[
+                   { role: "Senior Systems Engineer", company: "Tech Startup", period: "2024 - Present", impact: "Scaled backend systems to handle 10M+ daily requests. Migrated monolith to event-driven microservices reducing latency by 40%." },
+                   { role: "Full-Stack Developer", company: "Agency", period: "2022 - 2024", impact: "Led development of 15+ high-performance applications. Improved deployment speed by implementing robust CI/CD pipelines." }
+                 ].map((exp, i) => (
+                   <div key={i} className="relative pl-8 group">
+                     <div className="absolute -left-[41px] top-1 w-5 h-5 border-2 border-blue-500 bg-background rounded-full group-hover:bg-blue-500 transition-colors" />
+                     <span className="text-xs font-mono text-blue-500 mb-2 block tracking-widest">{exp.period}</span>
+                     <h3 className="text-2xl font-bold text-foreground mb-1">{exp.role}</h3>
+                     <h4 className="text-lg text-muted-foreground mb-4 font-medium">{exp.company}</h4>
+                     <p className="text-sm text-muted-foreground max-w-2xl leading-relaxed">{exp.impact}</p>
+                   </div>
+                 ))}
+              </div>
+           </div>
+        </section>
+      </SectionReveal>
 
       {/* Engineering Excellence Section */}
 
@@ -1078,10 +1116,10 @@ export default function Index() {
         </section>
       </SectionReveal>
 
-      {/* Combined Process & FAQ Section */}
+      {/* Engineering Philosophy / How I Work */}
       <SectionReveal index={5}>
         <section 
-          id="process"
+          id="philosophy"
           className="py-32 px-6 bg-muted/30 border-b border-border/30 relative z-10"
         >
         <div className="max-w-7xl mx-auto border-x border-border/30 relative">
@@ -1089,26 +1127,26 @@ export default function Index() {
           <div className="hidden md:block absolute -bottom-[1px] -right-[1px] w-1.5 h-1.5 bg-foreground/30 translate-y-1/2 translate-x-1/2 z-10" />
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-start">
 
-            {/* Left Column: Development Lifecycle */}
+            {/* Left Column: Core Principles */}
             <div>
               <div className="mb-16">
                 <ScrollReveal>
                   <h2 className="text-4xl md:text-6xl font-bold tracking-tighter mb-6 leading-tight">
-                    Development <br />
-                    <span className="text-muted-foreground font-medium whitespace-nowrap">Lifecycle</span>
+                    Engineering <br />
+                    <span className="text-muted-foreground font-medium whitespace-nowrap">Philosophy</span>
                   </h2>
-                  <p className="text-muted-foreground max-w-xl font-medium leading-relaxed">
-                    Building secure, high-performance systems through a structured engineering approach.
+                  <p className="text-muted-foreground max-w-xl font-medium leading-relaxed italic border-l-2 border-blue-500/30 pl-4">
+                    "I optimize for maintainability first, then performance bottlenecks proven by profiling."
                   </p>
                 </ScrollReveal>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {[
-                  { step: "01", title: "Discovery", desc: "Analyzing requirements, identifying bottlenecks, and defining technical goals." },
-                  { step: "02", title: "Architecture", desc: "Designing system components, database schemas, and API structures." },
-                  { step: "03", title: "Implementation", desc: "Writing clean, modular code with unit tests and continuous integration." },
-                  { step: "04", title: "Scale & QC", desc: "Deployment, performance monitoring, and ensuring long-term scalability." },
+                  { title: "Ownership", desc: "Taking full accountability from architecture design to production monitoring." },
+                  { title: "Code Quality", desc: "Writing clean, modular, and extensively tested code." },
+                  { title: "Performance", desc: "Optimizing critical paths, reducing latency, and profiling resources." },
+                  { title: "DX Principles", desc: "Building intuitive internal tools and maintaining robust CI/CD pipelines." },
                 ].map((item, i) => (
                   <motion.div
                     key={i}
@@ -1119,8 +1157,8 @@ export default function Index() {
                   >
                     <TechnicalCard 
                       title={item.title} 
-                      label={`Phase ${item.step}`}
-                      className="h-full"
+                      label={`Principle 0${i+1}`}
+                      className="h-full border-blue-500/10 hover:border-blue-500/30 transition-colors"
                     >
                       <p className="text-sm text-muted-foreground leading-relaxed font-medium">{item.desc}</p>
                     </TechnicalCard>
@@ -1129,34 +1167,34 @@ export default function Index() {
               </div>
             </div>
 
-            {/* Right Column: FAQ */}
+            {/* Right Column: Methods */}
             <div className="lg:pt-10">
               <div className="mb-12">
                 <h2 className="text-3xl md:text-5xl font-bold tracking-tighter mb-4">
-                  Technical <br />
-                  <span className="text-muted-foreground font-medium whitespace-nowrap">Insights & FAQ</span>
+                  How I <br />
+                  <span className="text-muted-foreground font-medium whitespace-nowrap">Work</span>
                 </h2>
               </div>
 
               <div className="space-y-4">
                 {[
-                  { q: "What is your primary tech stack?", a: "I focus on React/Next.js for the frontend, Spring Boot or Node.js for the backend, and PostgreSQL/MongoDB for databases." },
-                  { q: "How do you ensure system scalability?", a: "I implement micro-services architecture where needed, optimize database queries, and use caching layers like Redis for high-load applications." },
-                  { q: "Do you provide API documentation?", a: "Always. I use Swagger/OpenAPI or Postman collections to ensure seamless integration for frontend teams or third-party developers." },
-                  { q: "What is your approach to security?", a: "I follow OWASP principles, implement robust JWT authentication, and ensure data encryption at rest and in transit." },
+                  { q: "Testing Standards", a: "Test-Driven Development (TDD) for critical logic. High coverage using Vitest and Playwright to catch regressions early." },
+                  { q: "Product Thinking", a: "I don't just build features; I align engineering decisions with business goals to drive user adoption and revenue." },
+                  { q: "Continuous Integration", a: "Automated linting, type-checking, and testing on every PR. Zero-downtime deployments via container orchestration." },
+                  { q: "Architecture Reviews", a: "Writing RFCs (Request for Comments) for major system changes to align teams and document tradeoffs before writing code." },
                 ].map((faq, i) => (
                   <motion.div
                     key={i}
                     initial={{ opacity: 0, x: 20 }}
                     whileInView={{ opacity: 1, x: 0 }}
-                    className="glass rounded-none overflow-hidden"
+                    className="glass rounded-none overflow-hidden border border-blue-500/10"
                   >
                     <button
                       className="w-full p-6 text-left flex items-center justify-between group"
                       onClick={() => setActiveFaq(activeFaq === i ? null : i)}
                     >
-                      <span className="text-base font-bold group-hover:text-primary transition-colors">{faq.q}</span>
-                      <Plus className={cn("w-4 h-4 text-muted-foreground transition-transform duration-300", activeFaq === i && "rotate-45")} />
+                      <span className="text-base font-bold group-hover:text-blue-500 transition-colors">{faq.q}</span>
+                      <Plus className={cn("w-4 h-4 text-blue-500 transition-transform duration-300", activeFaq === i && "rotate-45")} />
                     </button>
                     <AnimatePresence>
                       {activeFaq === i && (
