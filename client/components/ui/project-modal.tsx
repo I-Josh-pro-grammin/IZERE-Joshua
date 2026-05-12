@@ -58,7 +58,7 @@ export const ProjectModal = ({ isOpen, onClose, project }: ProjectModalProps) =>
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="relative w-full max-w-6xl max-h-full bg-[#080808] border border-blue-500/30  pointer-events-auto shadow-2xl flex flex-col md:flex-row"
+              className="relative w-full max-w-6xl max-h-full bg-background border border-blue-500/30 pointer-events-auto shadow-2xl flex flex-col md:flex-row dark:bg-[#080808]"
             >
               {/* Corner Accents */}
               <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-blue-500/60 z-20 pointer-events-none" />
@@ -177,7 +177,7 @@ export const ProjectModal = ({ isOpen, onClose, project }: ProjectModalProps) =>
                      <h4 className="text-sm font-mono text-blue-500 tracking-widest uppercase mb-4">Technology Stack Analysis</h4>
                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         {details.techStack.map((tech, idx) => (
-                          <div key={idx} className="bg-[#0f0f0f] border border-blue-500/10 p-4 hover:border-blue-500/30 transition-colors group">
+                          <div key={idx} className="bg-card border border-blue-500/10 p-4 hover:border-blue-500/30 transition-colors group dark:bg-[#0f0f0f]">
                             <h5 className="text-sm font-bold text-foreground mb-1 group-hover:text-blue-500 transition-colors">{tech.name}</h5>
                             <p className="text-xs text-muted-foreground">{tech.reason}</p>
                           </div>

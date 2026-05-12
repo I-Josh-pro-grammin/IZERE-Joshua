@@ -34,7 +34,7 @@ const TechnicalCard = ({
 }) => {
   return (
     <div 
-      className={cn("relative bg-[#080808] border border-blue-500/10 rounded-none overflow-hidden group transition-all duration-500 hover:border-blue-500/40 p-10", className)}
+      className={cn("relative bg-card border border-blue-500/20 rounded-none overflow-hidden group transition-all duration-500 hover:border-blue-500/50 p-10 shadow-sm dark:shadow-none", className)}
     >
       {/* HUD Accents */}
       <div className="absolute top-0 left-0 w-4 h-4 border-t border-l border-blue-500/40" />
@@ -68,7 +68,7 @@ const TechnicalCard = ({
 const ProjectTechnicalCard = ({ project }: { project: any }) => {
   return (
     <div 
-      className="relative w-full h-full bg-[#080808] border border-blue-500/20 rounded-none overflow-hidden group transition-all duration-500 hover:border-blue-500/50"
+      className="relative w-full h-full bg-card border border-blue-500/20 rounded-none overflow-hidden group transition-all duration-500 hover:border-blue-500/50 shadow-sm dark:shadow-none"
     >
       {/* Technical Frame Accents */}
       <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-blue-500/60 z-20" />
@@ -521,10 +521,13 @@ export default function Index() {
             {/* Hero text and Carousel are here */}
             {/* We will hide the text during dealing but keep carousel visible */}
         {/* Marquee Background Name */}
-        <div className="absolute top-[15rem] -translate-y-1/2 left-0 w-full overflow-hidden z-0 pointer-events-none select-none opacity-[0.03] dark:opacity-[0.05]">
+        <div className="absolute top-[15rem] -translate-y-1/2 left-0 w-full overflow-hidden z-0 pointer-events-none select-none">
+          {/* Vibrant blue glow behind the name */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-96 bg-blue-500/[0.08] blur-[120px] rounded-full dark:bg-blue-500/[0.05]" />
+          
           <div className="animate-marquee whitespace-nowrap flex items-center">
             {[...Array(10)].map((_, i) => (
-              <span key={i} className="text-[12rem] md:text-[20rem] font-black tracking-tighter mx-8 text-foreground">
+              <span key={i} className="text-[12rem] md:text-[20rem] font-black tracking-tighter mx-8 text-blue-500/10 dark:text-blue-500/20">
                 IZERE JOSHUA
               </span>
             ))}
@@ -612,7 +615,7 @@ export default function Index() {
                 >
                   {[
                     { label: "Experience", value: "2+ Years" },
-                    { label: "Projects", value: "15+ Completed" },
+                    { label: "Projects", value: "20+ Completed" },
                     { label: "Design", value: "Minimalist" },
                     { label: "Stack", value: "Full-Stack" },
                   ].map((stat, i) => (
@@ -864,7 +867,7 @@ export default function Index() {
                 System <span className="text-muted-foreground font-medium">Architecture</span>
               </h2>
             </ScrollReveal>
-            <div className="bg-[#080808] border border-blue-500/20 p-12 relative flex flex-col items-center justify-center min-h-[400px]">
+            <div className="bg-card border border-blue-500/20 p-12 relative flex flex-col items-center justify-center min-h-[400px]">
                <div className="absolute inset-0 bg-blue-500/5 blur-[100px] pointer-events-none" />
                <div className="text-center max-w-2xl relative z-10">
                  <Server className="w-16 h-16 text-blue-500 mx-auto mb-6 opacity-80" />
@@ -917,7 +920,7 @@ export default function Index() {
                  { project: "React Flow", desc: "Implemented AST parsing optimization reducing compile time by 18%.", pr: "#1425 Merged" },
                  { project: "Next.js", desc: "Fixed memory leak in image optimization middleware for high concurrency loads.", pr: "#8931 Merged" }
                ].map((oss, i) => (
-                 <div key={i} className="p-8 border border-blue-500/20 bg-[#080808] hover:border-blue-500/50 transition-all flex justify-between items-start group">
+                 <div key={i} className="p-8 border border-blue-500/20 bg-card hover:border-blue-500/50 transition-all flex justify-between items-start group shadow-sm dark:shadow-none">
                    <div>
                      <h3 className="text-2xl font-bold text-foreground mb-2 group-hover:text-blue-500 transition-colors">{oss.project}</h3>
                      <p className="text-sm text-muted-foreground font-medium">{oss.desc}</p>
@@ -942,7 +945,7 @@ export default function Index() {
               <div className="pl-4 md:pl-12 border-l border-blue-500/20 space-y-16">
                  {[
                    { role: "Senior Systems Engineer", company: "Tech Startup", period: "2024 - Present", impact: "Scaled backend systems to handle 10M+ daily requests. Migrated monolith to event-driven microservices reducing latency by 40%." },
-                   { role: "Full-Stack Developer", company: "Agency", period: "2022 - 2024", impact: "Led development of 15+ high-performance applications. Improved deployment speed by implementing robust CI/CD pipelines." }
+                   { role: "Full-Stack Developer", company: "Agency", period: "2022 - 2024", impact: "Led development of 20+ high-performance applications. Improved deployment speed by implementing robust CI/CD pipelines." }
                  ].map((exp, i) => (
                    <div key={i} className="relative pl-8 group">
                      <div className="absolute -left-[41px] top-1 w-5 h-5 border-2 border-blue-500 bg-background rounded-full group-hover:bg-blue-500 transition-colors" />
@@ -1243,7 +1246,7 @@ export default function Index() {
 
         {/* MAIN BACKGROUND */}
         <div
-          className="relative bg-[#080808] border border-blue-500/20 p-12 md:p-24 overflow-hidden rounded-none"
+          className="relative bg-card border border-blue-500/20 p-12 md:p-24 overflow-hidden rounded-none dark:bg-[#080808]"
         >
           {/* Glow */}
           <div className="absolute inset-0 pointer-events-none shadow-[0_0_30px_rgba(59,130,246,0.15)]" />
@@ -1293,7 +1296,7 @@ export default function Index() {
               whileInView={{ opacity: 1, x: 0 }}
               className="relative z-10 w-full"
             >
-              <div className="relative w-full bg-[#080808] border border-blue-500/20 rounded-none overflow-hidden hover:border-blue-500/50 transition-all">
+              <div className="relative w-full bg-card border border-blue-500/20 rounded-none overflow-hidden hover:border-blue-500/50 transition-all dark:bg-[#080808]">
 
                 {/* Corner accents */}
                 <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-blue-500/40" />
@@ -1330,11 +1333,10 @@ export default function Index() {
                       </div>
                     </div>
 
-                    {/* Inputs */}
                     <div className="space-y-6 flex-1">
-                      <input className="w-full bg-blue-500/[0.03] border border-blue-500/10 px-4 py-3 text-xs font-mono uppercase text-foreground placeholder:text-blue-500/20 focus:outline-none focus:border-blue-500/40 transition-colors" placeholder="NAME_REQ" />
-                      <input className="w-full bg-blue-500/[0.03] border border-blue-500/10 px-4 py-3 text-xs font-mono uppercase text-foreground placeholder:text-blue-500/20 focus:outline-none focus:border-blue-500/40 transition-colors" placeholder="EMAIL@PROTO.SYS" />
-                      <textarea rows={4} className="w-full bg-blue-500/[0.03] border border-blue-500/10 px-4 py-3 text-xs font-mono uppercase text-foreground placeholder:text-blue-500/20 focus:outline-none focus:border-blue-500/40 transition-colors resize-none" placeholder="ENTER_DATA_PACKET..." />
+                      <input className="w-full bg-muted/20 border border-blue-500/10 px-4 py-3 text-xs font-mono uppercase text-foreground placeholder:text-blue-500/40 focus:outline-none focus:border-blue-500/40 transition-colors dark:bg-blue-500/[0.03]" placeholder="NAME_REQ" />
+                      <input className="w-full bg-muted/20 border border-blue-500/10 px-4 py-3 text-xs font-mono uppercase text-foreground placeholder:text-blue-500/40 focus:outline-none focus:border-blue-500/40 transition-colors dark:bg-blue-500/[0.03]" placeholder="EMAIL@PROTO.SYS" />
+                      <textarea rows={4} className="w-full bg-muted/20 border border-blue-500/10 px-4 py-3 text-xs font-mono uppercase text-foreground placeholder:text-blue-500/40 focus:outline-none focus:border-blue-500/40 transition-colors resize-none dark:bg-blue-500/[0.03]" placeholder="ENTER_DATA_PACKET..." />
                     </div>
 
                     {/* Button */}
@@ -1351,7 +1353,7 @@ export default function Index() {
 
           {/* Bottom right text */}
           <div className="absolute bottom-10 right-14 text-xs font-mono uppercase flex gap-2">
-            <span className="text-white/40">Discoball</span>
+            <span className="text-muted-foreground/40 uppercase">Discoball</span>
             <span className="text-blue-500 font-bold">2025</span>
           </div>
         </div>
