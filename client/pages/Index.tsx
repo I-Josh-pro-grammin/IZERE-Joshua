@@ -320,6 +320,9 @@ export default function Index() {
   const [theme, setTheme] = useState<"light" | "dark">("light");
   const [vh, setVh] = useState(800);
   const [imageOffsetVh, setImageOffsetVh] = useState(0);
+  const [showScrollTop, setShowScrollTop] = useState(false);
+  const [isLaunching, setIsLaunching] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const carouselRef = useRef<HTMLDivElement>(null);
   const { scrollY } = useScroll();
   const introEnd = 0; // Removed dealing phase
@@ -366,6 +369,42 @@ export default function Index() {
 
   const { scrollY: scrollYRaw } = useScroll();
   const heroTextOpacity = useTransform(scrollYRaw, [0, vh * 0.4], [1, 0]);
+
+  useEffect(() => {
+    const unsubscribe = scrollYRaw.on("change", (v) => {
+      setShowScrollTop(v > 300);
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      setScrollProgress(maxScroll > 0 ? Math.min(v / maxScroll, 1) : 0);
+    });
+    return () => unsubscribe();
+  }, [scrollYRaw]);
+
+  const scrollToTop = () => {
+    if (isLaunching) return;
+    setIsLaunching(true);
+
+    const startY = window.scrollY;
+    const duration = 1000;
+    const startTime = performance.now();
+
+    // Dramatic ease-in-out quart: fast start, smooth deceleration at top
+    const easeInOutQuart = (t: number) =>
+      t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2;
+
+    const animate = (currentTime: number) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const easedProgress = easeInOutQuart(progress);
+      window.scrollTo(0, startY * (1 - easedProgress));
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        setIsLaunching(false);
+      }
+    };
+
+    requestAnimationFrame(animate);
+  };
 
   const sections = [
     { id: "services", title: "Services" },
@@ -429,21 +468,21 @@ export default function Index() {
   };
 
   const heroCarouselProjects = useMemo(() => [
+    { title: "Visual Identity", label: "E-Buy Store", tags: ["Next.js", "Tailwind"], type: 'project' as const },
     { title: "Web Platforms", label: "Brainly Code", tags: ["React", "Nest.js"], type: 'project' as const },
     { title: "Digital Commerce", label: "Akaguriro", tags: ["TypeScript", "Supabase"], type: 'project' as const },
     { title: "Mobile Architecture", label: "IMove App", tags: ["React Native", "MongoDB"], type: 'project' as const },
-    { title: "Visual Identity", label: "E-Buy Store", tags: ["Next.js", "Tailwind"], type: 'project' as const },
     { title: "Career Guidance", label: "Vantage", tags: ["React Native", "AI"], type: 'project' as const },
     { title: "AI Recruitment", label: "Bora AI", tags: ["OpenAI", "Next.js"], type: 'project' as const }
   ], []);
 
   const heroAchievements = useMemo(() => [
-    { title: "Recognition", label: "Global Innovation Award", tags: ["First Place", "2024"], type: 'achievement' as const },
-    { title: "Impact", label: "2M+ Active Users Reached", tags: ["Scalability", "Growth"], type: 'achievement' as const },
-    { title: "Certification", label: "AWS Solution Architect", tags: ["Cloud", "Security"], type: 'achievement' as const },
-    { title: "Success", label: "Top Rated @ Upwork", tags: ["Excellence", "100% JS"], type: 'achievement' as const },
+    { title: "Recognition", label: "Best Backend Developer Around", tags: ["First Place", "2024"], type: 'achievement' as const },
+    { title: "Impact", label: "10K+ Active Users", tags: ["Scalability", "Growth"], type: 'achievement' as const },
+    { title: "Certification", label: "Software Development Certificates", tags: ["Cloud", "Security"], type: 'achievement' as const },
+    { title: "Success", label: "Best of the Best", tags: ["Excellence", "100% JS"], type: 'achievement' as const },
     { title: "Achievement", label: "Open Source Contributor", tags: ["React", "Motion"], type: 'achievement' as const },
-    { title: "Milestone", label: "Built 20+ High-End Apps", tags: ["Experience", "Velocity"], type: 'achievement' as const }
+    { title: "Milestone", label: "20+ High-End Apps Delivered", tags: ["Experience", "Velocity"], type: 'achievement' as const }
   ], []);
 
   return (
@@ -521,7 +560,7 @@ export default function Index() {
             {/* Hero text and Carousel are here */}
             {/* We will hide the text during dealing but keep carousel visible */}
         {/* Marquee Background Name */}
-        <div className="absolute top-[15rem] -translate-y-1/2 left-0 w-full overflow-hidden z-0 pointer-events-none select-none">
+        <div className="absolute top-[15rem] p-[10rem] h-[50rem] -translate-y-1/2 left-0 w-full overflow-hidden z-0 pointer-events-none select-none">
           {/* Vibrant blue glow behind the name */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-96 bg-blue-500/[0.08] blur-[120px] rounded-full dark:bg-blue-500/[0.05]" />
           
@@ -944,8 +983,8 @@ export default function Index() {
               </ScrollReveal>
               <div className="pl-4 md:pl-12 border-l border-blue-500/20 space-y-16">
                  {[
-                   { role: "Senior Systems Engineer", company: "Tech Startup", period: "2024 - Present", impact: "Scaled backend systems to handle 10M+ daily requests. Migrated monolith to event-driven microservices reducing latency by 40%." },
-                   { role: "Full-Stack Developer", company: "Agency", period: "2022 - 2024", impact: "Led development of 20+ high-performance applications. Improved deployment speed by implementing robust CI/CD pipelines." }
+                   { role: "Systems Engineer", company: "ICODE CO Ltd", period: "2024 - Present", impact: "Scaled backend systems to handle 10M+ daily requests. Migrated monolith to event-driven microservices reducing latency by 40%." },
+                   { role: "Backend Developer", company: "Blink Tech", period: "2022 - 2024", impact: "Led development of a high-performance application. Improved deployment speed by implementing robust CI/CD pipelines." }
                  ].map((exp, i) => (
                    <div key={i} className="relative pl-8 group">
                      <div className="absolute -left-[41px] top-1 w-5 h-5 border-2 border-blue-500 bg-background rounded-full group-hover:bg-blue-500 transition-colors" />
@@ -1404,6 +1443,105 @@ export default function Index() {
           />
         ))}
       </div>
+
+      {/* Scroll-To-Top Button */}
+      <AnimatePresence>
+        {showScrollTop && (
+          <motion.button
+            key="scroll-top"
+            onClick={scrollToTop}
+            aria-label="Scroll to top"
+            initial={{ opacity: 0, y: 60, scale: 0.6 }}
+            animate={isLaunching
+              ? { scale: [1, 1.25, 0.85, 1.1, 1], y: [0, -8, 4, -4, 0], opacity: 1 }
+              : { opacity: 1, y: 0, scale: 1 }
+            }
+            exit={{ opacity: 0, y: 60, scale: 0.5 }}
+            transition={isLaunching
+              ? { duration: 0.5, ease: "easeInOut" }
+              : { type: "spring", stiffness: 280, damping: 20 }
+            }
+            whileHover={!isLaunching ? { scale: 1.1 } : {}}
+            whileTap={!isLaunching ? { scale: 0.93 } : {}}
+            className="fixed bottom-8 right-8 z-[200] w-16 h-16 flex items-center justify-center cursor-pointer"
+            style={{ backdropFilter: "blur(16px)" }}
+          >
+            {/* SVG progress ring + background */}
+            <svg
+              className="absolute inset-0 w-full h-full"
+              viewBox="0 0 64 64"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              {/* Background fill */}
+              <rect width="64" height="64" fill="var(--background)" fillOpacity="0.85" />
+              {/* Outer border */}
+              <rect x="0.5" y="0.5" width="63" height="63" stroke="rgba(59,130,246,0.35)" strokeWidth="1" />
+              {/* Track circle */}
+              <circle cx="32" cy="32" r="26" stroke="rgba(59,130,246,0.12)" strokeWidth="3" />
+              {/* Progress arc */}
+              <motion.circle
+                cx="32"
+                cy="32"
+                r="26"
+                stroke="rgba(59,130,246,0.9)"
+                strokeWidth="3"
+                strokeLinecap="square"
+                strokeDasharray={`${2 * Math.PI * 26}`}
+                style={{
+                  strokeDashoffset: (1 - scrollProgress) * 2 * Math.PI * 26,
+                  rotate: "-90deg",
+                  transformOrigin: "32px 32px",
+                }}
+              />
+              {/* Corner HUD brackets */}
+              <polyline points="0,10 0,0 10,0" stroke="rgba(59,130,246,0.8)" strokeWidth="1.5" fill="none" />
+              <polyline points="54,0 64,0 64,10" stroke="rgba(59,130,246,0.8)" strokeWidth="1.5" fill="none" />
+              <polyline points="64,54 64,64 54,64" stroke="rgba(59,130,246,0.8)" strokeWidth="1.5" fill="none" />
+              <polyline points="10,64 0,64 0,54" stroke="rgba(59,130,246,0.8)" strokeWidth="1.5" fill="none" />
+            </svg>
+
+            {/* Glow burst on launch */}
+            <AnimatePresence>
+              {isLaunching && (
+                <motion.span
+                  key="burst"
+                  className="absolute inset-0 rounded-none"
+                  initial={{ opacity: 0.9, scale: 1 }}
+                  animate={{ opacity: 0, scale: 2.6 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
+                  style={{ background: "radial-gradient(circle, rgba(59,130,246,0.6) 0%, transparent 70%)" }}
+                />
+              )}
+            </AnimatePresence>
+
+            {/* Animated chevron */}
+            <motion.svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="rgba(59,130,246,1)"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="relative z-10"
+              animate={isLaunching
+                ? { y: [-2, -10, -2], opacity: [1, 0.4, 1] }
+                : { y: [0, -4, 0] }
+              }
+              transition={isLaunching
+                ? { duration: 0.8, ease: "easeInOut", repeat: Infinity }
+                : { duration: 1.4, repeat: Infinity, ease: "easeInOut" }
+              }
+            >
+              <polyline points="18 15 12 9 6 15" />
+            </motion.svg>
+          </motion.button>
+        )}
+      </AnimatePresence>
     </div>
     </div>
     </>

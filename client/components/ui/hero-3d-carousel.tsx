@@ -180,7 +180,7 @@ export const Hero3DCarousel: React.FC<Hero3DCarouselProps> = ({
         <pointLight position={[10, 10, 10]} intensity={1.5} color="#3b82f6" />
         <pointLight position={[-10, -10, -10]} intensity={0.5} color="#60a5fa" />
         
-        <group scale={0.8}>
+        <group scale={0.8} rotation={[0.15, 0, 0]}>
           {/* Center Image */}
           <CenterImage imageSrc={imageSrc} manualRotationRef={centerManualRot} />
 
