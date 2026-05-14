@@ -16,16 +16,16 @@ interface Hero3DCarouselProps {
   achievements?: CardData[];
 }
 
-const RotatingGroup = ({ 
-  data, 
-  radius = 3.5, 
-  speed = 0.2, 
+const RotatingGroup = ({
+  data,
+  radius = 3.5,
+  speed = 0.2,
   manualRotationRef,
   yOffset = 0,
   cardClassName = ""
-}: { 
-  data: CardData[]; 
-  radius?: number; 
+}: {
+  data: CardData[];
+  radius?: number;
   speed?: number;
   manualRotationRef: React.MutableRefObject<number>;
   yOffset?: number;
@@ -60,7 +60,7 @@ const RotatingGroup = ({
               <div className={`w-[768px] glass rounded-none p-12 border-4 border-primary/20 backdrop-blur-md shadow-2xl flex flex-col gap-6 items-center text-center relative group transition-all duration-500 hover:scale-[1.05] hover:border-primary/40 ${cardClassName}`}>
                 <span className="text-3xl uppercase tracking-[0.4em] text-muted-foreground font-bold">{item.title}</span>
                 <span className="text-7xl font-extrabold text-foreground tracking-tight leading-tight">{item.label}</span>
-                
+
                 {item.tags && item.tags.length > 0 && (
                   <div className="flex flex-wrap gap-4 justify-center mt-6">
                     {item.tags.slice(0, 3).map((tag, idx) => (
@@ -112,15 +112,15 @@ const CenterImage = ({ imageSrc, manualRotationRef }: { imageSrc: string; manual
   );
 };
 
-export const Hero3DCarousel: React.FC<Hero3DCarouselProps> = ({ 
-  imageSrc, 
-  projects, 
-  achievements = [] 
+export const Hero3DCarousel: React.FC<Hero3DCarouselProps> = ({
+  imageSrc,
+  projects,
+  achievements = []
 }) => {
   const innerManualRot = useRef(0);
   const outerManualRot = useRef(0);
   const centerManualRot = useRef(0);
-  
+
   const [isDragging, setIsDragging] = useState(false);
   const [activeButton, setActiveButton] = useState<number | null>(null);
 
@@ -136,7 +136,7 @@ export const Hero3DCarousel: React.FC<Hero3DCarouselProps> = ({
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!isDragging) return;
-    
+
     const factor = 0.005;
 
     if (activeButton === 0) { // Left Click Drag -> Inner Ring
@@ -166,7 +166,7 @@ export const Hero3DCarousel: React.FC<Hero3DCarouselProps> = ({
   ];
 
   return (
-    <div 
+    <div
       className="w-full p-20 h-[500px] md:h-[650px] relative z-50 cursor-grab active:cursor-grabbing select-none"
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
@@ -179,25 +179,25 @@ export const Hero3DCarousel: React.FC<Hero3DCarouselProps> = ({
         <ambientLight intensity={0.7} />
         <pointLight position={[10, 10, 10]} intensity={1.5} color="#3b82f6" />
         <pointLight position={[-10, -10, -10]} intensity={0.5} color="#60a5fa" />
-        
+
         <group scale={0.8} rotation={[0.15, 0, 0]}>
           {/* Center Image */}
           <CenterImage imageSrc={imageSrc} manualRotationRef={centerManualRot} />
 
           {/* Inner Ring: Projects */}
-          <RotatingGroup 
-            data={projects} 
-            radius={5.5} 
-            speed={0.15} 
+          <RotatingGroup
+            data={projects}
+            radius={5.5}
+            speed={0.15}
             manualRotationRef={innerManualRot}
             cardClassName="bg-background/40"
           />
 
           {/* Outer Ring: Achievements */}
-          <RotatingGroup 
-            data={displayAchievements} 
-            radius={9.5} 
-            speed={-0.12} 
+          <RotatingGroup
+            data={displayAchievements}
+            radius={9.5}
+            speed={-0.12}
             manualRotationRef={outerManualRot}
             cardClassName="bg-blue-500/5 border-blue-500/10"
           />
@@ -206,14 +206,14 @@ export const Hero3DCarousel: React.FC<Hero3DCarouselProps> = ({
         <OrbitControls
           enableZoom={false}
           enablePan={false}
-          autoRotate={false} 
+          autoRotate={false}
           minPolarAngle={Math.PI / 2.5}
           maxPolarAngle={Math.PI / 1.7}
         />
       </Canvas>
-      
+
       <div className="absolute inset-0 bg-blue-500/5 rounded-full blur-[180px] pointer-events-none -z-10" />
-      
+
     </div>
   );
 };
