@@ -710,13 +710,13 @@ export default function Index() {
                         transition={{ duration: 0.6, delay: i * 0.1 }}
                         className="group"
                       >
-                        <TechnicalCard
+                        <UnequalBordersCard
                           title={study.title}
-                          label={`Case Study 0${i + 1}`}
-                          meta={study.meta}
-                          className="h-full cursor-pointer hover:border-blue-500/50"
+                          tag={`Case Study 0${i + 1}`}
+                          date={study.meta}
+                          description={study.desc}
+                          className="h-full cursor-pointer"
                         >
-                          <p className="text-muted-foreground leading-relaxed font-medium mb-6">{study.desc}</p>
                           <div className="flex gap-4 border-t border-blue-500/10 pt-4">
                             {study.metrics.map((metric, idx) => (
                               <div key={idx} className="text-xs font-mono text-blue-500/80 font-bold tracking-tight">
@@ -724,7 +724,7 @@ export default function Index() {
                               </div>
                             ))}
                           </div>
-                        </TechnicalCard>
+                        </UnequalBordersCard>
                       </motion.div>
                     ))}
                   </div>

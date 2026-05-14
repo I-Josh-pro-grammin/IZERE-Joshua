@@ -4,33 +4,37 @@ import { useState } from "react";
 
 interface UnequalBordersCardProps {
     title: string;
-    date: string;
-    tag: string;
+    date?: string;
+    tag?: string;
+    description?: string;
+    children?: React.ReactNode;
     className?: string;
 }
 
-const UnequalBordersCard = ({ title, date, tag, className }: UnequalBordersCardProps) => {
+const UnequalBordersCard = ({ title, date, tag, description, children, className }: UnequalBordersCardProps) => {
     const [isHovered, setIsHovered] = useState(false);
 
     return (
         <div 
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-            className={cn("relative w-full h-[30rem] bg-card border-2 border-b-0 border-r-0 border-blue-500/50 rounded-none overflow-hidden group transition-all duration-500 hover:border-blue-500", className)}
+            className={cn("relative w-full min-h-[24rem] bg-card border-2 border-b-0 border-r-0 border-blue-500/50 rounded-none overflow-hidden group transition-all duration-500 hover:border-blue-500", className)}
         >
             {/* Short right border */}
             <div className="absolute right-[0.2px] top-0 h-[100%] w-[1px] bg-blue-500/ group-hover:bg-blue-500 transition-colors"></div>
 
             {/* Content Area */}
-            <div className="relative z-10 p-6 flex flex-col h-[10rem] justify-between">
+            <div className="relative z-10 p-6 flex flex-col h-full justify-between">
                 <div>
                     <div className="flex justify-between items-start mb-4">
-                        <span className="text-[10px] font-mono text-blue-500/60 uppercase tracking-[0.2em]">{tag}</span>
-                        <span className="text-[10px] font-mono text-blue-500/40 uppercase tracking-widest">{date}</span>
+                        {tag && <span className="text-[10px] font-mono text-blue-500/60 uppercase tracking-[0.2em]">{tag}</span>}
+                        {date && <span className="text-[10px] font-mono text-blue-500/40 uppercase tracking-widest">{date}</span>}
                     </div>
-                    <h3 className="text-xl font-bold text-foreground uppercase tracking-tight group-hover:text-blue-500 transition-colors">
+                    <h3 className="text-xl font-bold text-foreground uppercase tracking-tight group-hover:text-blue-500 transition-colors mb-4">
                         {title}
                     </h3>
+                    {description && <p className="text-sm text-muted-foreground leading-relaxed font-medium mb-6">{description}</p>}
+                    {children}
                 </div>
 
 
@@ -42,9 +46,9 @@ const UnequalBordersCard = ({ title, date, tag, className }: UnequalBordersCardP
             </div>
             {/* Left Cut  - Main Decoration */}
             <motion.div 
-                animate={{ rotate: isHovered ? [-50, 310] : -50 }}
+                animate={{ rotate: isHovered ? [-36, 324] : -36 }}
                 transition={{ duration: 1, ease: "easeInOut" }}
-                className="absolute -bottom-[32px] left-[47%] w-[10%] h-[40px] origin-left border-t-2 border-blue-500/50 bg-card group-hover:border-blue-500 transition-colors duration-500"
+                className="absolute -bottom-[40px] left-[44%] w-[10%] h-[40px] origin-left border-t-2 border-blue-500/50 bg-card group-hover:border-blue-500 transition-colors duration-500"
             >
             </motion.div>
 
@@ -69,5 +73,6 @@ const UnequalBordersCard = ({ title, date, tag, className }: UnequalBordersCardP
 };
 
 export default UnequalBordersCard;
+
 
 
