@@ -4,7 +4,7 @@ const bCode = "/bcode.png";
 const akaguriro = "/akaguriroo.png";
 const projects = "/projects.png";
 const joshImg = "/nkera.jpeg";
-const ebuy = "/ebuy.png";
+const icode = "/icode.png";
 const Bora = "/Bora.png";
 const vantage = "/Vantage.png";
 import { Badge } from "@/components/ui/badge";
@@ -795,10 +795,10 @@ export default function Index() {
                         customContent: true
                       },
                       {
-                        title: "Visual Identity",
-                        label: "E-Buy Store",
-                        desc: "Futuristic component library and global commerce experience with a focus on high-fidelity motion and design systems.",
-                        image: ebuy,
+                        title: "Company Website",
+                        label: "I CODE website",
+                        desc: "Futuristic component modern website for a Rwandan tech componany that builds and designs scalable and reliable systems.",
+                        image: icode,
                         icon: <Palette className="w-6 h-6" />,
                         // github: "https://github.com/I-Josh-pro-grammin/E-buy",
                         liveUrl: "https://e-buy-store.vercel.app/",
@@ -1406,8 +1406,8 @@ export default function Index() {
                     </div>
 
                     <div className="flex gap-8 text-sm text-muted-foreground">
-                      <a href="#">Privacy</a>
-                      <a href="#">Terms</a>
+                      {/* <a href="#">Email</a>
+                      <a href="#">Terms</a> */}
                       <span>© 2025 IZERE JOSHUA</span>
                     </div>
                   </div>
