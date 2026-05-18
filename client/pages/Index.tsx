@@ -812,15 +812,15 @@ export default function Index() {
                         label: "Vantage",
                         desc: "A mobile app that provides an advantage to students by recommending the optimal career path based on the RIASEC model.",
                         image: vantage,
-                        icon: <Smartphone className="w-6 h-6" />,
+                        // icon: <Smartphone className="w-6 h-6" />,
                         liveUrl: "https://vantage-frontend-beta.vercel.app/",
                         tags: ["React Native", "AI", "Mobile"],
                         colSpan: "md:col-span-12 lg:col-span-5",
                         rowSpan: "md:row-span-1",
                         imageHeight: "h-[250px]",
-                        customContent: true,
-                        customIcon: <Smartphone className="w-24 h-24" />,
-                        customLabel: "Mobile Architecture"
+                        // customContent: true,
+                        // customIcon: <Smartphone className="w-24 h-24" />,
+                        // customLabel: "Mobile Architecture"
                       },
                       {
                         title: "AI Recruitment",
