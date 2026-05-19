@@ -7,28 +7,23 @@ interface LoadingScreenProps {
 }
 
 // Tick counter shown as streaming hex lines
-const HEX_CHARS = "0123456789ABCDEF";
+// const HEX_CHARS = "0123456789ABCDEF";
 const randomBinary = (len: number) =>
   Array.from({ length: len }, () => (Math.random() > 0.5 ? "1" : "0")).join("");
 
 function StreamLine({ delay }: { delay: number }) {
   // Much longer string to cover wide screens
-  const [text, setText] = useState(randomBinary(128));
+  const [text, setText] = useState(randomBinary(512));
 
   useEffect(() => {
-    const id = setInterval(() => setText(randomBinary(128)), 100 + Math.random() * 150);
+    const id = setInterval(() => setText(randomBinary(512)), 100 + Math.random() * 150);
     return () => clearInterval(id);
   }, []);
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ delay, duration: 0.5 }}
-      className="font-mono text-[20px] line-height-[0px] leading-none tracking-[0.3em] text-white/[0.07] whitespace-nowrap overflow-hidden"
-    >
+    <div className="shrink-0 font-mono text-[10px] leading-none tracking-[0.5em] text-white/5 whitespace-nowrap overflow-hidden">
       {text}
-    </motion.div>
+    </div>
   );
 }
 
@@ -72,8 +67,8 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
           className="fixed inset-0 z-[9999] bg-[#080808] flex flex-col items-center justify-center overflow-hidden"
         >
           {/* Background streaming hex lines - DENSE FILL */}
-          <div className="absolute inset-0 flex flex-col gap-[2px] pointer-events-none select-none overflow-hidden opacity-50">
-            {Array.from({ length: 120 }).map((_, i) => (
+          <div className="absolute inset-0 flex flex-col gap-[2px] pointer-events-none select-none overflow-hidden opacity-100">
+            {Array.from({ length: 250 }).map((_, i) => (
               <StreamLine key={i} delay={i * 0.01} />
             ))}
           </div>
@@ -125,7 +120,7 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
               {/* Labels */}
               <div className="flex items-center justify-between">
                 <span className="font-mono text-[10px] text-white/30 tracking-[0.4em] uppercase">
-                  Initializing
+                  Initializing...
                 </span>
                 <span className="font-mono text-[10px] text-blue-400 tabular-nums">
                   {Math.round(progress * 100)}%
