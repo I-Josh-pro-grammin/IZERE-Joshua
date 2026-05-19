@@ -145,9 +145,9 @@ const ProjectTechnicalCard = ({ project }: { project: any }) => {
             </div>
 
             <div className="flex gap-2">
-              <div className="w-10 h-10 bg-blue-500/10 border border-blue-500/20 flex items-center justify-center rounded-none hover:bg-blue-500 hover:text-white transition-all">
+              {/* <div className="w-10 h-10 bg-blue-500/10 border border-blue-500/20 flex items-center justify-center rounded-none hover:bg-blue-500 hover:text-white transition-all">
                 <Github className="w-4 h-4" />
-              </div>
+              </div> */}
               <div className="w-10 h-10 bg-blue-500 flex items-center justify-center rounded-none shadow-[0_0_20px_rgba(59,130,246,0.3)]">
                 <ArrowUpRight className="w-5 h-5 text-white" />
               </div>
@@ -808,7 +808,7 @@ export default function Index() {
                         label: "IMove App",
                         desc: "Mobile app for finding nearest riders with real-time booking and geolocation tracking for seamless transit.",
                         icon: <Smartphone className="w-6 h-6" />,
-                        github: "https://i-move-admin-frontend.vercel.app/",
+                        // github: "https://i-move-admin-frontend.vercel.app/",
                         liveUrl: "https://i-move-admin-frontend.vercel.app/",
                         tags: ["React Native", "Expo", "MongoDB"],
                         colSpan: "md:col-span-12 lg:col-span-5",
