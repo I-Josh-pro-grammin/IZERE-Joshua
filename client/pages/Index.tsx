@@ -16,6 +16,8 @@ import { cn } from "@/lib/utils";
 import { useMotionValue, useSpring, useTransform } from "framer-motion";
 import { ProjectModal } from "@/components/ui/project-modal";
 import UnequalBordersCard from "@/components/ui/unequal-borders-card";
+import Lenis from "lenis";
+import "lenis/dist/lenis.css";
 
 // Reusable Technical HUD Card
 const TechnicalCard = ({
@@ -332,6 +334,24 @@ export default function Index() {
   const mainContentOpacity = 1;
 
   useEffect(() => {
+    let lenisRafId: number;
+    // Initialize Lenis for smooth scrolling
+    const lenis = new Lenis({
+      duration: 2, // Slower scrolling duration
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Custom easing function
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+      wheelMultiplier: 0.7, // Reduce wheel speed
+      touchMultiplier: 2,
+    });
+
+    function raf(time: number) {
+      lenis.raf(time);
+      lenisRafId = requestAnimationFrame(raf);
+    }
+    lenisRafId = requestAnimationFrame(raf);
+
     setIsLoaded(true);
     setVh(window.innerHeight);
 
@@ -363,6 +383,8 @@ export default function Index() {
     }
 
     return () => {
+      cancelAnimationFrame(lenisRafId);
+      lenis.destroy();
       clearTimeout(timer);
       window.removeEventListener('resize', handleResize);
     };
