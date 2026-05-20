@@ -1,5 +1,6 @@
 import { Github, Linkedin, Mail, ArrowUpRight, Plus, Menu, X, Send, Loader2, CheckCircle, Check, Globe, Smartphone, Layout, Palette, Sun, Moon, Phone, Download, Server, Terminal } from "lucide-react";
 import { TerminalNavigation } from "@/components/ui/terminal-navigation";
+import { ArchitectureSimulation } from "@/components/ui/architecture-simulation";
 
 const bCode = "/bcode.png";
 const akaguriro = "/akaguriroo.png";
@@ -328,6 +329,7 @@ export default function Index() {
   const [isLaunching, setIsLaunching] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
+  const [showSimulation, setShowSimulation] = useState(false);
   const carouselRef = useRef<HTMLDivElement>(null);
   const { scrollY } = useScroll();
   const introEnd = 0; // Removed dealing phase
@@ -966,16 +968,56 @@ export default function Index() {
                       System <span className="text-muted-foreground font-medium">Architecture</span>
                     </h2>
                   </ScrollReveal>
-                  <div className="bg-card border border-blue-500/20 p-12 relative flex flex-col items-center justify-center min-h-[400px]">
+                  <div className="bg-card border border-blue-500/20 p-6 md:p-12 relative min-h-[400px]">
                     <div className="absolute inset-0 bg-blue-500/5 blur-[100px] pointer-events-none" />
-                    <div className="text-center max-w-2xl relative z-10">
-                      <Server className="w-16 h-16 text-blue-500 mx-auto mb-6 opacity-80" />
-                      <h3 className="text-2xl font-bold uppercase tracking-widest mb-4">Event-Driven Microservices</h3>
-                      <p className="text-muted-foreground leading-relaxed mb-8 font-medium">
-                        [Interactive Diagram Placeholder: Visualizing scalable Kafka-backed event-driven architecture, rate limiters, and custom API gateways.]
-                      </p>
-                      <Button className="bg-blue-500 text-white hover:bg-blue-600 rounded-none h-12 px-8">Explore Architecture Simulation</Button>
-                    </div>
+                    <AnimatePresence mode="wait">
+                      {!showSimulation ? (
+                        <motion.div 
+                          key="placeholder"
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          transition={{ duration: 0.3 }}
+                          className="text-center max-w-2xl mx-auto py-12 relative z-10 flex flex-col items-center justify-center"
+                        >
+                          <Server className="w-16 h-16 text-blue-500 mx-auto mb-6 opacity-80 animate-pulse" />
+                          <h3 className="text-2xl font-bold uppercase tracking-widest mb-4">Event-Driven Microservices</h3>
+                          <p className="text-muted-foreground leading-relaxed mb-8 font-medium">
+                            Explore an interactive visual simulation of a production-ready microservices architecture. Witness live request routing, token-bucket rate limiting (DDoS defense), event streaming via Kafka, and cache invalidation in real-time.
+                          </p>
+                          <Button 
+                            onClick={() => setShowSimulation(true)}
+                            className="bg-blue-500 text-white hover:bg-blue-600 rounded-none h-12 px-8 font-mono font-bold uppercase tracking-widest"
+                          >
+                            Explore Architecture Simulation
+                          </Button>
+                        </motion.div>
+                      ) : (
+                        <motion.div 
+                          key="simulation"
+                          initial={{ opacity: 0, scale: 0.95 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          exit={{ opacity: 0, scale: 0.95 }}
+                          transition={{ duration: 0.4 }}
+                          className="relative z-10 flex flex-col gap-4"
+                        >
+                          <div className="flex justify-between items-center border-b border-blue-500/20 pb-4 mb-2">
+                            <div className="flex items-center gap-2">
+                              <span className="w-2.5 h-2.5 rounded-full bg-green-500 animate-ping" />
+                              <h4 className="font-mono text-sm font-bold uppercase text-blue-400 tracking-wider">LIVE CLUSTER CONTROLLER</h4>
+                            </div>
+                            <Button 
+                              onClick={() => setShowSimulation(false)}
+                              variant="outline"
+                              className="border-red-500/40 text-red-400 hover:bg-red-500/10 hover:text-red-300 rounded-none h-9 px-4 font-mono font-bold text-xs uppercase"
+                            >
+                              Exit Simulation
+                            </Button>
+                          </div>
+                          <ArchitectureSimulation />
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
                 </div>
               </section>
