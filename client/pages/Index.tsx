@@ -479,10 +479,20 @@ export default function Index() {
     setShowError(false);
     setShowSuccess(false);
 
+    const formId = import.meta.env.VITE_FORMSPREE_FORM_ID;
+
+    if (!formId) {
+      console.warn("VITE_FORMSPREE_FORM_ID is missing in environment variables.");
+      setIsSending(false);
+      setShowError(true);
+      return;
+    }
+
     try {
-      const response = await fetch("/api/contact", {
+      const response = await fetch(`https://formspree.io/f/${formId}`, {
         method: "POST",
         headers: {
+          "Accept": "application/json",
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
@@ -493,8 +503,7 @@ export default function Index() {
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to send message via server");
+        throw new Error("Failed to send message via Formspree");
       }
 
       setIsSending(false);
@@ -507,7 +516,6 @@ export default function Index() {
       console.error("Submission Error:", error);
       setIsSending(false);
       setShowError(true);
-      // We don't auto-hide error if it requires manual fallback
     }
   };
 
@@ -1425,15 +1433,48 @@ export default function Index() {
                                 </div>
 
                                 <div className="space-y-6 flex-1">
-                                  <input className="w-full bg-muted/20 border border-blue-500/10 px-4 py-3 text-xs font-mono uppercase text-foreground placeholder:text-blue-500/40 focus:outline-none focus:border-blue-500/40 transition-colors dark:bg-blue-500/[0.03]" placeholder="ENTER YOUR NAME" />
-                                  <input className="w-full bg-muted/20 border border-blue-500/10 px-4 py-3 text-xs font-mono uppercase text-foreground placeholder:text-blue-500/40 focus:outline-none focus:border-blue-500/40 transition-colors dark:bg-blue-500/[0.03]" placeholder="YOUR EMAIL@DOMAIN.COM" />
-                                  <textarea rows={4} className="w-full bg-muted/20 border border-blue-500/10 px-4 py-3 text-xs font-mono uppercase text-foreground placeholder:text-blue-500/40 focus:outline-none focus:border-blue-500/40 transition-colors resize-none dark:bg-blue-500/[0.03]" placeholder="PROVIDE A DESCRIPTION OF YOUR PROJECT" />
+                                  <input 
+                                    value={contactName}
+                                    onChange={(e) => setContactName(e.target.value)}
+                                    className="w-full bg-muted/20 border border-blue-500/10 px-4 py-3 text-xs font-mono uppercase text-foreground placeholder:text-blue-500/40 focus:outline-none focus:border-blue-500/40 transition-colors dark:bg-blue-500/[0.03]" 
+                                    placeholder="ENTER YOUR NAME" 
+                                  />
+                                  <input 
+                                    value={contactEmail}
+                                    onChange={(e) => setContactEmail(e.target.value)}
+                                    type="email"
+                                    className="w-full bg-muted/20 border border-blue-500/10 px-4 py-3 text-xs font-mono uppercase text-foreground placeholder:text-blue-500/40 focus:outline-none focus:border-blue-500/40 transition-colors dark:bg-blue-500/[0.03]" 
+                                    placeholder="YOUR EMAIL@DOMAIN.COM" 
+                                  />
+                                  <textarea 
+                                    value={contactMessage}
+                                    onChange={(e) => setContactMessage(e.target.value)}
+                                    rows={4} 
+                                    className="w-full bg-muted/20 border border-blue-500/10 px-4 py-3 text-xs font-mono uppercase text-foreground placeholder:text-blue-500/40 focus:outline-none focus:border-blue-500/40 transition-colors resize-none dark:bg-blue-500/[0.03]" 
+                                    placeholder="PROVIDE A DESCRIPTION OF YOUR PROJECT" 
+                                  />
                                 </div>
+
+                                {/* Status Messages */}
+                                {showSuccess && (
+                                  <div className="mt-4 text-xs font-mono uppercase text-green-400 border border-green-500/20 bg-green-500/[0.03] px-4 py-3">
+                                    MESSAGE SENT SUCCESSFULLY. STANDBY FOR REPLY.
+                                  </div>
+                                )}
+                                {showError && (
+                                  <div className="mt-4 text-xs font-mono uppercase text-red-400 border border-red-500/20 bg-red-500/[0.03] px-4 py-3">
+                                    TRANSMISSION FAILED. CHECK YOUR CONNECTIVITY AND TRY AGAIN.
+                                  </div>
+                                )}
 
                                 {/* Button */}
                                 <div className="mt-6 flex justify-end">
-                                  <Button className="bg-blue-500 text-white hover:bg-blue-600 shadow-[0_0_20px_rgba(59,130,246,0.3)]">
-                                    SEND MESSAGE
+                                  <Button 
+                                    onClick={handleSubmit}
+                                    disabled={isSending}
+                                    className="bg-blue-500 text-white hover:bg-blue-600 shadow-[0_0_20px_rgba(59,130,246,0.3)] disabled:opacity-50 disabled:cursor-not-allowed"
+                                  >
+                                    {isSending ? "TRANSMITTING..." : "SEND MESSAGE"}
                                   </Button>
                                 </div>
                               </div>
