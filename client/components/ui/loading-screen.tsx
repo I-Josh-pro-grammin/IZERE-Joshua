@@ -21,7 +21,7 @@ function StreamLine({ delay }: { delay: number }) {
   }, []);
 
   return (
-    <div className="shrink-0 font-mono text-[10px] leading-none tracking-[0.5em] text-white/5 whitespace-nowrap overflow-hidden">
+    <div className="shrink-0 font-mono text-[13px] leading-none tracking-[0.5em] text-white/5 whitespace-nowrap overflow-hidden">
       {text}
     </div>
   );

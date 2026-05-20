@@ -1,4 +1,5 @@
-import { Github, Linkedin, Mail, ArrowUpRight, Plus, Menu, X, Send, Loader2, CheckCircle, Check, Globe, Smartphone, Layout, Palette, Sun, Moon, Phone, Download, Server } from "lucide-react";
+import { Github, Linkedin, Mail, ArrowUpRight, Plus, Menu, X, Send, Loader2, CheckCircle, Check, Globe, Smartphone, Layout, Palette, Sun, Moon, Phone, Download, Server, Terminal } from "lucide-react";
+import { TerminalNavigation } from "@/components/ui/terminal-navigation";
 
 const bCode = "/bcode.png";
 const akaguriro = "/akaguriroo.png";
@@ -326,6 +327,7 @@ export default function Index() {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [isLaunching, setIsLaunching] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [isTerminalOpen, setIsTerminalOpen] = useState(false);
   const carouselRef = useRef<HTMLDivElement>(null);
   const { scrollY } = useScroll();
   const introEnd = 0; // Removed dealing phase
@@ -371,9 +373,27 @@ export default function Index() {
       measureCarousel();
     };
 
+    const handleGlobalKeyDown = (e: KeyboardEvent) => {
+      // Toggle terminal on backtick or tilde
+      if (e.key === '`' || e.key === '~') {
+        // Only prevent default if we're not inside an input, unless we want global hijack
+        // Actually, preventing default stops backtick from typing. We can check active element
+        const tag = document.activeElement?.tagName.toLowerCase();
+        if (tag !== 'input' && tag !== 'textarea') {
+          e.preventDefault();
+          setIsTerminalOpen(prev => !prev);
+        } else if (isTerminalOpen) {
+           // Allow toggling it off even when typing inside terminal
+           e.preventDefault();
+           setIsTerminalOpen(false);
+        }
+      }
+    };
+
     // Measure once fonts/images load so layout is stable
     const timer = setTimeout(measureCarousel, 500);
     window.addEventListener('resize', handleResize);
+    window.addEventListener('keydown', handleGlobalKeyDown);
 
     const savedTheme = localStorage.getItem("theme") as "light" | "dark";
     if (savedTheme) {
@@ -387,6 +407,7 @@ export default function Index() {
       lenis.destroy();
       clearTimeout(timer);
       window.removeEventListener('resize', handleResize);
+      window.removeEventListener('keydown', handleGlobalKeyDown);
     };
   }, []);
 
@@ -520,6 +541,7 @@ export default function Index() {
         onClose={() => setSelectedProject(null)}
         project={selectedProject}
       />
+      <TerminalNavigation isOpen={isTerminalOpen} onClose={() => setIsTerminalOpen(false)} />
 
       <div className="min-h-screen relative bg-background text-foreground selection:bg-primary selection:text-primary-foreground cursor-none transition-colors duration-500">
         <CustomCursor />
@@ -552,6 +574,13 @@ export default function Index() {
                 aria-label="Toggle theme"
               >
                 {theme === "light" ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
+              </button>
+              <button
+                onClick={() => setIsTerminalOpen(true)}
+                className="p-2 rounded-none hover:bg-black/5 dark:hover:bg-white/5 transition-colors text-blue-500"
+                aria-label="Open Terminal"
+              >
+                <Terminal className="w-5 h-5" />
               </button>
               <Magnetic>
                 <Button variant="outline" size="sm" className="hidden bg-blue-500 text-white hover:bg-blue-600 sm:inline-flex" asChild>
@@ -698,7 +727,7 @@ export default function Index() {
             {/* Case Studies Section */}
             <SectionReveal index={0}>
               <section
-                id="case-studies"
+                id="services"
                 className="py-32 px-6 relative overflow-hidden bg-background z-10"
               >
                 <div className="max-w-7xl mx-auto border-x border-border/30 relative">
@@ -1193,7 +1222,7 @@ export default function Index() {
             {/* Engineering Philosophy / How I Work */}
             <SectionReveal index={5}>
               <section
-                id="philosophy"
+                id="process"
                 className="py-32 px-6 bg-muted/30 border-b border-border/30 relative z-10"
               >
                 <div className="max-w-7xl mx-auto border-x border-border/30 relative">
