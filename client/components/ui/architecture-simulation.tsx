@@ -132,6 +132,7 @@ export function ArchitectureSimulation() {
   const [packets, setPackets] = useState<Packet[]>([]);
   const [logs, setLogs] = useState<LogEntry[]>([]);
   const logsEndRef = useRef<HTMLDivElement>(null);
+  const logsContainerRef = useRef<HTMLDivElement>(null);
 
   // Add event log helper
   const addLog = (node: string, message: string, type: LogEntry['type'] = 'info') => {
@@ -144,8 +145,8 @@ export function ArchitectureSimulation() {
   };
 
   useEffect(() => {
-    if (logsEndRef.current) {
-      logsEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    if (logsContainerRef.current) {
+      logsContainerRef.current.scrollTop = logsContainerRef.current.scrollHeight;
     }
   }, [logs]);
 
@@ -454,6 +455,7 @@ export function ArchitectureSimulation() {
           </div>
 
           <div 
+            ref={logsContainerRef}
             data-lenis-prevent
             className="flex-1 overflow-y-auto font-mono text-[10px] leading-relaxed space-y-1 terminal-scrollbar select-none cursor-default"
           >
