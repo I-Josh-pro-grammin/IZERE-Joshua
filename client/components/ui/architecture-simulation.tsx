@@ -208,7 +208,7 @@ export function ArchitectureSimulation() {
     const interval = setInterval(() => {
       setPackets((prevPackets) => {
         return prevPackets
-          .map((p) => {
+          .map((p): Packet => {
             const nextProgress = p.progress + 0.08; // speed of packet
             const currentIdx = Math.floor(p.progress * (p.path.length - 1));
             const currentNode = p.path[currentIdx];
