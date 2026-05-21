@@ -56,13 +56,13 @@ export function TerminalNavigation({ isOpen, onClose }: TerminalNavigationProps)
       case 'help':
         output = (
           <div className="flex flex-col gap-1">
-            <span>Available commands:</span>
-            <span className="text-blue-400">help      - Show this help message</span>
-            <span className="text-blue-400">clear     - Clear terminal output</span>
-            <span className="text-blue-400">whoami    - Display current user</span>
-            <span className="text-blue-400">ls        - List navigable sections</span>
-            <span className="text-blue-400">cd [dir]  - Navigate to a section (e.g., 'cd projects')</span>
-            <span className="text-blue-400">exit      - Close the terminal</span>
+            <span className="text-slate-800 dark:text-emerald-400 font-semibold mb-1 underline underline-offset-4">Available commands:</span>
+            <span className="text-slate-600 dark:text-slate-300"><strong className="text-blue-600 dark:text-blue-400 font-medium inline-block w-20">help</strong> - Show this help message</span>
+            <span className="text-slate-600 dark:text-slate-300"><strong className="text-blue-600 dark:text-blue-400 font-medium inline-block w-20">clear</strong> - Clear terminal output</span>
+            <span className="text-slate-600 dark:text-slate-300"><strong className="text-blue-600 dark:text-blue-400 font-medium inline-block w-20">whoami</strong> - Display current user</span>
+            <span className="text-slate-600 dark:text-slate-300"><strong className="text-blue-600 dark:text-blue-400 font-medium inline-block w-20">ls</strong> - List navigable sections</span>
+            <span className="text-slate-600 dark:text-slate-300"><strong className="text-blue-600 dark:text-blue-400 font-medium inline-block w-20">cd [dir]</strong> - Navigate to a section</span>
+            <span className="text-slate-600 dark:text-slate-300"><strong className="text-blue-600 dark:text-blue-400 font-medium inline-block w-20">exit</strong> - Close the terminal</span>
           </div>
         );
         break;
@@ -74,8 +74,8 @@ export function TerminalNavigation({ isOpen, onClose }: TerminalNavigationProps)
         break;
       case 'ls':
         output = (
-          <div className="flex flex-wrap gap-4 text-blue-300">
-            {AVAILABLE_SECTIONS.map(s => <span key={s}>{s}/</span>)}
+          <div className="flex flex-wrap gap-4 text-emerald-600 dark:text-emerald-400 font-semibold">
+            {AVAILABLE_SECTIONS.map(s => <span key={s} className="hover:underline cursor-pointer">{s}/</span>)}
           </div>
         );
         break;
@@ -151,7 +151,7 @@ export function TerminalNavigation({ isOpen, onClose }: TerminalNavigationProps)
         exit={{ opacity: 0, scale: 0.95, y: 20 }}
         transition={{ duration: 0.2 }}
         className={cn(
-          "fixed z-[1000] flex flex-col overflow-hidden bg-black/80 backdrop-blur-md border border-blue-500/30 shadow-[0_0_30px_rgba(59,130,246,0.15)]",
+          "fixed z-[1000] flex flex-col overflow-hidden bg-white/95 dark:bg-black/80 backdrop-blur-md border border-slate-200 dark:border-blue-500/30 shadow-2xl dark:shadow-[0_0_30px_rgba(59,130,246,0.15)] text-slate-800 dark:text-white",
           isMaximized 
             ? "inset-4 rounded-none" 
             : "bottom-6 right-6 w-[500px] h-[400px] max-w-[calc(100vw-3rem)] rounded-none"
@@ -160,17 +160,17 @@ export function TerminalNavigation({ isOpen, onClose }: TerminalNavigationProps)
         {/* Terminal Header */}
         <div 
           onPointerDown={(e) => dragControls.start(e)}
-          className="flex items-center justify-between px-4 py-2 bg-blue-500/10 border-b border-blue-500/30 cursor-move select-none"
+          className="flex items-center justify-between px-4 py-2 bg-slate-100/80 dark:bg-blue-500/10 border-b border-slate-200 dark:border-blue-500/30 cursor-move select-none"
         >
-          <div className="flex items-center gap-2 text-blue-400">
-            <TerminalIcon className="w-4 h-4" />
-            <span className="text-xs font-mono font-bold tracking-widest">SYS_TERM</span>
+          <div className="flex items-center gap-2 text-slate-500 dark:text-blue-400">
+            <TerminalIcon className="w-4 h-4 text-blue-500" />
+            <span className="text-xs font-mono font-bold text-blue-500 dark:text-blue-400 tracking-widest">SYS_TERM</span>
           </div>
           <div className="flex items-center gap-2">
-            <button onClick={() => setIsMaximized(!isMaximized)} className="p-1 hover:bg-blue-500/20 text-blue-400 transition-colors">
+            <button onClick={() => setIsMaximized(!isMaximized)} className="p-1 hover:bg-slate-200 dark:hover:bg-blue-500/20 text-slate-500 dark:text-blue-400 transition-colors">
               <Square className="w-3 h-3" />
             </button>
-            <button onClick={onClose} className="p-1 hover:bg-red-500/20 hover:text-red-400 text-blue-400 transition-colors">
+            <button onClick={onClose} className="p-1 hover:bg-red-100 dark:hover:bg-red-500/20 hover:text-red-500 dark:hover:text-red-400 text-slate-500 dark:text-blue-400 transition-colors">
               <X className="w-4 h-4" />
             </button>
           </div>
@@ -186,17 +186,17 @@ export function TerminalNavigation({ isOpen, onClose }: TerminalNavigationProps)
           {history.map((entry, i) => (
             <div key={i} className="mb-2">
               {entry.type === 'input' && (
-                <div className="flex gap-2 text-white">
-                  <span className="text-blue-500">guest@izere ~$</span>
-                  <span>{entry.command}</span>
+                <div className="flex gap-2 items-start">
+                  <span className="shrink-0 font-bold tracking-tight"><span className="text-emerald-600 dark:text-emerald-500">guest</span><span className="text-slate-500 dark:text-slate-400">@</span><span className="text-blue-600 dark:text-blue-500">izere</span><span className="text-slate-500 dark:text-slate-400">:</span><span className="text-amber-600 dark:text-amber-500">~</span><span className="text-slate-800 dark:text-white ml-0.5">$</span></span>
+                  <span className="text-slate-800 dark:text-slate-200">{entry.command}</span>
                 </div>
               )}
               {entry.output && (
                 <div className={cn(
-                  "mt-1",
-                  entry.type === 'error' ? "text-red-400" :
-                  entry.type === 'system' ? "text-blue-300" :
-                  "text-white/70"
+                  "mt-1 mb-3",
+                  entry.type === 'error' ? "text-red-600 dark:text-red-400" :
+                  entry.type === 'system' ? "text-slate-500 italic dark:text-blue-300" :
+                  "text-slate-700 dark:text-white/80"
                 )}>
                   {entry.output}
                 </div>
@@ -204,15 +204,15 @@ export function TerminalNavigation({ isOpen, onClose }: TerminalNavigationProps)
             </div>
           ))}
           
-          <div className="flex gap-2 text-white mt-2">
-            <span className="text-blue-500 shrink-0">guest@izere ~$</span>
+          <div className="flex gap-2 items-center mt-2">
+            <span className="shrink-0 font-bold tracking-tight"><span className="text-emerald-600 dark:text-emerald-500">guest</span><span className="text-slate-500 dark:text-slate-400">@</span><span className="text-blue-600 dark:text-blue-500">izere</span><span className="text-slate-500 dark:text-slate-400">:</span><span className="text-amber-600 dark:text-amber-500">~</span><span className="text-slate-800 dark:text-white ml-0.5">$</span></span>
             <input
               ref={inputRef}
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
-              className="flex-1 bg-transparent outline-none border-none text-white focus:ring-0 p-0 m-0 caret-blue-500"
+              className="flex-1 bg-transparent outline-none border-none text-slate-900 dark:text-white focus:ring-0 p-0 m-0 caret-slate-800 dark:caret-blue-500"
               spellCheck={false}
               autoComplete="off"
               autoFocus

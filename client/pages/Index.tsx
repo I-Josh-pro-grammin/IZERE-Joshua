@@ -684,7 +684,7 @@ export default function Index() {
                       Full-stack engineer building AI-powered products, scalable distributed systems, and modern digital architectures.
                     </p>
 
-                    <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+                    <div className="flex flex-col sm:flex-row flex-wrap gap-6 justify-center items-center">
                       <Magnetic>
                         <Button size="lg" className="h-16 bg-blue-500 hover:bg-blue-600 text-white px-12" onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}>
                           View Projects
@@ -699,7 +699,13 @@ export default function Index() {
                         </Button>
                       </Magnetic>
                       <Magnetic>
-                        <Button size="lg" variant="outline" className="h-16 px-12 border-blue-500/30 text-blue-500 hover:bg-blue-500 hover:text-white transition-colors" asChild>
+                        <Button size="lg" variant="outline" className="h-16 px-12 border-blue-500/30 text-blue-500 hover:bg-blue-500 hover:text-white transition-colors" onClick={() => setIsTerminalOpen(true)}>
+                          <Terminal className="mr-2 w-5 h-5" />
+                          Use Terminal
+                        </Button>
+                      </Magnetic>
+                      <Magnetic>
+                        <Button size="lg" className="h-16 bg-blue-500 hover:bg-blue-600 text-white px-12" asChild>
                           <a href="https://mail.google.com/mail/?view=cm&to=izerejoshua94@gmail.com" target="_blank" rel="noopener noreferrer">Contact Me</a>
                         </Button>
                       </Magnetic>
