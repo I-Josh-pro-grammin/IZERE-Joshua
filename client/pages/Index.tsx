@@ -22,6 +22,45 @@ import UnequalBordersCard from "@/components/ui/unequal-borders-card";
 import Lenis from "lenis";
 import "lenis/dist/lenis.css";
 
+export const ARTICLES: Article[] = [
+  { 
+    title: "Building a Multi-Tenant SaaS Architecture", 
+    date: "Oct 2025", 
+    tag: "Architecture",
+    content: [
+      "Designing a multi-tenant SaaS application introduces complex challenges around data isolation, security, and scalability. In a multi-tenant architecture, a single instance of the software serves multiple customers (tenants), which drastically reduces infrastructure costs and simplifies deployment. However, it requires a robust strategy to ensure that tenant data remains strictly partitioned.",
+      "The most critical decision in multi-tenancy is the data isolation model. The 'Silo' model provisions a separate database for each tenant, offering maximum isolation and easing compliance (like HIPAA or SOC2), but at the cost of high maintenance overhead. The 'Pool' model mixes all tenant data in a single database, using a tenant_id column to filter rows. This is highly scalable and cost-effective but introduces the risk of cross-tenant data leaks if a query is malformed.",
+      "To mitigate the risks of the Pool model, modern systems heavily leverage Row-Level Security (RLS). By utilizing PostgreSQL's RLS policies, we can enforce tenant isolation at the database engine level. When a request comes in, the application sets a local configuration parameter for the current database session with the tenant's ID. The database then automatically appends the isolation filters to every query, making it virtually impossible for application-level bugs to leak data.",
+      "Caching in a multi-tenant environment also requires careful design. A common pitfall is caching a generic response without considering the tenant context. To solve this, cache keys must always be prefixed with the tenant ID. Using Redis, we implement a namespace pattern (e.g., `tenant:{id}:users:list`), which not only isolates the data but also allows us to easily invalidate all cached data for a specific tenant when their configuration changes.",
+      "Ultimately, there is no silver bullet. The choice between Silo, Pool, or a hybrid Bridge model depends entirely on your application's specific compliance requirements, scale, and operational capacity. By enforcing strict boundaries at the database and caching layers, you can build a highly scalable SaaS architecture that doesn't compromise on security."
+    ]
+  },
+  { 
+    title: "Rust vs Go for High-Throughput Microservices", 
+    date: "Aug 2025", 
+    tag: "Performance",
+    content: [
+      "As backend systems scale to handle millions of concurrent connections, the choice of programming language becomes critical. Node.js and Python often hit performance ceilings under extreme load, leading engineering teams to evaluate compiled, memory-safe languages. In recent years, the debate has largely narrowed down to two giants: Go and Rust.",
+      "Go, designed by Google, is practically built for network I/O and microservices. Its killer feature is goroutines—lightweight, user-space threads multiplexed onto OS threads. You can spawn hundreds of thousands of goroutines with minimal memory overhead. Coupled with an incredibly fast compiler and a garbage collector optimized for low latency, Go allows teams to iterate quickly and build highly concurrent network services with very simple, readable code.",
+      "Rust, on the other hand, takes a fundamentally different approach. Instead of a garbage collector, Rust uses an ownership model evaluated at compile time. This ensures memory safety and thread safety without runtime overhead, eliminating 'stop-the-world' GC pauses. For high-throughput systems where predictable tail latency (p99) is critical—such as financial trading engines or real-time gaming backends—Rust's deterministic performance is unmatched.",
+      "However, this performance comes with a trade-off in developer experience. Rust's steep learning curve and strict compiler (the notorious 'borrow checker') can significantly slow down initial development speed compared to Go. Writing asynchronous code in Rust is also inherently more complex than Go's straightforward blocking-style goroutines.",
+      "The verdict? If your microservice is primarily I/O bound (routing requests, querying databases, calling other services) and rapid delivery is a priority, Go is almost always the better choice. It hits the sweet spot of high performance and high developer productivity. But if your service is CPU-bound (complex cryptography, heavy data parsing, video encoding), or if strict control over memory and predictable tail latency are absolute requirements, Rust is the superior tool for the job."
+    ]
+  },
+  { 
+    title: "Debugging Memory Leaks in Node.js at Scale", 
+    date: "Jun 2025", 
+    tag: "Debugging",
+    content: [
+      "Memory leaks in Node.js can be incredibly insidious. Because JavaScript is a garbage-collected language, developers rarely think about manual memory management. However, when an application scales, a leak of just a few kilobytes per request can quickly compound, leading to massive heap sizes, frequent garbage collection pauses, and eventual Out-Of-Memory (OOM) crashes.",
+      "The most common culprits for memory leaks in Node.js are unhandled closures and event listeners. If a closure retains a reference to a large object, and that closure is kept alive (for example, by being attached to an EventEmitter that is never cleaned up), the garbage collector cannot free that memory. Another frequent issue is unbounded caching—storing data in in-memory objects or Maps without implementing a Time-To-Live (TTL) or Least-Recently-Used (LRU) eviction policy.",
+      "Identifying a leak requires proactive monitoring. The first step is setting up robust observability. By tracking `process.memoryUsage().heapUsed` over time in a dashboard like Grafana, you can visualize the leak. A healthy Node.js process will show a 'sawtooth' pattern—memory grows, then drops sharply when the GC runs. A memory leak is characterized by a sawtooth pattern where the baseline continuously trends upward over hours or days.",
+      "Once a leak is suspected, the next step is capturing a heap snapshot. By starting the Node.js process with the `--inspect` flag, you can connect Chrome DevTools to the running server. When memory usage is high, taking a snapshot serializes the entire V8 heap. You can take a baseline snapshot, apply load to the system using a tool like Artillery, and then take a second snapshot. Comparing the two snapshots reveals exactly which objects were allocated and not freed.",
+      "Mitigating these leaks often involves architectural tweaks. Utilizing `WeakMap` or `WeakSet` allows you to associate data with objects without preventing those objects from being garbage collected. For caching, always use dedicated solutions like Redis, or robust in-memory libraries like `lru-cache`. Finally, always ensure that `removeListener` or `off` is called when an event subscription is no longer needed, especially in long-lived connections like WebSockets."
+    ]
+  },
+];
+
 // Reusable Technical HUD Card
 const TechnicalCard = ({
   children,
@@ -317,7 +356,8 @@ export default function Index() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
   const [selectedProject, setSelectedProject] = useState<any | null>(null);
-  const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
+  const [selectedArticleIndex, setSelectedArticleIndex] = useState<number | null>(null);
+  const selectedArticle = selectedArticleIndex !== null ? ARTICLES[selectedArticleIndex] : null;
   const [contactName, setContactName] = useState("");
   const [contactEmail, setContactEmail] = useState("");
   const [contactMessage, setContactMessage] = useState("");
@@ -554,9 +594,11 @@ export default function Index() {
         project={selectedProject}
       />
       <ArticleModal
-        isOpen={!!selectedArticle}
-        onClose={() => setSelectedArticle(null)}
+        isOpen={selectedArticleIndex !== null}
+        onClose={() => setSelectedArticleIndex(null)}
         article={selectedArticle}
+        onNext={selectedArticleIndex !== null && selectedArticleIndex < ARTICLES.length - 1 ? () => setSelectedArticleIndex(selectedArticleIndex + 1) : undefined}
+        onPrev={selectedArticleIndex !== null && selectedArticleIndex > 0 ? () => setSelectedArticleIndex(selectedArticleIndex - 1) : undefined}
       />
       <TerminalNavigation isOpen={isTerminalOpen} onClose={() => setIsTerminalOpen(false)} />
 
@@ -1046,12 +1088,8 @@ export default function Index() {
                     </h2>
                   </ScrollReveal>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {[
-                      { title: "Building a Multi-Tenant SaaS Architecture", date: "Oct 2025", tag: "Architecture" },
-                      { title: "Rust vs Go for High-Throughput Microservices", date: "Aug 2025", tag: "Performance" },
-                      { title: "Debugging Memory Leaks in Node.js at Scale", date: "Jun 2025", tag: "Debugging" },
-                    ].map((post, i) => (
-                      <UnequalBordersCard key={i} title={post.title} tag={post.tag} date={post.date} className="cursor-pointer h-full" onClick={() => setSelectedArticle(post)} />
+                    {ARTICLES.map((post, i) => (
+                      <UnequalBordersCard key={i} title={post.title} tag={post.tag} date={post.date} className="cursor-pointer h-full" onClick={() => setSelectedArticleIndex(i)} />
                     ))}
                   </div>
                 </div>

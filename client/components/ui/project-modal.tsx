@@ -119,7 +119,7 @@ export const ProjectModal = ({ isOpen, onClose, project }: ProjectModalProps) =>
               </div>
 
               {/* Right Column: Deep Dive Details */}
-              <div className="w-full md:w-3/5 p-8 md:p-12 overflow-y-auto">
+              <div className="w-full md:w-3/5 p-8 md:p-12 overflow-y-auto" data-lenis-prevent="true" onWheel={(e) => e.stopPropagation()}>
                 <div className="grid grid-cols-1 gap-12">
 
                   {/* Problem & Impact */}
