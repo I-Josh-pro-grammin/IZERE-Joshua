@@ -9,16 +9,18 @@ interface UnequalBordersCardProps {
     description?: string;
     children?: React.ReactNode;
     className?: string;
+    onClick?: () => void;
 }
 
-const UnequalBordersCard = ({ title, date, tag, description, children, className }: UnequalBordersCardProps) => {
+const UnequalBordersCard = ({ title, date, tag, description, children, className, onClick }: UnequalBordersCardProps) => {
     const [isHovered, setIsHovered] = useState(false);
 
     return (
         <div 
+            onClick={onClick}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-            className={cn("relative w-full min-h-[24rem] bg-card border-2 border-b-0 border-r-0 border-blue-500/50 rounded-none overflow-hidden group transition-all duration-500 hover:border-blue-500", className)}
+            className={cn("relative w-full min-h-[24rem] bg-card border-2 border-b-0 border-r-0 border-blue-500/50 rounded-none overflow-hidden group transition-all duration-500 hover:border-blue-500", onClick && "cursor-pointer", className)}
         >
             {/* Short right border */}
             <div className="absolute right-[0.2px] top-0 h-[100%] w-[1px] bg-blue-500/ group-hover:bg-blue-500 transition-colors"></div>

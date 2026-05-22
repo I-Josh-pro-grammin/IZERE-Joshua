@@ -17,6 +17,7 @@ import { useEffect, useState, useRef, useMemo } from "react";
 import { cn } from "@/lib/utils";
 import { useMotionValue, useSpring, useTransform } from "framer-motion";
 import { ProjectModal } from "@/components/ui/project-modal";
+import { ArticleModal, Article } from "@/components/ui/article-modal";
 import UnequalBordersCard from "@/components/ui/unequal-borders-card";
 import Lenis from "lenis";
 import "lenis/dist/lenis.css";
@@ -316,6 +317,7 @@ export default function Index() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
   const [selectedProject, setSelectedProject] = useState<any | null>(null);
+  const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
   const [contactName, setContactName] = useState("");
   const [contactEmail, setContactEmail] = useState("");
   const [contactMessage, setContactMessage] = useState("");
@@ -550,6 +552,11 @@ export default function Index() {
         isOpen={!!selectedProject}
         onClose={() => setSelectedProject(null)}
         project={selectedProject}
+      />
+      <ArticleModal
+        isOpen={!!selectedArticle}
+        onClose={() => setSelectedArticle(null)}
+        article={selectedArticle}
       />
       <TerminalNavigation isOpen={isTerminalOpen} onClose={() => setIsTerminalOpen(false)} />
 
@@ -1044,7 +1051,7 @@ export default function Index() {
                       { title: "Rust vs Go for High-Throughput Microservices", date: "Aug 2025", tag: "Performance" },
                       { title: "Debugging Memory Leaks in Node.js at Scale", date: "Jun 2025", tag: "Debugging" },
                     ].map((post, i) => (
-                      <UnequalBordersCard key={i} title={post.title} tag={post.tag} date={post.date} className="cursor-pointer h-full" />
+                      <UnequalBordersCard key={i} title={post.title} tag={post.tag} date={post.date} className="cursor-pointer h-full" onClick={() => setSelectedArticle(post)} />
                     ))}
                   </div>
                 </div>
