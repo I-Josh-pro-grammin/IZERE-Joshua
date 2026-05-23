@@ -605,8 +605,8 @@ export default function Index() {
   const heroAchievements = useMemo(() => [
     { title: "Recognition", label: "Best Backend Developer Around", tags: ["First Place", "2024"], type: 'achievement' as const },
     { title: "Impact", label: "10K+ Active Users", tags: ["Scalability", "Growth"], type: 'achievement' as const },
-    { title: "Certification", label: "Software Development Certificates", tags: ["Cloud", "Security"], type: 'achievement' as const },
-    { title: "Success", label: "Best of the Best", tags: ["Excellence", "100% JS"], type: 'achievement' as const },
+    // { title: "Certification", label: "Software Development Certificates", tags: ["Cloud", "Security"], type: 'achievement' as const },
+    { title: "Success", label: "10x Engineer", tags: ["Excellence", "100% JS"], type: 'achievement' as const },
     { title: "Achievement", label: "Open Source Contributor", tags: ["React", "Motion"], type: 'achievement' as const },
     { title: "Milestone", label: "20+ High-End Apps Delivered", tags: ["Experience", "Velocity"], type: 'achievement' as const }
   ], []);

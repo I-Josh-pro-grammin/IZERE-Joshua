@@ -83,7 +83,7 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
               className="flex flex-col items-center gap-1"
             >
               <span className="text-white text-4xl font-extrabold tracking-tighter leading-none">
-                IZERE.
+                IZEZE Joshua.
               </span>
               <span className="text-white/30 font-mono text-[10px] tracking-[0.5em] uppercase">
                 Portfolio v2.0
