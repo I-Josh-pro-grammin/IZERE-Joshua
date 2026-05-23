@@ -43,7 +43,7 @@ export const ArticleModal = ({ isOpen, onClose, article, onNext, onPrev }: Artic
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-md cursor-pointer"
+            className="fixed inset-0 z-[100] bg-black/90 backdrop-blur cursor-pointer"
           />
 
           {/* Modal Content */}

@@ -61,178 +61,33 @@ export const ARTICLES: Article[] = [
   },
 ];
 
-export const PORTFOLIO_PROJECTS = [ {
-                        title: "Web Platforms",
-                        label: "Brainly Code",
-                        desc: "Interactive educational platform for learning to code with engaging challenges and projects designed for all ages.",
-                        image: bCode,
-                        icon: <Globe className="w-6 h-6" />,
-                        // github: "https://brainlycode.dpdns.org",
-                        liveUrl: "https://brainlycode.dpdns.org",
-                        tags: ["React", "Nest.js", "PostgreSQL", "Docker"],
-                        colSpan: "md:col-span-12 lg:col-span-7",
-                        rowSpan: "md:row-span-2",
-                        imageHeight: "h-[300px] md:h-[450px]",
-                        details: {
-                          problem: "Beginners often find learning to code intimidating and dry, lacking interactive, engaging environments that foster practical skills.",
-                          architecture: "Full-stack application using React for interactive UI components and Nest.js for managing user progress, courses, and execution.",
-                          techStack: [
-                            { name: "React", reason: "Enables building dynamic and highly interactive learning interfaces." },
-                            { name: "Nest.js", reason: "Provides a structured and scalable backend for managing courses and user data." },
-                            { name: "PostgreSQL", reason: "Reliable relational database for storing user progress and course materials." }
-                          ],
-                          impact: [
-                            { metric: "Student Engagement", value: "Increased by 40%" },
-                            { metric: "Course Completion", value: "85% Rate" },
-                            { metric: "Active Learners", value: "10k+" }
-                          ],
-                          challenges: "Creating a seamless, lag-free interactive coding environment required optimizing state management and efficiently handling real-time code evaluation feedback."
-                        }
-                      },
-                      {
-                        title: "Digital Commerce",
-                        label: "Akaguriro",
-                        desc: "Full-stack E-commerce platform for the Burundian market with optimized performance and localized payment flows.",
-                        image: akaguriro,
-                        icon: <Layout className="w-6 h-6" />,
-                        // github: "https://akaguriroo.com",
-                        liveUrl: "https://akaguriroo.com",
-                        tags: ["TypeScript", "Supabase", "Vite"],
-                        colSpan: "md:col-span-12 lg:col-span-5",
-                        rowSpan: "md:row-span-1",
-                        imageHeight: "h-[250px]",
-                        details: {
-                          problem: "The Burundian market lacked a localized, performant e-commerce platform that integrated seamlessly with local payment systems.",
-                          architecture: "Modern single-page application built with TypeScript and Vite, backed by Supabase for real-time database and authentication.",
-                          techStack: [
-                            { name: "TypeScript", reason: "Ensures type safety across the entire stack, reducing runtime errors." },
-                            { name: "Supabase", reason: "Accelerated development with built-in auth, database, and real-time subscriptions." },
-                            { name: "Vite", reason: "Lightning-fast build tool improving developer experience and bundle sizes." }
-                          ],
-                          impact: [
-                            { metric: "Page Load Time", value: "< 1.5s" },
-                            { metric: "Monthly Orders", value: "5,000+" },
-                            { metric: "Uptime", value: "99.9%" }
-                          ],
-                          challenges: "Implementing custom payment gateways specific to the local market required building resilient integration layers that gracefully handle network instability."
-                        }
-                      },
-                      {
-                        title: "Mobile Architecture",
-                        label: "IMove App",
-                        desc: "Mobile app for finding nearest riders with real-time booking and geolocation tracking for seamless transit.",
-                        icon: <Smartphone className="w-6 h-6" />,
-                        // github: "https://i-move-admin-frontend.vercel.app/",
-                        liveUrl: "https://i-move-admin-frontend.vercel.app/",
-                        tags: ["React Native", "Expo", "MongoDB"],
-                        colSpan: "md:col-span-12 lg:col-span-5",
-                        rowSpan: "md:row-span-2",
-                        imageHeight: "h-[350px]",
-                        customContent: true,
-                        details: {
-                          problem: "Commuters faced difficulties in reliably locating and booking nearby riders, leading to long wait times and inefficient routing.",
-                          architecture: "Mobile application built with React Native and Expo, utilizing MongoDB for flexible, location-based data storage.",
-                          techStack: [
-                            { name: "React Native", reason: "Allows cross-platform development for iOS and Android from a single codebase." },
-                            { name: "Expo", reason: "Simplifies the mobile development workflow and access to native device features." },
-                            { name: "MongoDB", reason: "Geospatial queries make it easy to find riders near a specific location." }
-                          ],
-                          impact: [
-                            { metric: "Avg Wait Time", value: "-50%" },
-                            { metric: "Daily Rides", value: "2,000+" },
-                            { metric: "Driver Matching", value: "< 5s" }
-                          ],
-                          challenges: "Implementing real-time geolocation tracking without severely draining the device's battery required careful optimization of background location updates and WebSocket connections."
-                        }
-                      },
-                      {
-                        title: "Company Website",
-                        label: "I CODE website",
-                        desc: "Futuristic component modern website for a Rwandan tech company that builds and designs scalable and reliable systems.",
-                        image: icode,
-                        icon: <Palette className="w-6 h-6" />,
-                        // github: "https://github.com/I-Josh-pro-grammin/E-buy",
-                        liveUrl: "https://e-buy-store.vercel.app/",
-                        tags: ["Next.js", "Node.js", "Tailwind"],
-                        colSpan: "md:col-span-12 lg:col-span-7",
-                        rowSpan: "md:row-span-1",
-                        imageHeight: "h-[250px]",
-                        details: {
-                          problem: "The company needed a highly modern, futuristic digital presence to effectively showcase their system architecture and engineering capabilities to high-end clients.",
-                          architecture: "Server-side rendered Next.js application utilizing Tailwind CSS for intricate, responsive, and futuristic styling components.",
-                          techStack: [
-                            { name: "Next.js", reason: "Provides excellent SEO and fast initial page loads through server-side rendering." },
-                            { name: "Tailwind CSS", reason: "Utility-first styling enables rapid prototyping of complex, futuristic UI components." },
-                            { name: "Node.js", reason: "Powers custom backend integrations and form submissions seamlessly." }
-                          ],
-                          impact: [
-                            { metric: "Client Inquiries", value: "+120%" },
-                            { metric: "Lighthouse Score", value: "98/100" },
-                            { metric: "Bounce Rate", value: "-35%" }
-                          ],
-                          challenges: "Achieving complex, high-performance web animations (like 3D tilts and magnetic cursors) without compromising page performance and accessibility on lower-end devices."
-                        }
-                      },
-                      {
-                        title: "Career Guidance",
-                        label: "Vantage",
-                        desc: "A mobile app that provides an advantage to students by recommending the optimal career path based on the RIASEC model.",
-                        image: vantage,
-                        // icon: <Smartphone className="w-6 h-6" />,
-                        liveUrl: "https://vantage-frontend-beta.vercel.app/",
-                        tags: ["React Native", "AI", "Mobile"],
-                        colSpan: "md:col-span-12 lg:col-span-5",
-                        rowSpan: "md:row-span-1",
-                        imageHeight: "h-[250px]",
-                        // customContent: true,
-                        // customIcon: <Smartphone className="w-24 h-24" />,
-                        // customLabel: "Mobile Architecture",
-                        details: {
-                          problem: "Students frequently struggle to identify career paths that align with their natural aptitudes and interests, leading to misalignment and wasted educational resources.",
-                          architecture: "AI-integrated application utilizing React Native on the frontend, interfacing with an AI recommendation engine.",
-                          techStack: [
-                            { name: "React Native", reason: "Delivers a native-like experience on both iOS and Android platforms." },
-                            { name: "AI/ML", reason: "Powers the core recommendation engine based on the RIASEC model." },
-                            { name: "Node.js", reason: "Serves as the middleware handling AI requests and user profile management." }
-                          ],
-                          impact: [
-                            { metric: "Career Matches", value: "50,000+" },
-                            { metric: "User Satisfaction", value: "4.8/5" },
-                            { metric: "Accuracy Rate", value: "92%" }
-                          ],
-                          challenges: "Fine-tuning the AI prompts and models to consistently output structured, accurate, and culturally relevant career advice based on varied user inputs."
-                        }
-                      },
-                      {
-                        title: "AI Recruitment",
-                        label: "Bora AI",
-                        desc: "An AI application built for job recruiters that provides accurate, automated screening results to streamline hiring.",
-                        image: Bora,
-                        icon: <Layout className="w-6 h-6" />,
-                        liveUrl: "https://bora-ai-web.vercel.app/",
-                        tags: ["OpenAI", "Next.js", "TypeScript"],
-                        colSpan: "md:col-span-12 lg:col-span-7",
-                        rowSpan: "md:row-span-1",
-                        imageHeight: "h-[250px]",
-                        // customContent: true,
-                        customIcon: <Layout className="w-24 h-24" />,
-                        customLabel: "AI System Interface",
-                        details: {
-                          problem: "Job recruiters spend countless hours manually screening resumes, leading to bottlenecks in the hiring process and potential human bias.",
-                          architecture: "Next.js web application deeply integrated with OpenAI APIs to automate resume parsing and candidate evaluation.",
-                          techStack: [
-                            { name: "Next.js", reason: "Robust framework for building the dashboard and handling server-side API calls." },
-                            { name: "OpenAI", reason: "Provides the natural language processing power required to understand and score complex resumes." },
-                            { name: "TypeScript", reason: "Ensures type safety across complex data structures exchanged with the AI models." }
-                          ],
-                          impact: [
-                            { metric: "Screening Time", value: "-80%" },
-                            { metric: "Placements", value: "1,000+" },
-                            { metric: "Bias Reduction", value: "Measurable" }
-                          ],
-                          challenges: "Designing resilient systems to handle API rate limits and structuring AI outputs to guarantee JSON formatting for the frontend dashboard."
-                        }
-                      } ];
+export const CASE_STUDIES: Article[] = [
+  {
+    title: "High-Performance API with Microservices Architecture",
+    date: "Mar 2026",
+    tag: "System Design",
+    content: [
+      "Our team built a full-featured Node.js API as a monolith during the initial development phase — a pragmatic choice that let us move fast, iterate quickly, and ship the product on time. But after launch, as real traffic grew past 50,000 daily requests, the cracks started showing. Response times spiked past 4 seconds during peak hours, and the system was beginning to buckle. Something had to change.",
+      "We ran a thorough profiling session to understand what was actually happening before touching a single line of code. The findings were clear: three core domains — user authentication, data processing, and notification delivery — were all running on the same Node.js event loop, starving each other during bursts. A single heavy database query in the processing pipeline cascaded latency across every other endpoint in the system. The monolith's shared-everything model had become its biggest liability.",
+      "After aligning as a team on the decomposition strategy, we carved the system into four independently deployable services. An API Gateway handled all inbound traffic — routing, rate limiting, and JWT validation — so downstream services never had to worry about these concerns. An Auth Service got its own isolated PostgreSQL database and a Redis session store. A Data Processing Service was rewritten as a dedicated cluster of Node.js workers. A Notification Service was fully decoupled using a RabbitMQ queue, meaning email and push delivery never blocked a user-facing request again.",
+      "One of the more important architectural decisions we made was around inter-service communication. For synchronous, user-facing calls, we adopted gRPC over HTTP/2. Binary serialization reduced payload sizes by over 60% compared to our previous REST/JSON approach, which made a noticeable difference at scale. For async work — notifications, analytics events, audit logs — services published messages to RabbitMQ and moved on. No waiting, no coupling.",
+      "Each service was containerized with Docker and deployed on a Kubernetes cluster with three nodes. We configured Horizontal Pod Autoscaling based on CPU thresholds, so the Data Processing service could scale from 2 pods up to 12 automatically within 90 seconds of a traffic spike — no manual intervention needed, even during unexpected peaks.",
+      "The outcome validated every decision we made as a team. Average API response time dropped from 4.1 seconds to under 120ms. The system held steady through a stress test simulating 200,000+ concurrent connections. And because each service now failed independently, a bug in the notification pipeline no longer took down authentication or data processing. Over the three months following the migration, we recorded 99.97% uptime — a number the monolith could never have hit under that load."
+    ]
+  },
+  {
+    title: "Optimizing Database Performance at Scale",
+    date: "Jan 2026",
+    tag: "Performance",
+    content: [
+      "A production PostgreSQL database powering an e-commerce platform was processing 3-second average query times during peak load, directly translating to abandoned carts and lost revenue. The goal was sub-100ms queries without changing the application's data model.",
+      "The first diagnostic step was enabling pg_stat_statements to capture a real workload fingerprint over 48 hours. The top 10 slowest queries accounted for 80% of total database CPU time—a classic 80/20 distribution. The primary culprit was a product search query performing sequential scans on a 12-million-row table, joining three other tables without any composite indexes.",
+      "I introduced a GIN index on the product name and description columns to support full-text search (tsvector), immediately eliminating the sequential scan. For the join-heavy analytics queries, I created carefully targeted composite indexes that matched the exact column order of the WHERE and ORDER BY clauses—a detail that is frequently overlooked but critical for the query planner to use an index scan instead of falling back to a sequential scan.",
+      "Connection pooling via PgBouncer in transaction mode was the second major lever. The application was opening a new connection per request, with peaks of 800 simultaneous connections overwhelming PostgreSQL's process-per-connection model. PgBouncer reduced the active connection count to a stable 25, dramatically reducing memory overhead and context-switching on the database server.",
+      "Finally, frequently-read, rarely-written data (category trees, configuration tables) was moved to a Redis cache with a 5-minute TTL. This offloaded roughly 35% of all read queries from PostgreSQL entirely. The combined result: average query time fell from 3.1s to 38ms—a 75x improvement—CPU load on the database server dropped by 60%, and the platform handled Black Friday traffic without a single slow-query alert firing."
+    ]
+  }
+];
 
 // Reusable Technical HUD Card
 const TechnicalCard = ({
@@ -341,7 +196,7 @@ const ProjectTechnicalCard = ({ project }: { project: any }) => {
               <img
                 src={project.image}
                 alt={project.label}
-                className="w-full h-full object-cover opacity-40 grayscale group-hover:grayscale-0 group-hover:opacity-80 group-hover:scale-105 transition-all duration-700"
+                className="w-full h-full object-cover opacity-20 grayscale group-hover:grayscale-0 group-hover:opacity-80 group-hover:scale-105 transition-all duration-700"
               />
             )}
 
@@ -528,10 +383,11 @@ export default function Index() {
   const [isLoading, setIsLoading] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
-  const [selectedProjectIndex, setSelectedProjectIndex] = useState<number | null>(null);
-  const selectedProject = selectedProjectIndex !== null ? PORTFOLIO_PROJECTS[selectedProjectIndex] : null;
+  const [selectedProject, setSelectedProject] = useState<any | null>(null);
   const [selectedArticleIndex, setSelectedArticleIndex] = useState<number | null>(null);
   const selectedArticle = selectedArticleIndex !== null ? ARTICLES[selectedArticleIndex] : null;
+  const [selectedCaseStudyIndex, setSelectedCaseStudyIndex] = useState<number | null>(null);
+  const selectedCaseStudy = selectedCaseStudyIndex !== null ? CASE_STUDIES[selectedCaseStudyIndex] : null;
   const [contactName, setContactName] = useState("");
   const [contactEmail, setContactEmail] = useState("");
   const [contactMessage, setContactMessage] = useState("");
@@ -763,11 +619,9 @@ export default function Index() {
         )}
       </AnimatePresence>
       <ProjectModal
-        isOpen={selectedProjectIndex !== null}
-        onClose={() => setSelectedProjectIndex(null)}
+        isOpen={!!selectedProject}
+        onClose={() => setSelectedProject(null)}
         project={selectedProject}
-        onNext={selectedProjectIndex !== null && selectedProjectIndex < PORTFOLIO_PROJECTS.length - 1 ? () => setSelectedProjectIndex(selectedProjectIndex + 1) : undefined}
-        onPrev={selectedProjectIndex !== null && selectedProjectIndex > 0 ? () => setSelectedProjectIndex(selectedProjectIndex - 1) : undefined}
       />
       <ArticleModal
         isOpen={selectedArticleIndex !== null}
@@ -775,6 +629,13 @@ export default function Index() {
         article={selectedArticle}
         onNext={selectedArticleIndex !== null && selectedArticleIndex < ARTICLES.length - 1 ? () => setSelectedArticleIndex(selectedArticleIndex + 1) : undefined}
         onPrev={selectedArticleIndex !== null && selectedArticleIndex > 0 ? () => setSelectedArticleIndex(selectedArticleIndex - 1) : undefined}
+      />
+      <ArticleModal
+        isOpen={selectedCaseStudyIndex !== null}
+        onClose={() => setSelectedCaseStudyIndex(null)}
+        article={selectedCaseStudy}
+        onNext={selectedCaseStudyIndex !== null && selectedCaseStudyIndex < CASE_STUDIES.length - 1 ? () => setSelectedCaseStudyIndex(selectedCaseStudyIndex + 1) : undefined}
+        onPrev={selectedCaseStudyIndex !== null && selectedCaseStudyIndex > 0 ? () => setSelectedCaseStudyIndex(selectedCaseStudyIndex - 1) : undefined}
       />
       <TerminalNavigation isOpen={isTerminalOpen} onClose={() => setIsTerminalOpen(false)} />
 
@@ -983,16 +844,16 @@ export default function Index() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {[
                       {
-                        title: "Scaling WebSocket Infrastructure",
-                        desc: "How I designed and scaled a real-time collaborative editor to support 100k+ concurrent users with sub-50ms latency.",
-                        meta: "System Design · WebSockets · Redis · Node.js",
-                        metrics: ["Latency: <50ms", "Users: 100k+", "Uptime: 99.99%"]
+                        title: "High-Performance API with Microservices",
+                        desc: "How our team took a working monolithic Node.js API and decomposed it into microservices after launch — cutting response times from 4.1s to 120ms to handle 200k+ concurrent users.",
+                        meta: "System Design · Microservices · Docker · Kubernetes",
+                        metrics: ["Latency: 4.1s → 120ms", "Users: 200k+ concurrent", "Uptime: 99.97%"]
                       },
                       {
                         title: "Optimizing Database Performance",
-                        desc: "A deep dive into indexing strategies, query refactoring, and connection pooling that reduced PostgreSQL query times from 3s to 40ms.",
-                        meta: "PostgreSQL · Performance · Indexing · Profiling",
-                        metrics: ["Speed: 75x Faster", "CPU Load: -60%", "Memory: Optimized"]
+                        desc: "A deep dive into indexing strategies, query refactoring, and connection pooling that reduced PostgreSQL query times from 3s to 38ms on a 12-million-row production table.",
+                        meta: "PostgreSQL · Performance · Indexing · PgBouncer",
+                        metrics: ["Speed: 75x Faster", "CPU Load: -60%", "Connections: 800 → 25"]
                       }
                     ].map((study, i) => (
                       <motion.div
@@ -1000,14 +861,15 @@ export default function Index() {
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: i * 0.1 }}
-                        className="group"
+                        className="group cursor-pointer"
+                        onClick={() => setSelectedCaseStudyIndex(i)}
                       >
                         <UnequalBordersCard
                           title={study.title}
                           tag={`Case Study 0${i + 1}`}
                           date={study.meta}
                           description={study.desc}
-                          className="h-full cursor-pointer"
+                          className="h-full"
                         >
                           <div className="flex gap-4 border-t border-blue-500/10 pt-4">
                             {study.metrics.map((metric, idx) => (
@@ -1046,14 +908,97 @@ export default function Index() {
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-12 gap-10">
-                    {PORTFOLIO_PROJECTS.map((project, i) => (
+                    {[
+                      {
+                        title: "Web Platforms",
+                        label: "Brainly Code",
+                        desc: "Real‑time analytics dashboard with animated charts and seamless UX, built for high-performance data visualization.",
+                        image: bCode,
+                        icon: <Globe className="w-6 h-6" />,
+                        // github: "https://brainlycode.dpdns.org",
+                        liveUrl: "https://brainlycode.dpdns.org",
+                        tags: ["React", "Nest.js", "PostgreSQL", "Docker"],
+                        colSpan: "md:col-span-12 lg:col-span-7",
+                        rowSpan: "md:row-span-2",
+                        imageHeight: "h-[300px] md:h-[450px]"
+                      },
+                      {
+                        title: "Digital Commerce",
+                        label: "Akaguriro",
+                        desc: "Full-stack E-commerce platform for the Burundian market with optimized performance and localized payment flows.",
+                        image: akaguriro,
+                        icon: <Layout className="w-6 h-6" />,
+                        // github: "https://akaguriroo.com",
+                        liveUrl: "https://akaguriroo.com",
+                        tags: ["TypeScript", "Supabase", "Vite"],
+                        colSpan: "md:col-span-12 lg:col-span-5",
+                        rowSpan: "md:row-span-1",
+                        imageHeight: "h-[250px]"
+                      },
+                      {
+                        title: "Mobile Architecture",
+                        label: "IMove App",
+                        desc: "Mobile app for finding nearest riders with real-time booking and geolocation tracking for seamless transit.",
+                        icon: <Smartphone className="w-6 h-6" />,
+                        // github: "https://i-move-admin-frontend.vercel.app/",
+                        liveUrl: "https://i-move-admin-frontend.vercel.app/",
+                        tags: ["React Native", "Expo", "MongoDB"],
+                        colSpan: "md:col-span-12 lg:col-span-5",
+                        rowSpan: "md:row-span-2",
+                        imageHeight: "h-[350px]",
+                        customContent: true
+                      },
+                      {
+                        title: "Company Website",
+                        label: "I CODE website",
+                        desc: "Futuristic component modern website for a Rwandan tech componany that builds and designs scalable and reliable systems.",
+                        image: icode,
+                        icon: <Palette className="w-6 h-6" />,
+                        // github: "https://github.com/I-Josh-pro-grammin/E-buy",
+                        liveUrl: "https://e-buy-store.vercel.app/",
+                        tags: ["Next.js", "Node.js", "Tailwind"],
+                        colSpan: "md:col-span-12 lg:col-span-7",
+                        rowSpan: "md:row-span-1",
+                        imageHeight: "h-[250px]"
+                      },
+                      {
+                        title: "Career Guidance",
+                        label: "Vantage",
+                        desc: "A mobile app that provides an advantage to students by recommending the optimal career path based on the RIASEC model.",
+                        image: vantage,
+                        // icon: <Smartphone className="w-6 h-6" />,
+                        liveUrl: "https://vantage-frontend-beta.vercel.app/",
+                        tags: ["React Native", "AI", "Mobile"],
+                        colSpan: "md:col-span-12 lg:col-span-5",
+                        rowSpan: "md:row-span-1",
+                        imageHeight: "h-[250px]",
+                        // customContent: true,
+                        // customIcon: <Smartphone className="w-24 h-24" />,
+                        // customLabel: "Mobile Architecture"
+                      },
+                      {
+                        title: "AI Recruitment",
+                        label: "Bora AI",
+                        desc: "An AI application built for job recruiters that provides accurate, automated screening results to streamline hiring.",
+                        image: Bora,
+                        icon: <Layout className="w-6 h-6" />,
+                        liveUrl: "https://bora-ai-web.vercel.app/",
+                        tags: ["OpenAI", "Next.js", "TypeScript"],
+                        colSpan: "md:col-span-12 lg:col-span-7",
+                        rowSpan: "md:row-span-1",
+                        imageHeight: "h-[250px]",
+                        // customContent: true,
+                        customIcon: <Layout className="w-24 h-24" />,
+                        customLabel: "AI System Interface"
+                      }
+                    ].map((project, i) => (
                       <motion.div
                         key={i}
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ delay: i * 0.1 }}
                         className={`${project.colSpan} ${project.rowSpan} group cursor-pointer`}
-                        onClick={() => setSelectedProjectIndex(i)}
+                        onClick={() => setSelectedProject(project)}
                       >
                         <ProjectTechnicalCard project={project} />
                       </motion.div>
@@ -1190,7 +1135,7 @@ export default function Index() {
             </SectionReveal>
 
             {/* Open Source Section */}
-            <SectionReveal index={5}>
+            {/* <SectionReveal index={5}>
               <section id="opensource" className="py-32 px-6 relative overflow-hidden bg-muted/30 border-b border-border/30 z-10">
                 <div className="max-w-7xl mx-auto border-x border-border/30 relative">
                   <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
@@ -1216,7 +1161,7 @@ export default function Index() {
                   </div>
                 </div>
               </section>
-            </SectionReveal>
+            </SectionReveal> */}
 
             {/* Experience Timeline Section */}
             <SectionReveal index={6}>
