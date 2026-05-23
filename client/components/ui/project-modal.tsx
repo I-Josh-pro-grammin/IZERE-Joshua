@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Github, ExternalLink, Activity, Server, Cpu, Layers } from "lucide-react";
+import { X, Github, ExternalLink, Activity, Server, Cpu, Layers, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "./button";
 import { Badge } from "./badge";
 import { cn } from "@/lib/utils";
@@ -16,9 +16,11 @@ interface ProjectModalProps {
   isOpen: boolean;
   onClose: () => void;
   project: any;
+  onNext?: () => void;
+  onPrev?: () => void;
 }
 
-export const ProjectModal = ({ isOpen, onClose, project }: ProjectModalProps) => {
+export const ProjectModal = ({ isOpen, onClose, project, onNext, onPrev }: ProjectModalProps) => {
   if (!project) return null;
 
   // Placeholder details if not provided
@@ -65,13 +67,31 @@ export const ProjectModal = ({ isOpen, onClose, project }: ProjectModalProps) =>
               <div className="absolute top-4 right-4 w-12 h-[1px] bg-blue-500/20 pointer-events-none" />
               <div className="absolute bottom-4 left-4 w-[1px] h-12 bg-blue-500/20 pointer-events-none" />
 
-              {/* Close Button */}
-              <button
-                onClick={onClose}
-                className="absolute top-1 right-4 z-30 p-2 bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 transition-colors text-blue-500 hover:text-white"
-              >
-                <X className="w-5 h-5" />
-              </button>
+              {/* Navigation and Close Buttons */}
+              <div className="absolute -top-12 right-0 flex gap-2 z-30 sm:top-1 sm:right-4">
+                {onPrev && (
+                  <button
+                    onClick={onPrev}
+                    className="p-2 bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 transition-colors text-blue-500 hover:text-white pointer-events-auto"
+                  >
+                    <ChevronLeft className="w-5 h-5" />
+                  </button>
+                )}
+                {onNext && (
+                  <button
+                    onClick={onNext}
+                    className="p-2 bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 transition-colors text-blue-500 hover:text-white pointer-events-auto"
+                  >
+                    <ChevronRight className="w-5 h-5" />
+                  </button>
+                )}
+                <button
+                  onClick={onClose}
+                  className="p-2 bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 transition-colors text-blue-500 hover:text-white pointer-events-auto"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
 
               {/* Left Column: Visuals & Core Info */}
               <div className="w-full md:w-2/5 border-b md:border-b-0 md:border-r border-blue-500/20 bg-blue-500/[0.02] flex flex-col relative">

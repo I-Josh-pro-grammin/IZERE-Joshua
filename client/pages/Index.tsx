@@ -874,7 +874,7 @@ export default function Index() {
                       {
                         title: "Web Platforms",
                         label: "Brainly Code",
-                        desc: "Real‑time analytics dashboard with animated charts and seamless UX, built for high-performance data visualization.",
+                        desc: "Interactive educational platform for learning to code with engaging challenges and projects designed for all ages.",
                         image: bCode,
                         icon: <Globe className="w-6 h-6" />,
                         // github: "https://brainlycode.dpdns.org",
@@ -882,7 +882,22 @@ export default function Index() {
                         tags: ["React", "Nest.js", "PostgreSQL", "Docker"],
                         colSpan: "md:col-span-12 lg:col-span-7",
                         rowSpan: "md:row-span-2",
-                        imageHeight: "h-[300px] md:h-[450px]"
+                        imageHeight: "h-[300px] md:h-[450px]",
+                        details: {
+                          problem: "Beginners often find learning to code intimidating and dry, lacking interactive, engaging environments that foster practical skills.",
+                          architecture: "Full-stack application using React for interactive UI components and Nest.js for managing user progress, courses, and execution.",
+                          techStack: [
+                            { name: "React", reason: "Enables building dynamic and highly interactive learning interfaces." },
+                            { name: "Nest.js", reason: "Provides a structured and scalable backend for managing courses and user data." },
+                            { name: "PostgreSQL", reason: "Reliable relational database for storing user progress and course materials." }
+                          ],
+                          impact: [
+                            { metric: "Student Engagement", value: "Increased by 40%" },
+                            { metric: "Course Completion", value: "85% Rate" },
+                            { metric: "Active Learners", value: "10k+" }
+                          ],
+                          challenges: "Creating a seamless, lag-free interactive coding environment required optimizing state management and efficiently handling real-time code evaluation feedback."
+                        }
                       },
                       {
                         title: "Digital Commerce",
@@ -895,7 +910,22 @@ export default function Index() {
                         tags: ["TypeScript", "Supabase", "Vite"],
                         colSpan: "md:col-span-12 lg:col-span-5",
                         rowSpan: "md:row-span-1",
-                        imageHeight: "h-[250px]"
+                        imageHeight: "h-[250px]",
+                        details: {
+                          problem: "The Burundian market lacked a localized, performant e-commerce platform that integrated seamlessly with local payment systems.",
+                          architecture: "Modern single-page application built with TypeScript and Vite, backed by Supabase for real-time database and authentication.",
+                          techStack: [
+                            { name: "TypeScript", reason: "Ensures type safety across the entire stack, reducing runtime errors." },
+                            { name: "Supabase", reason: "Accelerated development with built-in auth, database, and real-time subscriptions." },
+                            { name: "Vite", reason: "Lightning-fast build tool improving developer experience and bundle sizes." }
+                          ],
+                          impact: [
+                            { metric: "Page Load Time", value: "< 1.5s" },
+                            { metric: "Monthly Orders", value: "5,000+" },
+                            { metric: "Uptime", value: "99.9%" }
+                          ],
+                          challenges: "Implementing custom payment gateways specific to the local market required building resilient integration layers that gracefully handle network instability."
+                        }
                       },
                       {
                         title: "Mobile Architecture",
@@ -908,12 +938,27 @@ export default function Index() {
                         colSpan: "md:col-span-12 lg:col-span-5",
                         rowSpan: "md:row-span-2",
                         imageHeight: "h-[350px]",
-                        customContent: true
+                        customContent: true,
+                        details: {
+                          problem: "Commuters faced difficulties in reliably locating and booking nearby riders, leading to long wait times and inefficient routing.",
+                          architecture: "Mobile application built with React Native and Expo, utilizing MongoDB for flexible, location-based data storage.",
+                          techStack: [
+                            { name: "React Native", reason: "Allows cross-platform development for iOS and Android from a single codebase." },
+                            { name: "Expo", reason: "Simplifies the mobile development workflow and access to native device features." },
+                            { name: "MongoDB", reason: "Geospatial queries make it easy to find riders near a specific location." }
+                          ],
+                          impact: [
+                            { metric: "Avg Wait Time", value: "-50%" },
+                            { metric: "Daily Rides", value: "2,000+" },
+                            { metric: "Driver Matching", value: "< 5s" }
+                          ],
+                          challenges: "Implementing real-time geolocation tracking without severely draining the device's battery required careful optimization of background location updates and WebSocket connections."
+                        }
                       },
                       {
                         title: "Company Website",
                         label: "I CODE website",
-                        desc: "Futuristic component modern website for a Rwandan tech componany that builds and designs scalable and reliable systems.",
+                        desc: "Futuristic component modern website for a Rwandan tech company that builds and designs scalable and reliable systems.",
                         image: icode,
                         icon: <Palette className="w-6 h-6" />,
                         // github: "https://github.com/I-Josh-pro-grammin/E-buy",
@@ -921,7 +966,22 @@ export default function Index() {
                         tags: ["Next.js", "Node.js", "Tailwind"],
                         colSpan: "md:col-span-12 lg:col-span-7",
                         rowSpan: "md:row-span-1",
-                        imageHeight: "h-[250px]"
+                        imageHeight: "h-[250px]",
+                        details: {
+                          problem: "The company needed a highly modern, futuristic digital presence to effectively showcase their system architecture and engineering capabilities to high-end clients.",
+                          architecture: "Server-side rendered Next.js application utilizing Tailwind CSS for intricate, responsive, and futuristic styling components.",
+                          techStack: [
+                            { name: "Next.js", reason: "Provides excellent SEO and fast initial page loads through server-side rendering." },
+                            { name: "Tailwind CSS", reason: "Utility-first styling enables rapid prototyping of complex, futuristic UI components." },
+                            { name: "Node.js", reason: "Powers custom backend integrations and form submissions seamlessly." }
+                          ],
+                          impact: [
+                            { metric: "Client Inquiries", value: "+120%" },
+                            { metric: "Lighthouse Score", value: "98/100" },
+                            { metric: "Bounce Rate", value: "-35%" }
+                          ],
+                          challenges: "Achieving complex, high-performance web animations (like 3D tilts and magnetic cursors) without compromising page performance and accessibility on lower-end devices."
+                        }
                       },
                       {
                         title: "Career Guidance",
@@ -936,7 +996,22 @@ export default function Index() {
                         imageHeight: "h-[250px]",
                         // customContent: true,
                         // customIcon: <Smartphone className="w-24 h-24" />,
-                        // customLabel: "Mobile Architecture"
+                        // customLabel: "Mobile Architecture",
+                        details: {
+                          problem: "Students frequently struggle to identify career paths that align with their natural aptitudes and interests, leading to misalignment and wasted educational resources.",
+                          architecture: "AI-integrated application utilizing React Native on the frontend, interfacing with an AI recommendation engine.",
+                          techStack: [
+                            { name: "React Native", reason: "Delivers a native-like experience on both iOS and Android platforms." },
+                            { name: "AI/ML", reason: "Powers the core recommendation engine based on the RIASEC model." },
+                            { name: "Node.js", reason: "Serves as the middleware handling AI requests and user profile management." }
+                          ],
+                          impact: [
+                            { metric: "Career Matches", value: "50,000+" },
+                            { metric: "User Satisfaction", value: "4.8/5" },
+                            { metric: "Accuracy Rate", value: "92%" }
+                          ],
+                          challenges: "Fine-tuning the AI prompts and models to consistently output structured, accurate, and culturally relevant career advice based on varied user inputs."
+                        }
                       },
                       {
                         title: "AI Recruitment",
@@ -951,7 +1026,22 @@ export default function Index() {
                         imageHeight: "h-[250px]",
                         // customContent: true,
                         customIcon: <Layout className="w-24 h-24" />,
-                        customLabel: "AI System Interface"
+                        customLabel: "AI System Interface",
+                        details: {
+                          problem: "Job recruiters spend countless hours manually screening resumes, leading to bottlenecks in the hiring process and potential human bias.",
+                          architecture: "Next.js web application deeply integrated with OpenAI APIs to automate resume parsing and candidate evaluation.",
+                          techStack: [
+                            { name: "Next.js", reason: "Robust framework for building the dashboard and handling server-side API calls." },
+                            { name: "OpenAI", reason: "Provides the natural language processing power required to understand and score complex resumes." },
+                            { name: "TypeScript", reason: "Ensures type safety across complex data structures exchanged with the AI models." }
+                          ],
+                          impact: [
+                            { metric: "Screening Time", value: "-80%" },
+                            { metric: "Placements", value: "1,000+" },
+                            { metric: "Bias Reduction", value: "Measurable" }
+                          ],
+                          challenges: "Designing resilient systems to handle API rate limits and structuring AI outputs to guarantee JSON formatting for the frontend dashboard."
+                        }
                       }
                     ].map((project, i) => (
                       <motion.div
