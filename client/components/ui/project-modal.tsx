@@ -127,7 +127,7 @@ export const ProjectModal = ({ isOpen, onClose, project, onNext, onPrev }: Proje
                   <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%)] bg-[length:100%_4px]" />
                 </div>
 
-                <div className="p-8 flex-1 flex flex-col">
+                <div className="p-6 sm:p-8 flex-1 flex flex-col">
                   <div className="mb-6">
                     <span className="text-[10px] font-mono text-blue-500/60 uppercase tracking-widest block mb-2">Project Classification</span>
                     <h2 className="text-3xl md:text-4xl font-bold tracking-tighter uppercase text-foreground">{project.title}</h2>
@@ -154,7 +154,7 @@ export const ProjectModal = ({ isOpen, onClose, project, onNext, onPrev }: Proje
               </div>
 
               {/* Right Column: Deep Dive Details */}
-              <div className="w-full md:w-3/5 p-8 md:p-12 overflow-y-auto" data-lenis-prevent="true" onWheel={(e) => e.stopPropagation()}>
+              <div className="w-full md:w-3/5 p-6 sm:p-8 md:p-12 overflow-y-auto" data-lenis-prevent="true" onWheel={(e) => e.stopPropagation()}>
                 <div className="grid grid-cols-1 gap-12">
 
                   {/* Problem & Impact */}

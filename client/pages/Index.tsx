@@ -1750,9 +1750,12 @@ export default function Index() {
                       IZERE.SYSTEMS [v 2.5]
                     </div>
 
+                    <div className="text-center pt-20 text-xs text-muted-foreground max-w-sm leading-relaxed">
+                        <p>Everything you've seen so far was all part of my plan.</p>
+                        <p className="block text-center">To give you a great experience😉</p>
+                    </div>
+
                     <div className="flex gap-8 text-sm text-muted-foreground">
-                      {/* <a href="#">Email</a>
-                      <a href="#">Terms</a> */}
                       <span>© 2025 IZERE JOSHUA</span>
                     </div>
                   </div>

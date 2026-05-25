@@ -23,7 +23,7 @@ const UnequalBordersCard = ({ title, date, tag, description, children, className
             className={cn("relative w-full min-h-[24rem] bg-card border-2 border-b-0 border-r-0 border-blue-500/50 rounded-none overflow-hidden group transition-all duration-500 hover:border-blue-500", onClick && "cursor-pointer", className)}
         >
             {/* Short right border */}
-            <div className="absolute right-[0.2px] top-0 h-[100%] w-[1px] bg-blue-500/ group-hover:bg-blue-500 transition-colors"></div>
+            <div className="absolute right-[0.2px] top-0 h-[100%] w-[1px] bg-blue-500/20 group-hover:bg-blue-500 transition-colors"></div>
 
             {/* Content Area */}
             <div className="relative z-10 p-6 flex flex-col h-full justify-between">

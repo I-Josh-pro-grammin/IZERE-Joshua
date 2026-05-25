@@ -73,7 +73,7 @@ export const ArticleModal = ({ isOpen, onClose, article, onNext, onPrev }: Artic
               </button>
 
               {/* Header Section */}
-              <div className="w-full border-b border-blue-500/30 bg-blue-500/[0.03] p-8 md:p-12 relative flex-shrink-0">
+              <div className="w-full border-b border-blue-500/30 bg-blue-500/[0.03] p-6 sm:p-8 md:p-12 relative flex-shrink-0">
                 <div className="absolute inset-0 bg-gradient-to-b from-blue-500/5 to-transparent pointer-events-none" />
                 <div className="mb-6 flex flex-wrap gap-4 items-center relative z-10">
                   <div className="flex items-center gap-1.5 text-xs font-mono text-blue-400 uppercase tracking-widest bg-blue-500/10 px-3 py-1 border border-blue-500/30 shadow-[0_0_15px_rgba(59,130,246,0.2)]">
@@ -98,7 +98,7 @@ export const ArticleModal = ({ isOpen, onClose, article, onNext, onPrev }: Artic
               </div>
 
               {/* Content Section */}
-              <div className="flex-1 p-8 md:p-12 overflow-y-auto custom-scrollbar relative z-10" data-lenis-prevent="true" onWheel={(e) => e.stopPropagation()}>
+              <div className="flex-1 p-6 sm:p-8 md:p-12 overflow-y-auto custom-scrollbar relative z-10" data-lenis-prevent="true" onWheel={(e) => e.stopPropagation()}>
                 <div className="max-w-3xl mx-auto space-y-8 pb-12">
                   {/* Decorative starting block */}
                   <div className="flex gap-6 items-start">
