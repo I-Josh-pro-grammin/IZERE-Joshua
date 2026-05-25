@@ -80,7 +80,7 @@ export const ProjectModal = ({ isOpen, onClose, project, onNext, onPrev }: Proje
               <div className="absolute bottom-4 left-4 w-[1px] h-12 bg-blue-500/20 pointer-events-none" />
 
               {/* Navigation and Close Buttons */}
-              <div className="absolute top-3 right-3 flex gap-2 z-30">
+              <div className="absolute top-8 lg:top-4 right-5 flex gap-2 z-30">
                 {onPrev && (
                   <button
                     onClick={onPrev}
@@ -121,7 +121,7 @@ export const ProjectModal = ({ isOpen, onClose, project, onNext, onPrev }: Proje
                     <img
                       src={project.image}
                       alt={project.label}
-                      className="w-full h-full object-contain bg-blue-500/[0.03] opacity-30 hover:opacity-90 transition-all duration-700"
+                      className="w-full h-full object-contain bg-blue-500/[0.03] opacity-40 hover:opacity-90 transition-all duration-700"
                     />
                   )}
                   <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%)] bg-[length:100%_4px]" />

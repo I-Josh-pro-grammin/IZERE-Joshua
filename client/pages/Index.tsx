@@ -372,7 +372,7 @@ const ProjectTechnicalCard = ({ project }: { project: any }) => {
               <img
                 src={project.image}
                 alt={project.label}
-                className="w-full h-full object-contain bg-blue-500/[0.03] opacity-30 hover:opacity-60 group-hover:opacity-100 group-hover:scale-[1.02] transition-all duration-700"
+                className="w-full h-full object-contain bg-blue-500/[0.03] opacity-50 hover:opacity-60 group-hover:opacity-100 group-hover:scale-[1.02] transition-all duration-700"
               />
             )}
 
@@ -922,7 +922,7 @@ export default function Index() {
             {/* Hero text and Carousel are here */}
             {/* We will hide the text during dealing but keep carousel visible */}
             {/* Marquee Background Name */}
-            <div className="absolute top-[15rem] h-[50rem] -translate-y-1/2 left-0 w-full overflow-hidden z-0 pointer-events-none select-none">
+            <div className="absolute lg:top-[25rem] top-[28rem] h-[50rem] -translate-y-1/2 left-0 w-full overflow-hidden z-0 pointer-events-none select-none">
               {/* Vibrant blue glow behind the name */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-96 bg-blue-500/[0.08] blur-[120px] rounded-full dark:bg-blue-500/[0.05]" />
 
@@ -1203,7 +1203,7 @@ export default function Index() {
                           </p>
                           <Button 
                             onClick={() => setShowSimulation(true)}
-                            className="bg-blue-500 text-white hover:bg-blue-600 rounded-none h-12 px-8 font-mono font-bold uppercase tracking-widest"
+                            className="bg-blue-500 w-[300px] text-white hover:bg-blue-600 rounded-none h-12 px-8 font-mono font-bold uppercase tracking-widest"
                           >
                             Explore Architecture Simulation
                           </Button>
