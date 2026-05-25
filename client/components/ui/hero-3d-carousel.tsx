@@ -175,7 +175,7 @@ export const Hero3DCarousel: React.FC<Hero3DCarouselProps> = ({
       onDoubleClick={handleDoubleClick}
       onContextMenu={handleContextMenu}
     >
-      <Canvas camera={{ position: [0, 2, 20], fov: 35 }}>
+      <Canvas camera={{ position: [0, 2, 20], fov: 35 }} gl={{ alpha: true }} style={{ background: "transparent" }}>
         <ambientLight intensity={0.7} />
         <pointLight position={[10, 10, 10]} intensity={1.5} color="#3b82f6" />
         <pointLight position={[-10, -10, -10]} intensity={0.5} color="#60a5fa" />

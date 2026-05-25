@@ -1174,8 +1174,8 @@ export default function Index() {
                   </ScrollReveal>
                   <div className="pl-4 md:pl-12 border-l border-blue-500/20 space-y-16">
                     {[
-                      { role: "Systems Engineer", company: "ICODE CO Ltd", period: "2024 - Present", impact: "Scaled backend systems to handle 10M+ daily requests. Migrated monolith to event-driven microservices reducing latency by 40%." },
-                      { role: "Backend Developer", company: "Blink Tech", period: "2022 - 2024", impact: "Led development of a high-performance application. Improved deployment speed by implementing robust CI/CD pipelines." }
+                      { role: "Systems Engineer", company: "ICODE CO Ltd", period: "2024 - 2025", impact: "Scaled backend systems to handle 5M+ daily requests. Migrated monolith to event-driven microservices reducing latency by 40%." },
+                      { role: "Backend Developer", company: "Blink Tech", period: "2025 - Present", impact: "Led development of a high-performance application. Improved deployment speed by implementing robust CI/CD pipelines." }
                     ].map((exp, i) => (
                       <div key={i} className="relative pl-8 group">
                         <div className="absolute -left-[41px] top-1 w-5 h-5 border-2 border-blue-500 bg-background rounded-full group-hover:bg-blue-500 transition-colors" />
