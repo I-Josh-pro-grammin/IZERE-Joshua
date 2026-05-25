@@ -133,6 +133,63 @@ export function ArchitectureSimulation() {
   const [logs, setLogs] = useState<LogEntry[]>([]);
   const logsEndRef = useRef<HTMLDivElement>(null);
   const logsContainerRef = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Monitor resize for vertical flowchart mode
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Helper to resolve coordinates dynamically depending on layout mode
+  const getCoords = (node: Node) => {
+    if (!isMobile) return node.coords;
+    
+    // Premium vertical mobile flowchart coordinates
+    switch (node.id) {
+      case 'client':
+        return { x: 50, y: 7 };
+      case 'gateway':
+        return { x: 50, y: 19 };
+      case 'limiter':
+        return { x: 18, y: 19 };
+      case 'auth':
+        return { x: 50, y: 31 };
+      case 'user':
+        return { x: 25, y: 44 };
+      case 'order':
+        return { x: 75, y: 44 };
+      case 'cache':
+        return { x: 25, y: 57 };
+      case 'kafka':
+        return { x: 75, y: 57 };
+      case 'database':
+        return { x: 50, y: 71 };
+      default:
+        return node.coords;
+    }
+  };
+
+  // Structural microservice connection pathways
+  const CONNECTIONS = [
+    { from: 'client', to: 'gateway' },
+    { from: 'gateway', to: 'limiter' },
+    { from: 'gateway', to: 'user' },
+    { from: 'gateway', to: 'order' },
+    { from: 'limiter', to: 'auth' },
+    { from: 'auth', to: 'cache' },
+    { from: 'auth', to: 'database' },
+    { from: 'user', to: 'cache' },
+    { from: 'user', to: 'database' },
+    { from: 'order', to: 'kafka' },
+    { from: 'order', to: 'database' },
+    { from: 'cache', to: 'database' },
+    { from: 'kafka', to: 'database' },
+  ];
 
   // Add event log helper
   const addLog = (node: string, message: string, type: LogEntry['type'] = 'info') => {
@@ -259,7 +316,7 @@ export function ArchitectureSimulation() {
     return () => clearInterval(interval);
   }, []);
 
-  // Helper to interpolate position along a multi-node pathway
+  // Helper to interpolate position along a multi-node pathway using dynamic coordinates
   const getPacketPosition = (packet: Packet) => {
     const totalSegments = packet.path.length - 1;
     if (totalSegments <= 0) return { left: '0%', top: '0%' };
@@ -273,8 +330,11 @@ export function ArchitectureSimulation() {
 
     if (!startNode || !endNode) return { left: '0%', top: '0%' };
 
-    const currentX = startNode.coords.x + (endNode.coords.x - startNode.coords.x) * segmentProgress;
-    const currentY = startNode.coords.y + (endNode.coords.y - startNode.coords.y) * segmentProgress;
+    const startCoords = getCoords(startNode);
+    const endCoords = getCoords(endNode);
+
+    const currentX = startCoords.x + (endCoords.x - startCoords.x) * segmentProgress;
+    const currentY = startCoords.y + (endCoords.y - startCoords.y) * segmentProgress;
 
     return {
       left: `${currentX}%`,
@@ -286,26 +346,35 @@ export function ArchitectureSimulation() {
     <div className="flex flex-col lg:flex-row gap-8 w-full border border-blue-500/20 bg-black/40 backdrop-blur-md p-6 font-mono text-sm overflow-hidden z-10 relative">
       
       {/* Visual Canvas Area */}
-      <div className="flex-1 min-h-[460px] relative border border-blue-500/10 p-4 bg-black/60 overflow-hidden">
+      <div className="flex-1 min-h-[540px] md:min-h-[460px] relative border border-blue-500/10 bg-black/60 overflow-hidden">
         
         {/* Neon HUD Background Grid */}
         <div className="absolute inset-0 grid-pattern opacity-10 pointer-events-none" />
         
         {/* Visual Pathways (SVG Lines) */}
         <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-30">
-          {/* Main system line routes */}
-          <line x1="5%" y1="50%" x2="22%" y2="50%" stroke="rgba(59,130,246,0.3)" strokeWidth="1.5" strokeDasharray="4 4" />
-          <line x1="22%" y1="50%" x2="38%" y2="20%" stroke="rgba(59,130,246,0.3)" strokeWidth="1.5" strokeDasharray="4 4" />
-          <line x1="22%" y1="50%" x2="55%" y2="50%" stroke="rgba(59,130,246,0.3)" strokeWidth="1.5" strokeDasharray="4 4" />
-          <line x1="22%" y1="50%" x2="55%" y2="80%" stroke="rgba(59,130,246,0.3)" strokeWidth="1.5" strokeDasharray="4 4" />
-          <line x1="38%" y1="20%" x2="55%" y2="20%" stroke="rgba(59,130,246,0.3)" strokeWidth="1.5" strokeDasharray="4 4" />
-          <line x1="55%" y1="20%" x2="75%" y2="20%" stroke="rgba(59,130,246,0.3)" strokeWidth="1.5" strokeDasharray="4 4" />
-          <line x1="55%" y1="50%" x2="75%" y2="20%" stroke="rgba(59,130,246,0.3)" strokeWidth="1.5" strokeDasharray="4 4" />
-          <line x1="55%" y1="80%" x2="75%" y2="80%" stroke="rgba(59,130,246,0.3)" strokeWidth="1.5" strokeDasharray="4 4" />
-          
-          <line x1="75%" y1="20%" x2="92%" y2="50%" stroke="rgba(59,130,246,0.3)" strokeWidth="1.5" strokeDasharray="4 4" />
-          <line x1="55%" y1="50%" x2="92%" y2="50%" stroke="rgba(59,130,246,0.3)" strokeWidth="1.5" strokeDasharray="4 4" />
-          <line x1="75%" y1="80%" x2="92%" y2="50%" stroke="rgba(59,130,246,0.3)" strokeWidth="1.5" strokeDasharray="4 4" />
+          {/* Main system line routes dynamically scaled */}
+          {CONNECTIONS.map((conn, idx) => {
+            const fromNode = NODES.find(n => n.id === conn.from);
+            const toNode = NODES.find(n => n.id === conn.to);
+            if (!fromNode || !toNode) return null;
+            
+            const fromCoords = getCoords(fromNode);
+            const toCoords = getCoords(toNode);
+            
+            return (
+              <line
+                key={idx}
+                x1={`${fromCoords.x}%`}
+                y1={`${fromCoords.y}%`}
+                x2={`${toCoords.x}%`}
+                y2={`${toCoords.y}%`}
+                stroke="rgba(59,130,246,0.3)"
+                strokeWidth="1.5"
+                strokeDasharray="4 4"
+              />
+            );
+          })}
         </svg>
 
         {/* Animated Packets */}
@@ -335,6 +404,7 @@ export function ArchitectureSimulation() {
         {NODES.map((n) => {
           const NodeIcon = n.icon;
           const isSelected = selectedNode.id === n.id;
+          const coords = getCoords(n);
           return (
             <motion.button
               key={n.id}
@@ -346,8 +416,8 @@ export function ArchitectureSimulation() {
                 isSelected ? "border-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.5)] scale-105" : "border-opacity-40"
               )}
               style={{
-                left: `${n.coords.x}%`,
-                top: `${n.coords.y}%`
+                left: `${coords.x}%`,
+                top: `${coords.y}%`
               }}
             >
               <NodeIcon className="w-3.5 h-3.5 shrink-0" />
@@ -365,30 +435,32 @@ export function ArchitectureSimulation() {
             >
               <Play className="w-3 h-3" /> Fwd Request
             </button>
-            <button
-              onClick={() => setSimMode(simMode === 'healthy' ? 'idle' : 'healthy')}
-              className={cn(
-                "px-3 py-1 border text-xs font-bold uppercase transition-all rounded-none flex items-center gap-1",
-                simMode === 'healthy' 
-                  ? "bg-green-500/20 border-green-500 text-green-400" 
-                  : "bg-blue-500/10 border-blue-500/40 hover:bg-blue-500/30 text-blue-400"
-              )}
-            >
-              <RefreshCw className={cn("w-3 h-3", simMode === 'healthy' && "animate-spin")} />
-              {simMode === 'healthy' ? 'Stop Stream' : 'Auto Flow'}
-            </button>
-            <button
-              onClick={() => setSimMode(simMode === 'ddos' ? 'idle' : 'ddos')}
-              className={cn(
-                "px-3 py-1 border text-xs font-bold uppercase transition-all rounded-none flex items-center gap-1",
-                simMode === 'ddos' 
-                  ? "bg-red-500/20 border-red-500 text-red-400 shadow-[0_0_10px_rgba(239,68,68,0.2)] animate-pulse" 
-                  : "bg-red-500/10 border-red-500/40 hover:bg-red-500/30 text-red-400"
-              )}
-            >
-              <AlertTriangle className="w-3.5 h-3.5" />
-              {simMode === 'ddos' ? 'Stop DDoS' : 'Sim DDoS'}
-            </button>
+            <div className="grid grid-row-2 lg:grid-cols-2 gap-2">
+              <button
+                onClick={() => setSimMode(simMode === 'healthy' ? 'idle' : 'healthy')}
+                className={cn(
+                  "px-3 py-1 border text-xs font-bold uppercase transition-all rounded-none flex items-center gap-1",
+                  simMode === 'healthy' 
+                    ? "bg-green-500/20 border-green-500 text-green-400" 
+                    : "bg-blue-500/10 border-blue-500/40 hover:bg-blue-500/30 text-blue-400"
+                )}
+              >
+                <RefreshCw className={cn("w-3 h-3", simMode === 'healthy' && "animate-spin")} />
+                {simMode === 'healthy' ? 'Stop Stream' : 'Auto Flow'}
+              </button>
+              <button
+                onClick={() => setSimMode(simMode === 'ddos' ? 'idle' : 'ddos')}
+                className={cn(
+                  "px-3 py-1 border text-xs font-bold uppercase transition-all rounded-none flex items-center gap-1",
+                  simMode === 'ddos' 
+                    ? "bg-red-500/20 border-red-500 text-red-400 shadow-[0_0_10px_rgba(239,68,68,0.2)] animate-pulse" 
+                    : "bg-red-500/10 border-red-500/40 hover:bg-red-500/30 text-red-400"
+                )}
+              >
+                <AlertTriangle className="w-3.5 h-3.5" />
+                {simMode === 'ddos' ? 'Stop DDoS' : 'Sim DDoS'}
+              </button>
+            </div>
           </div>
 
           <div className="text-[10px] uppercase text-blue-400 font-bold tracking-widest hidden md:block">

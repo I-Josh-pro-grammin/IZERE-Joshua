@@ -1295,7 +1295,7 @@ export default function Index() {
                       Engineering <span className="text-muted-foreground font-medium">Experience</span>
                     </h2>
                   </ScrollReveal>
-                  <div className="pl-4 md:pl-12 border-l border-blue-500/20 space-y-16">
+                  <div className="pl-8 lg:pl-4 md:pl-12 border-l border-blue-500/20 space-y-16">
                     {[
                       { role: "Systems Engineer", company: "ICODE CO Ltd", period: "2024 - 2025", impact: "Scaled backend systems to handle 5M+ daily requests. Migrated monolith to event-driven microservices reducing latency by 40%." },
                       { role: "Backend Developer", company: "Blink Tech", period: "2025 - Present", impact: "Led development of a high-performance application. Improved deployment speed by implementing robust CI/CD pipelines." }
