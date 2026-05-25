@@ -72,7 +72,7 @@ export const ProjectModal = ({ isOpen, onClose, project, onNext, onPrev }: Proje
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="relative w-full max-w-6xl max-h-full bg-background border border-blue-500/30 pointer-events-auto shadow-2xl flex flex-col md:flex-row dark:bg-[#080808]"
+              className="relative w-full max-w-6xl h-full md:h-auto max-h-[100vh] md:max-h-[90vh] bg-background border border-blue-500/30 pointer-events-auto shadow-2xl flex flex-col md:flex-row dark:bg-[#080808] overflow-y-auto md:overflow-hidden"
             >
               {/* Corner Accents */}
               <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-blue-500/60 z-20 pointer-events-none" />
@@ -80,37 +80,38 @@ export const ProjectModal = ({ isOpen, onClose, project, onNext, onPrev }: Proje
               <div className="absolute bottom-4 left-4 w-[1px] h-12 bg-blue-500/20 pointer-events-none" />
 
               {/* Navigation and Close Buttons */}
-              <div className="absolute -top-12 right-0 flex gap-2 z-30 sm:top-1 sm:right-4">
-                <div className="relative w-[37.4rem] left-4 flex gap-2">
-                  {onPrev && (
-                    <button
-                      onClick={onPrev}
-                      className="p-2 bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 transition-colors text-blue-500 hover:text-white pointer-events-auto"
-                    >
-                      <ChevronLeft className="w-5 h-5" />
-                    </button>
-                  )}
-                  {onNext && (
-                    <button
-                      onClick={onNext}
-                      className="p-2 bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 transition-colors text-blue-500 hover:text-white pointer-events-auto"
-                    >
-                      <ChevronRight className="w-5 h-5" />
-                    </button>
-                  )}
-                </div>
+              <div className="absolute top-3 right-3 flex gap-2 z-30">
+                {onPrev && (
+                  <button
+                    onClick={onPrev}
+                    className="p-2 bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 transition-colors text-blue-500 hover:text-white pointer-events-auto"
+                    aria-label="Previous project"
+                  >
+                    <ChevronLeft className="w-5 h-5" />
+                  </button>
+                )}
+                {onNext && (
+                  <button
+                    onClick={onNext}
+                    className="p-2 bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 transition-colors text-blue-500 hover:text-white pointer-events-auto"
+                    aria-label="Next project"
+                  >
+                    <ChevronRight className="w-5 h-5" />
+                  </button>
+                )}
                 <button
                   onClick={onClose}
-                  className=" relative right-10 p-2 bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 transition-colors text-blue-500 hover:text-white pointer-events-auto"
+                  className="p-2 bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 transition-colors text-blue-500 hover:text-white pointer-events-auto"
+                  aria-label="Close modal"
                 >
                   <X className="w-5 h-5" />
                 </button>
               </div>
 
               {/* Left Column: Visuals & Core Info */}
-              <div className="w-full md:w-2/5 border-b md:border-b-0 md:border-r border-blue-500/20 bg-blue-500/[0.02] flex flex-col relative">
+              <div className="w-full md:w-2/5 border-b md:border-b-0 md:border-r border-blue-500/20 bg-blue-500/[0.02] flex flex-col relative shrink-0">
                 {/* Image/Visual Area */}
-                <div className="relative h-[800px] w-full overflow-hidden border-b border-blue-500/20 bg-blue-500/5 flex items-center justify-center">
+                <div className="relative h-[240px] md:h-[350px] lg:h-[400px] w-full overflow-hidden border-b border-blue-500/20 bg-blue-500/5 flex items-center justify-center">
                   {project.customContent ? (
                     <div className="flex flex-col items-center gap-4 text-blue-500">
                       <div className="absolute inset-0 bg-blue-500/20 blur-2xl rounded-full scale-150 animate-pulse" />

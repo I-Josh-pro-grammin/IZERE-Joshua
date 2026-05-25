@@ -167,7 +167,7 @@ export const Hero3DCarousel: React.FC<Hero3DCarouselProps> = ({
 
   return (
     <div
-      className="w-full p-20 h-[500px] md:h-[650px] relative z-50 cursor-grab active:cursor-grabbing select-none"
+      className="w-full px-4 sm:p-20 h-[350px] sm:h-[500px] md:h-[650px] relative z-50 cursor-grab active:cursor-grabbing select-none"
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}

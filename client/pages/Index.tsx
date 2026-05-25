@@ -282,7 +282,7 @@ const TechnicalCard = ({
 }) => {
   return (
     <div
-      className={cn("relative bg-card border border-blue-500/20 rounded-none overflow-hidden group transition-all duration-500 hover:border-blue-500/50 p-10 shadow-sm dark:shadow-none", className)}
+      className={cn("relative bg-card border border-blue-500/20 rounded-none overflow-hidden group transition-all duration-500 hover:border-blue-500/50 p-6 md:p-10 shadow-sm dark:shadow-none", className)}
     >
       {/* HUD Accents */}
       <div className="absolute top-0 left-0 w-4 h-4 border-t border-l border-blue-500/40" />
@@ -327,8 +327,8 @@ const ProjectTechnicalCard = ({ project }: { project: any }) => {
       <div className="relative h-full flex flex-row">
 
         {/* Left: Vertical Brand Label */}
-        <div className="w-12 md:w-16 flex items-center justify-center border-r border-blue-500/10 bg-blue-500/[0.02]">
-          <span className="rotate-[-90deg] whitespace-nowrap text-2xl md:text-4xl font-black tracking-tighter text-blue-500/80 uppercase">
+        <div className="w-10 sm:w-12 md:w-16 flex items-center justify-center border-r border-blue-500/10 bg-blue-500/[0.02]">
+          <span className="rotate-[-90deg] whitespace-nowrap text-lg sm:text-2xl md:text-4xl font-black tracking-tighter text-blue-500/80 uppercase">
             {project.label}
           </span>
         </div>
@@ -337,21 +337,21 @@ const ProjectTechnicalCard = ({ project }: { project: any }) => {
         <div className="flex-1 flex flex-col p-6 md:p-8">
 
           {/* Top Row: Meta Data */}
-          <div className="flex flex-wrap items-start justify-between gap-6 mb-8">
-            <div className="flex gap-10">
+          <div className="flex flex-wrap items-start justify-between gap-4 mb-6">
+            <div className="flex gap-6">
               <div className="flex flex-col">
                 <span className="text-[9px] font-mono text-blue-500/60 uppercase tracking-widest mb-1">Architecture</span>
-                <span className="text-xl md:text-2xl font-bold tracking-tight text-foreground uppercase">{project.title}</span>
+                <span className="text-lg sm:text-xl md:text-2xl font-bold tracking-tight text-foreground uppercase">{project.title}</span>
               </div>
               <div className="hidden sm:flex flex-col">
                 <span className="text-[9px] font-mono text-blue-500/60 uppercase tracking-widest mb-1">Integrity</span>
-                <span className="text-xl md:text-2xl font-bold tracking-tight text-foreground uppercase">Verified</span>
+                <span className="text-lg sm:text-xl md:text-2xl font-bold tracking-tight text-foreground uppercase">Verified</span>
               </div>
             </div>
 
-            <div className="max-w-[240px] text-right">
+            <div className="max-w-[200px] sm:max-w-[240px] text-right">
               <span className="text-[9px] font-mono text-blue-500/60 uppercase tracking-widest mb-2 block">Project Brief</span>
-              <p className="text-[11px] md:text-xs leading-relaxed text-muted-foreground font-medium uppercase tracking-wider">
+              <p className="text-[10px] md:text-xs leading-relaxed text-muted-foreground font-medium uppercase tracking-wider">
                 {project.desc}
               </p>
             </div>
@@ -524,10 +524,18 @@ const SectionReveal = ({ children, index }: { children: React.ReactNode, index: 
     offset: ["start 100%", "start 0%"]
   });
 
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   const scale = useTransform(scrollYProgress, [0, 0.4], [0.85, 1]);
   const borderRadius = useTransform(scrollYProgress, [0, 0.4], ["4rem", "0%"]);
   const y = useTransform(scrollYProgress, [0, 0.4], ["100px", "0px"]);
-  const rotateZ = useTransform(scrollYProgress, [0, 0.4], [index % 2 === 0 ? 5 : -5, 0]);
+  const rotateZ = useTransform(scrollYProgress, [0, 0.4], [isMobile ? 0 : (index % 2 === 0 ? 5 : -5), 0]);
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.4], [0, 1, 1]);
   const boxShadow = useTransform(
     scrollYProgress,
@@ -557,6 +565,7 @@ export default function Index() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
   const [selectedProjectIndex, setSelectedProjectIndex] = useState<number | null>(null);
   const selectedProject = selectedProjectIndex !== null ? PORTFOLIO_PROJECTS[selectedProjectIndex] : null;
@@ -606,6 +615,7 @@ export default function Index() {
 
     setIsLoaded(true);
     setVh(window.innerHeight);
+    setIsMobile(window.innerWidth < 1024);
 
     const measureCarousel = () => {
       if (carouselRef.current) {
@@ -621,6 +631,7 @@ export default function Index() {
     const handleResize = () => {
       setVh(window.innerHeight);
       measureCarousel();
+      setIsMobile(window.innerWidth < 1024);
     };
 
     const handleGlobalKeyDown = (e: KeyboardEvent) => {
@@ -824,7 +835,7 @@ export default function Index() {
         <nav
           className="fixed top-0 left-0 right-0 z-[101] border-b border-border/30 bg-background/80 backdrop-blur-xl transition-all duration-500"
         >
-          <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+          <div className="max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-6 py-4">
             <div className="flex items-center space-x-2">
               <span className="text-lg font-extrabold tracking-tighter">IZERE.</span>
             </div>
@@ -841,7 +852,7 @@ export default function Index() {
               ))}
             </div>
 
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2 sm:space-x-4">
               <button
                 onClick={toggleTheme}
                 className="p-2 rounded-none hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
@@ -872,6 +883,30 @@ export default function Index() {
               </button>
             </div>
           </div>
+
+          {/* Mobile Menu Dropdown */}
+          {isMobileMenuOpen && (
+            <div className="md:hidden border-t border-border/30 bg-background/95 backdrop-blur-xl px-4 py-4 flex flex-col gap-4">
+              {["Services", "Projects", "Process", "Contact"].map((item) => (
+                <a
+                  key={item}
+                  href={`#${item.toLowerCase()}`}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors py-2 border-b border-border/20 last:border-0"
+                >
+                  {item}
+                </a>
+              ))}
+              <a
+                href="/IZERE_JOSHUA_CV.pdf"
+                download="IZERE_JOSHUA_CV.pdf"
+                className="mt-2 flex items-center justify-center gap-2 bg-blue-500 text-white text-sm font-semibold py-3 px-6"
+              >
+                <Download className="w-4 h-4" />
+                Download CV
+              </a>
+            </div>
+          )}
         </nav>
 
         {/* Phase 1: Intro Dealer (Fixed Overlay) */}
@@ -882,17 +917,17 @@ export default function Index() {
 
         {/* Hero Section */}
         <div className="relative z-0">
-          <section className="min-h-screen pt-44 pb-32 px-6 border-b border-border/30 relative">
+          <section className="min-h-screen pt-32 sm:pt-44 pb-32 px-4 sm:px-6 border-b border-border/30 relative overflow-x-hidden">
             {/* Hero text and Carousel are here */}
             {/* We will hide the text during dealing but keep carousel visible */}
             {/* Marquee Background Name */}
-            <div className="absolute top-[15rem] p-[10rem] h-[50rem] -translate-y-1/2 left-0 w-full overflow-hidden z-0 pointer-events-none select-none">
+            <div className="absolute top-[15rem] h-[50rem] -translate-y-1/2 left-0 w-full overflow-hidden z-0 pointer-events-none select-none">
               {/* Vibrant blue glow behind the name */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-96 bg-blue-500/[0.08] blur-[120px] rounded-full dark:bg-blue-500/[0.05]" />
 
               <div className="animate-marquee whitespace-nowrap flex items-center">
                 {[...Array(10)].map((_, i) => (
-                  <span key={i} className="text-[12rem] md:text-[20rem] font-black tracking-tighter mx-8 text-blue-500/10 dark:text-blue-500/20">
+                  <span key={i} className="text-[6rem] sm:text-[10rem] md:text-[14rem] lg:text-[18rem] font-black tracking-tighter mx-4 sm:mx-8 text-blue-500/10 dark:text-blue-500/20">
                     IZERE JOSHUA
                   </span>
                 ))}
@@ -924,16 +959,16 @@ export default function Index() {
                   className="flex flex-col items-center"
                 >
                   <motion.div className="flex flex-col items-center">
-                    <div className="flex flex-wrap justify-center gap-4 mb-8">
-                      <Badge variant="outline" className="px-5 py-2 border-blue-500/60 bg-blue-500/10 rounded-none text-xs font-bold font-mono tracking-widest uppercase text-blue-500 shadow-[0_0_20px_rgba(59,130,246,0.4)] animate-pulse">
+                    <div className="flex flex-wrap justify-center gap-3 mb-8">
+                      <Badge variant="outline" className="px-4 py-2 border-blue-500/60 bg-blue-500/10 rounded-none text-[10px] sm:text-xs font-bold font-mono tracking-widest uppercase text-blue-500 shadow-[0_0_20px_rgba(59,130,246,0.4)] animate-pulse">
                         ✦ 10X+ ENGINEER
                       </Badge>
-                      <Badge variant="outline" className="px-4 py-2 border-border/30 bg-muted/5 rounded-none text-[10px] font-mono tracking-widest uppercase text-muted-foreground flex items-center">
+                      <Badge variant="outline" className="px-3 py-2 border-border/30 bg-muted/5 rounded-none text-[9px] sm:text-[10px] font-mono tracking-widest uppercase text-muted-foreground flex items-center">
                         SYSTEM ARCHITECT & FULL-STACK ENGINEER
                       </Badge>
                     </div>
 
-                    <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter mb-10 leading-[0.9] gradient-text overflow-hidden z-10 relative">
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter mb-8 sm:mb-10 leading-[0.9] gradient-text overflow-hidden z-10 relative">
                       <motion.span
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
@@ -944,35 +979,27 @@ export default function Index() {
                       </motion.span>
                     </h2>
 
-                    <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mb-12 font-medium leading-relaxed">
+                    <p className="text-base sm:text-xl md:text-2xl text-muted-foreground max-w-2xl mb-10 sm:mb-12 font-medium leading-relaxed px-2 sm:px-0">
                       Full-stack engineer building AI-powered products, scalable distributed systems, and modern digital architectures.
                     </p>
 
-                    <div className="flex flex-col sm:flex-row flex-wrap gap-6 justify-center items-center">
-                      <Magnetic>
-                        <Button size="lg" className="h-16 bg-blue-500 hover:bg-blue-600 text-white px-12" onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}>
-                          View Projects
-                        </Button>
-                      </Magnetic>
-                      <Magnetic>
-                        <Button size="lg" variant="outline" className="h-16 px-12 border-blue-500/30 hover:bg-blue-500/10 text-foreground transition-colors" asChild>
-                          <a href="/IZERE_JOSHUA_CV.pdf" download="IZERE_JOSHUA_CV.pdf">
-                            <Download className="mr-2 w-5 h-5 text-blue-500" />
-                            Download CV
-                          </a>
-                        </Button>
-                      </Magnetic>
-                      <Magnetic>
-                        <Button size="lg" variant="outline" className="h-16 px-12 border-blue-500/30 text-blue-500 hover:bg-blue-500 hover:text-white transition-colors" onClick={() => setIsTerminalOpen(true)}>
-                          <Terminal className="mr-2 w-5 h-5" />
-                          Use Terminal
-                        </Button>
-                      </Magnetic>
-                      <Magnetic>
-                        <Button size="lg" className="h-16 bg-blue-500 hover:bg-blue-600 text-white px-12" asChild>
-                          <a href="https://mail.google.com/mail/?view=cm&to=izerejoshua94@gmail.com" target="_blank" rel="noopener noreferrer">Contact Me</a>
-                        </Button>
-                      </Magnetic>
+                    <div className="grid grid-cols-2 sm:flex sm:flex-row sm:flex-wrap gap-3 sm:gap-6 justify-center items-center w-full max-w-lg sm:max-w-none">
+                      <Button size="lg" className="h-12 sm:h-16 bg-blue-500 hover:bg-blue-600 text-white px-6 sm:px-12 text-sm" onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}>
+                        View Projects
+                      </Button>
+                      <Button size="lg" variant="outline" className="h-12 sm:h-16 px-6 sm:px-12 border-blue-500/30 hover:bg-blue-500/10 text-foreground transition-colors text-sm" asChild>
+                        <a href="/IZERE_JOSHUA_CV.pdf" download="IZERE_JOSHUA_CV.pdf">
+                          <Download className="mr-2 w-4 sm:w-5 h-4 sm:h-5 text-blue-500" />
+                          Download CV
+                        </a>
+                      </Button>
+                      <Button size="lg" variant="outline" className="h-12 sm:h-16 px-6 sm:px-12 border-blue-500/30 text-blue-500 hover:bg-blue-500 hover:text-white transition-colors text-sm" onClick={() => setIsTerminalOpen(true)}>
+                        <Terminal className="mr-2 w-4 sm:w-5 h-4 sm:h-5" />
+                        Terminal
+                      </Button>
+                      <Button size="lg" className="h-12 sm:h-16 bg-blue-500 hover:bg-blue-600 text-white px-6 sm:px-12 text-sm" asChild>
+                        <a href="https://mail.google.com/mail/?view=cm&to=izerejoshua94@gmail.com" target="_blank" rel="noopener noreferrer">Contact Me</a>
+                      </Button>
                     </div>
                   </motion.div>
 
@@ -982,7 +1009,7 @@ export default function Index() {
                       initial={{ opacity: 0, scale: 0.95 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: 0.5, duration: 1 }}
-                      className="mt-32 grid grid-cols-2 md:grid-cols-4 gap-4"
+                      className="mt-16 sm:mt-32 grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4"
                     >
                       {[
                         { label: "Experience", value: "2+ Years" },
@@ -990,9 +1017,9 @@ export default function Index() {
                         { label: "Design", value: "Minimalist" },
                         { label: "Stack", value: "Full-Stack" },
                       ].map((stat, i) => (
-                        <div key={i} className="glass p-8 flex flex-col justify-between h-40 rounded-none">
-                          <span className="text-xs uppercase tracking-widest text-muted-foreground font-bold">{stat.label}</span>
-                          <span className="text-2xl font-bold">{stat.value}</span>
+                        <div key={i} className="glass p-5 sm:p-8 flex flex-col justify-between h-32 sm:h-40 rounded-none">
+                          <span className="text-[10px] sm:text-xs uppercase tracking-widest text-muted-foreground font-bold">{stat.label}</span>
+                          <span className="text-xl sm:text-2xl font-bold">{stat.value}</span>
                         </div>
                       ))}
                     </motion.div>
@@ -1008,13 +1035,13 @@ export default function Index() {
             <SectionReveal index={0}>
               <section
                 id="services"
-                className="py-32 px-6 relative overflow-hidden bg-background z-10"
+                className="py-16 md:py-32 px-4 md:px-6 relative overflow-hidden bg-background z-10"
               >
                 <div className="max-w-7xl mx-auto border-x border-border/30 relative">
                   <div className="hidden md:block absolute -bottom-[1px] -left-[1px] w-1.5 h-1.5 bg-foreground/30 translate-y-1/2 -translate-x-1/2 z-10" />
                   <div className="hidden md:block absolute -bottom-[1px] -right-[1px] w-1.5 h-1.5 bg-foreground/30 translate-y-1/2 translate-x-1/2 z-10" />
                   <ScrollReveal>
-                    <h2 className="text-4xl md:text-6xl font-bold tracking-tighter mb-16">
+                    <h2 className="text-4xl md:text-6xl font-bold tracking-tighter mb-8 md:mb-16">
                       Engineering <span className="text-muted-foreground font-medium">Case Studies</span>
                     </h2>
                   </ScrollReveal>
@@ -1068,7 +1095,7 @@ export default function Index() {
             <SectionReveal index={1}>
               <section
                 id="projects"
-                className="py-32 px-6 bg-muted/30 border-b border-border/30 relative z-10"
+                className="py-16 md:py-32 px-4 md:px-6 bg-muted/30 border-b border-border/30 relative z-10"
               >
                 <div className="max-w-7xl mx-auto border-x border-border/30 relative">
                   <div className="hidden md:block absolute -bottom-[1px] -left-[1px] w-1.5 h-1.5 bg-foreground/30 translate-y-1/2 -translate-x-1/2 z-10" />
@@ -1107,13 +1134,13 @@ export default function Index() {
             <SectionReveal index={2}>
               <section
                 id="expertise"
-                className="py-32 px-6 relative overflow-hidden bg-background border-b border-border/30 z-10"
+                className="py-16 md:py-32 px-4 md:px-6 relative overflow-hidden bg-background border-b border-border/30 z-10"
               >
                 <div className="max-w-7xl mx-auto border-x border-border/30 relative">
                   <div className="hidden md:block absolute -bottom-[1px] -left-[1px] w-1.5 h-1.5 bg-foreground/30 translate-y-1/2 -translate-x-1/2 z-10" />
                   <div className="hidden md:block absolute -bottom-[1px] -right-[1px] w-1.5 h-1.5 bg-foreground/30 translate-y-1/2 translate-x-1/2 z-10" />
                   <ScrollReveal>
-                    <h2 className="text-4xl md:text-6xl font-bold tracking-tighter mb-16 text-foreground">
+                    <h2 className="text-4xl md:text-6xl font-bold tracking-tighter mb-8 md:mb-16 text-foreground">
                       Technical <span className="text-muted-foreground font-medium">Capabilities</span>
                     </h2>
                   </ScrollReveal>
@@ -1149,10 +1176,10 @@ export default function Index() {
 
             {/* System Design / Architecture Section */}
             <SectionReveal index={3}>
-              <section id="system-design" className="py-32 px-6 relative overflow-hidden bg-muted/30 border-b border-border/30 z-10">
+              <section id="system-design" className="py-16 md:py-32 px-4 md:px-6 relative overflow-hidden bg-muted/30 border-b border-border/30 z-10">
                 <div className="max-w-7xl mx-auto border-x border-border/30 relative">
                   <ScrollReveal>
-                    <h2 className="text-4xl md:text-6xl font-bold tracking-tighter mb-16 text-foreground">
+                    <h2 className="text-4xl md:text-6xl font-bold tracking-tighter mb-8 md:mb-16 text-foreground">
                       System <span className="text-muted-foreground font-medium">Architecture</span>
                     </h2>
                   </ScrollReveal>
@@ -1213,10 +1240,10 @@ export default function Index() {
 
             {/* Technical Writing Section */}
             <SectionReveal index={4}>
-              <section id="writing" className="py-32 px-6 relative overflow-hidden bg-background border-b border-border/30 z-10">
+              <section id="writing" className="py-16 md:py-32 px-4 md:px-6 relative overflow-hidden bg-background border-b border-border/30 z-10">
                 <div className="max-w-7xl mx-auto border-x border-border/30 relative">
                   <ScrollReveal>
-                    <h2 className="text-4xl md:text-6xl font-bold tracking-tighter mb-16 text-foreground">
+                    <h2 className="text-4xl md:text-6xl font-bold tracking-tighter mb-8 md:mb-16 text-foreground">
                       Technical <span className="text-muted-foreground font-medium">Writing</span>
                     </h2>
                   </ScrollReveal>
@@ -1231,9 +1258,9 @@ export default function Index() {
 
             {/* Open Source Section */}
             {/* <SectionReveal index={5}>
-              <section id="opensource" className="py-32 px-6 relative overflow-hidden bg-muted/30 border-b border-border/30 z-10">
+              <section id="opensource" className="py-16 md:py-32 px-4 md:px-6 relative overflow-hidden bg-muted/30 border-b border-border/30 z-10">
                 <div className="max-w-7xl mx-auto border-x border-border/30 relative">
-                  <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
+                  <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 md:mb-16 gap-8">
                     <ScrollReveal>
                       <h2 className="text-4xl md:text-6xl font-bold tracking-tighter text-foreground">
                         Open <span className="text-muted-foreground font-medium">Source</span>
@@ -1260,10 +1287,10 @@ export default function Index() {
 
             {/* Experience Timeline Section */}
             <SectionReveal index={6}>
-              <section id="experience" className="py-32 px-6 relative overflow-hidden bg-background border-b border-border/30 z-10">
+              <section id="experience" className="py-16 md:py-32 px-4 md:px-6 relative overflow-hidden bg-background border-b border-border/30 z-10">
                 <div className="max-w-7xl mx-auto border-x border-border/30 relative">
                   <ScrollReveal>
-                    <h2 className="text-4xl md:text-6xl font-bold tracking-tighter mb-16 text-foreground">
+                    <h2 className="text-4xl md:text-6xl font-bold tracking-tighter mb-8 md:mb-16 text-foreground">
                       Engineering <span className="text-muted-foreground font-medium">Experience</span>
                     </h2>
                   </ScrollReveal>
@@ -1289,7 +1316,7 @@ export default function Index() {
 
             <SectionReveal index={3}>
               <section
-                className="py-32 px-6 bg-muted/30 relative overflow-hidden border-b border-border/30 z-10"
+                className="py-16 md:py-32 px-4 md:px-6 bg-muted/30 relative overflow-hidden border-b border-border/30 z-10"
               >
                 <div className="max-w-7xl mx-auto border-x border-border/30 relative">
                   <div className="hidden md:block absolute -bottom-[1px] -left-[1px] w-1.5 h-1.5 bg-foreground/30 translate-y-1/2 -translate-x-1/2 z-10" />
@@ -1325,7 +1352,7 @@ export default function Index() {
             <SectionReveal index={4}>
               <section
                 id="testimonials"
-                className="py-32 px-6 border-b border-border/30 relative z-10 bg-background"
+                className="py-16 md:py-32 px-4 md:px-6 border-b border-border/30 relative z-10 bg-background"
               >
                 <div className="max-w-7xl mx-auto border-x border-border/30 relative">
                   <div className="hidden md:block absolute -bottom-[1px] -left-[1px] w-1.5 h-1.5 bg-foreground/30 translate-y-1/2 -translate-x-1/2 z-10" />
@@ -1405,10 +1432,10 @@ export default function Index() {
                         { image: "/delice.png", name: "Delice", role: "Mobile developer at ThinkStack", text: "I’ve had the pleasure of working with this developer, and I highly recommend them. They are skilled, reliable, and passionate about writing clean and efficient code. They solve problems effectively and are always eager to learn and improve. A great team player and a valuable asset to any development team.", rating: 5 },
                         { image: "/Isaac.jpeg", name: "Isaac", role: "Mentor At Brainiacs", text: "Josh is a strong Engineer who is good at collaborating with others in different projects. He is a good design at System  design and backend  models which are optimal for impactful solutions, I can recommend him for team work, collaboration and hard working.", rating: 5 },
                         { image: "/KIRENGA_Kenny.png", name: "KIRENGA Kenny", role: "Backend Developer at I-Code Rwanda", text: "He was instrumental in building the backend of IMove, delivering a scalable, secure, and well-architected system. Highly skilled, reliable, and committed to excellence — a backend developer you can truly trust.", rating: 5 },
-                        { image: "/aaron.png", name: "Twarimitswe Aaron", role: "Mentor At Brainiacs and Minister of Discipline at RCA", text: "Joshua is a persistent and highly motivated Full Stack Engineer who approaches every project with determination and ownership. His commitment to delivering quality results and pushing through challenges makes him someone you can confidently rely on for complex and demanding work.", rating: 4.9 },
+                        { image: "/aaron.png", name: "Twarimitswe Aaron", role: "Mentor At Brainiacs and Minister of Discipline at RCA", text: "Joshua is a persistent and highly motivated Full Stack Engineer who approaches every project with determination and ownership. His commitment to delivering quality results and pushing through challenges makes him someone you can confidently rely on for complex and demanding work.", rating: 5 },
                         { image: "/darius.jpg", name: "Niyonkuru Darius", role: "Mentor At Brainiacs and Minister of Academics at RCA", text: "Joshua is not just a developer but a true programmer. He doesn’t only write code; he understands the logic behind it and thinks deeply to find better solutions. His way of thinking is unique and impactful. I’ve known him for a year, and he continues to impress me—not only technically, but also mentally and socially. Beyond his skills, he has been a great friend, and working with him is truly inspiring.", rating: 5 },
                         { image: "/Ange.jpeg", name: "Ange", role: "Design Lead, Bloom", text: "Joshua is a hardworking colleague who fearlessly risks himself to get the job done. He cooperates seamlessly with others and always drives team success.", rating: 5 },
-                        { image: "/ashrafu.png", name: "Ashrafu", role: "Design Lead, Bloom", text: "Working with Joshua has been an incredibly rewarding experience. He brings a rare combination of technical skill, creativity, and genuine curiosity to every discussion. Whether we were brainstorming ideas or mentoring together at Brainiacs, he consistently showed strong leadership, thoughtful problem-solving, and a passion for helping others grow. Joshua doesn’t just build solutions — he elevates the people around him and turns ideas into clear, actionable outcomes. Any team would benefit from his energy and vision.", rating: 5 }
+                        { image: "/ashrafu.png", name: "Ashrafu", role: "Design Lead, Bloom", text: "Working with Joshua has been an incredibly rewarding experience. He brings a rare combination of technical skill, creativity, and genuine curiosity to every discussion. Whether we were brainstorming ideas or mentoring together at Brainiacs, he consistently showed strong leadership, thoughtful problem-solving, and a passion for helping others grow. Joshua doesn't just build solutions — he elevates the people around him and turns ideas into clear, actionable outcomes. Any team would benefit from his energy and vision.", rating: 5 }
                       ].map((client, i) => (
                         <motion.div
                           key={i}
@@ -1416,8 +1443,8 @@ export default function Index() {
                           whileInView={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.8, ease: "easeOut", delay: i * 0.1 }}
                           viewport={{ once: true }}
-                          className="sticky mb-12 sm:mb-24"
-                          style={{ zIndex: i + 1, top: 120 + i * 20 }}
+                          className="relative lg:sticky mb-8 sm:mb-12 lg:mb-24"
+                          style={{ zIndex: i + 1, top: isMobile ? 'auto' : 120 + i * 20 }}
                         >
                           <TechnicalCard
                             title={client.name}
@@ -1441,7 +1468,7 @@ export default function Index() {
                                 </div>
                               </div>
                             </div>
-                            <p className="text-xl md:text-2xl font-medium text-muted-foreground leading-relaxed italic border-l-2 border-blue-500/20 pl-6">
+                            <p className="text-base md:text-xl font-medium text-muted-foreground leading-relaxed italic border-l-2 border-blue-500/20 pl-4 sm:pl-6">
                               "{client.text}"
                             </p>
                           </TechnicalCard>
@@ -1457,7 +1484,7 @@ export default function Index() {
             <SectionReveal index={5}>
               <section
                 id="process"
-                className="py-32 px-6 bg-muted/30 border-b border-border/30 relative z-10"
+                className="py-16 md:py-32 px-4 md:px-6 bg-muted/30 border-b border-border/30 relative z-10"
               >
                 <div className="max-w-7xl mx-auto border-x border-border/30 relative">
                   <div className="hidden md:block absolute -bottom-[1px] -left-[1px] w-1.5 h-1.5 bg-foreground/30 translate-y-1/2 -translate-x-1/2 z-10" />
@@ -1466,7 +1493,7 @@ export default function Index() {
 
                     {/* Left Column: Core Principles */}
                     <div>
-                      <div className="mb-16">
+                      <div className="mb-8 md:mb-16">
                         <ScrollReveal>
                           <h2 className="text-4xl md:text-6xl font-bold tracking-tighter mb-6 leading-tight">
                             Engineering <br />
@@ -1562,7 +1589,7 @@ export default function Index() {
             <SectionReveal index={6}>
               <footer
                 id="contact"
-                className="py-32 px-6 bg-background border-t border-border/30 relative z-10"
+                className="py-16 md:py-32 px-4 md:px-6 bg-background border-t border-border/30 relative z-10"
               >
                 <div className="max-w-7xl mx-auto">
 
@@ -1571,7 +1598,7 @@ export default function Index() {
 
                     {/* MAIN BACKGROUND */}
                     <div
-                      className="relative bg-card border border-blue-500/20 p-12 md:p-24 overflow-hidden rounded-none dark:bg-[#080808]"
+                      className="relative bg-card border border-blue-500/20 p-6 sm:p-12 md:p-24 overflow-hidden rounded-none dark:bg-[#080808]"
                     >
                       {/* Glow */}
                       <div className="absolute inset-0 pointer-events-none shadow-[0_0_30px_rgba(59,130,246,0.15)]" />
@@ -1588,12 +1615,12 @@ export default function Index() {
                         {/* LEFT SIDE */}
                         <ScrollReveal>
                           <div className="max-w-xl">
-                            <h2 className="text-5xl md:text-8xl font-bold tracking-tighter mb-10 leading-[0.9]">
+                            <h2 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter mb-8 sm:mb-10 leading-[0.9]">
                               Let's Grow <br />
                               <span className="text-muted-foreground italic">Together</span>
                             </h2>
 
-                            <p className="text-xl text-muted-foreground mb-16 font-medium leading-relaxed">
+                            <p className="text-base sm:text-xl text-muted-foreground mb-10 sm:mb-8 md:mb-16 font-medium leading-relaxed">
                               Have a visionary project in mind? Let's turn your ideas into a high-performance digital reality.
                             </p>
 
@@ -1710,7 +1737,7 @@ export default function Index() {
                       </div>
 
                       {/* Bottom right text */}
-                      <div className="absolute bottom-10 right-14 text-xs font-mono uppercase flex gap-2">
+                      <div className="hidden sm:flex absolute bottom-10 right-14 text-xs font-mono uppercase gap-2">
                         <span className="text-muted-foreground/40 uppercase">Discoball</span>
                         <span className="text-blue-500 font-bold">2025</span>
                       </div>
@@ -1866,3 +1893,5 @@ export default function Index() {
     </>
   );
 }
+
+
