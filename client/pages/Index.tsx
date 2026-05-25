@@ -19,6 +19,7 @@ import { useMotionValue, useSpring, useTransform } from "framer-motion";
 import { ProjectModal } from "@/components/ui/project-modal";
 import { ArticleModal, Article } from "@/components/ui/article-modal";
 import UnequalBordersCard from "@/components/ui/unequal-borders-card";
+import { TechWink } from "@/components/ui/tech-wink";
 import Lenis from "lenis";
 import "lenis/dist/lenis.css";
 
@@ -371,7 +372,7 @@ const ProjectTechnicalCard = ({ project }: { project: any }) => {
               <img
                 src={project.image}
                 alt={project.label}
-                className="w-full h-full object-cover opacity-20 grayscale group-hover:grayscale-0 group-hover:opacity-80 group-hover:scale-105 transition-all duration-700"
+                className="w-full h-full object-contain bg-blue-500/[0.03] opacity-30 hover:opacity-60 group-hover:opacity-100 group-hover:scale-[1.02] transition-all duration-700"
               />
             )}
 
@@ -1452,9 +1453,9 @@ export default function Index() {
                             className="border-blue-500/20"
                           >
                             <div className="flex items-center space-x-6 mb-8">
-                              <div className="w-16 h-16 md:w-20 md:h-20 rounded-none bg-muted border border-blue-500/20 flex items-center justify-center overflow-hidden">
+                              <div className="relative w-16 h-16 md:w-20 md:h-20 rounded-none bg-muted border border-blue-500/20 flex items-center justify-center overflow-hidden">
                                 {client.image ? (
-                                  <img src={client.image} alt={client.name} className="w-full h-full object-cover grayscale" />
+                                  <img src={client.image} alt={client.name} className={`absolute inset-0 w-full ${client.name === "Twarimitswe Aaron" || "Niyonkuru Darius" ? "h-full" : "" } object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-300`} />
                                 ) : (
                                   <span className="text-2xl font-bold text-muted-foreground">{client.name[0]}</span>
                                 )}
@@ -1752,7 +1753,7 @@ export default function Index() {
 
                     <div className="text-center pt-20 text-xs text-muted-foreground max-w-sm leading-relaxed">
                         <p>Everything you've seen so far was all part of my plan.</p>
-                        <p className="block text-center">To give you a great experience😉</p>
+                        <p className="flex items-center justify-center gap-1 text-center">To give you a great experience <TechWink /></p>
                     </div>
 
                     <div className="flex gap-8 text-sm text-muted-foreground">

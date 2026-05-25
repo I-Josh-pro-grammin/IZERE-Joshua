@@ -121,7 +121,7 @@ export const ProjectModal = ({ isOpen, onClose, project, onNext, onPrev }: Proje
                     <img
                       src={project.image}
                       alt={project.label}
-                      className="w-full h-full object-cover opacity-60 grayscale hover:grayscale-0 transition-all duration-700"
+                      className="w-full h-full object-contain bg-blue-500/[0.03] opacity-30 hover:opacity-90 transition-all duration-700"
                     />
                   )}
                   <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%)] bg-[length:100%_4px]" />
