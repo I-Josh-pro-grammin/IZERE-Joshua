@@ -1453,7 +1453,7 @@ export default function Index() {
                             className="border-blue-500/20"
                           >
                             <div className="flex items-center space-x-6 mb-8">
-                              <div className="relative w-16 h-16 md:w-20 md:h-20 rounded-none bg-muted border border-blue-500/20 flex items-center justify-center overflow-hidden">
+                              <div className="relative min-w-16 min-h-16 md:w-20 md:h-20 rounded-none bg-muted border border-blue-500/20 flex items-center justify-center overflow-hidden">
                                 {client.image ? (
                                   <img src={client.image} alt={client.name} className={`absolute inset-0 w-full ${client.name === "Twarimitswe Aaron" || client.name === "Niyonkuru Darius" ? "h-full" : "" } object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-300`} />
                                 ) : (
