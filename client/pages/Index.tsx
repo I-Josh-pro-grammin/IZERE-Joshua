@@ -2,9 +2,8 @@ import { Github, Linkedin, Mail, ArrowUpRight, Plus, Menu, X, Send, Loader2, Che
 import { TerminalNavigation } from "@/components/ui/terminal-navigation";
 import { ArchitectureSimulation } from "@/components/ui/architecture-simulation";
 
-const bCode = "/bcode.png";
-const akaguriro = "/akaguriroo.png";
-const projects = "/projects.png";
+const bCode = "/bcode.jpeg";
+const akaguriro = "/Akaguriroo.jpeg";
 const joshImg = "/nkera.jpeg";
 const icode = "/icode.jpeg";
 const Bora = "/Bora.jpeg";
