@@ -190,7 +190,7 @@ export const Hero3DCarousel: React.FC<Hero3DCarouselProps> = ({
             radius={5.5}
             speed={0.35}
             manualRotationRef={innerManualRot}
-            cardClassName="bg-gray-200 dark:bg-black opacity-80 dark:opacity-70 border-green-500/10 shadow-lg"
+            cardClassName="bg-gray-200 dark:bg-black/20 opacity-80 dark:opacity-70 border-green-500/10 shadow-lg"
           />
 
           {/* Outer Ring: Achievements */}
@@ -199,7 +199,7 @@ export const Hero3DCarousel: React.FC<Hero3DCarouselProps> = ({
             radius={9.5}
             speed={-0.28}
             manualRotationRef={outerManualRot}
-            cardClassName="bg-gray-200 dark:bg-black opacity-80 dark:opacity-70 border-blue-500/10 shadow-md"
+            cardClassName="bg-gray-200 dark:bg-blue-500/10 opacity-80 dark:opacity-70 border-blue-500/10 shadow-md"
           />
         </group>
 
