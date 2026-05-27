@@ -57,7 +57,7 @@ const RotatingGroup = ({
               scale={0.25}
               className="pointer-events-none select-none"
             >
-              <div className={`w-[768px] glass rounded-none p-12 border-4 border-primary/20 backdrop-blur-md shadow-2xl flex flex-col gap-6 items-center text-center relative group transition-all duration-500 hover:scale-[1.05] hover:border-primary/40 ${cardClassName}`}>
+              <div className={`w-[768px] rounded-none p-12 border-4 border-primary/20 shadow-2xl flex flex-col gap-6 items-center text-center relative group transition-all duration-500 hover:scale-[1.05] hover:border-primary/40 bg-[#060608]/95 backdrop-filter-none will-change-transform transform-gpu ${cardClassName}`}>
                 <span className="text-3xl uppercase tracking-[0.4em] text-muted-foreground font-bold">{item.title}</span>
                 <span className="text-7xl font-extrabold text-foreground tracking-tight leading-tight">{item.label}</span>
 
@@ -97,7 +97,7 @@ const CenterImage = ({ imageSrc, manualRotationRef }: { imageSrc: string; manual
   return (
     <group ref={groupRef} position={[0, 0, 0]}>
       <Html transform center scale={0.25} className="pointer-events-none">
-        <div className="relative w-[896px] h-[896px] rounded-full border-[12px] border-primary/30 overflow-hidden glass shadow-[0_0_150px_rgba(59,130,246,0.3)] p-4">
+        <div className="relative w-[896px] h-[896px] rounded-full border-[12px] border-primary/30 overflow-hidden bg-gray-300 dark:bg-black shadow-[0_0_100px_rgba(59,130,246,0.2)] p-4 will-change-transform transform-gpu">
           <div className="w-full h-full rounded-full overflow-hidden relative group">
             <img
               src={imageSrc}
@@ -188,18 +188,18 @@ export const Hero3DCarousel: React.FC<Hero3DCarouselProps> = ({
           <RotatingGroup
             data={projects}
             radius={5.5}
-            speed={0.15}
+            speed={0.35}
             manualRotationRef={innerManualRot}
-            cardClassName="bg-background/40"
+            cardClassName="bg-gray-200 dark:bg-black opacity-80 dark:opacity-70 border-green-500/10 shadow-lg"
           />
 
           {/* Outer Ring: Achievements */}
           <RotatingGroup
             data={displayAchievements}
             radius={9.5}
-            speed={-0.12}
+            speed={-0.28}
             manualRotationRef={outerManualRot}
-            cardClassName="bg-blue-500/5 border-blue-500/10"
+            cardClassName="bg-gray-200 dark:bg-black opacity-80 dark:opacity-70 border-blue-500/10 shadow-md"
           />
         </group>
 
